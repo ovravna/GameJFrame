@@ -163,13 +163,13 @@ public class Game extends Canvas implements Runnable {
                 tick();
                 delta--;
                 shouldRender = true;
-            }
 
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+//            try {
+//                Thread.sleep(1);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
             if (shouldRender) {
                 frames++;
@@ -180,7 +180,6 @@ public class Game extends Canvas implements Runnable {
                 lastTimer += 1000;
 
                 frame.setTitle(String.format("  %3d ticks | %3d fps | coordinates: %4d :%4d\n", ticks, frames, player.x, player.y));
-//                System.out.printf("ticks:%3d | fps: %3d\n",ticks, frames);
                 frames = 0;
                 ticks = 0;
             }
