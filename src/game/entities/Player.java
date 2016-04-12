@@ -80,16 +80,17 @@ public class Player extends Mob {
             List<Integer> waterColor = new ArrayList<>(Arrays.asList(0x000000, 0x4444ff, 0x0000ff, 0x8888ff));
 
             yOffset += 4;
-            if (tickCount%60 < 15) {
-                waterColor.remove((Integer)0x4444ff);
-            } else if (15 <= tickCount%60 && tickCount%60 < 30) {
+            if ((tickCount%60)/15 == 0) {
+                waterColor.remove(1);
+            } else if ((tickCount%60)/15 == 1) {
                 yOffset--;
-                waterColor.remove((Integer)0x3333ff);
-            } else if (30 <= tickCount%60 && tickCount%60 < 45) {
-                waterColor.remove((Integer)0x8888ff);
+                waterColor.remove(2);
+            } else if ((tickCount%60)/15 == 2) {
+                waterColor.remove(3);
             } else {
                 yOffset--;
-                waterColor.remove((Integer)0x4444ff);
+                waterColor.remove(1);
+                waterColor.remove(2);
             }
 
             screen.render(xOffset, yOffset+3, 6, 0, 1, 8, waterColor);
@@ -97,9 +98,6 @@ public class Player extends Mob {
 
         }
 
-//        if (getEntity(20, 20) != null) {
-//            System.out.println("Kake!");
-//        }
 
         screen.render(xOffset + (modifier * flipTop), yOffset,
                 xTile+yTile*(screen.sheet.width >> 3), flipTop, scale);
@@ -129,48 +127,18 @@ public class Player extends Mob {
 
     @Override
     public boolean hasColided(int xa, int ya) {
-        int xMax = dimentions[0];
-        int xMin = dimentions[1];
-        int yMax = dimentions[2];
-        int yMin = dimentions[3];
+        int[] xPos = new int[]{dimentions[0], dimentions[1]};
+        int[] yPos = new int[]{dimentions[2], dimentions[3]};
 
-//        if (isSolidEntity(xa, ya, x, y)) {
-//            return true;
-//        }
-        for (int x = xMin;x < xMax;x++) {
-            if (isSolidTile(xa, ya, x, yMin)) {
-                return true;
-            } else if (isSolidEntity(xa, ya, x, yMin)) {
-                return true;
-            }
-
-        }
-        for (int x = xMin;x < xMax;x++) {
-            if (isSolidTile(xa, ya, x, yMax)) {
-                return true;
-            } else if (isSolidEntity(xa, ya, x, yMax)) {
-                return true;
+        for (int i = 0;i < yPos.length;i++) {
+            for (int j = 0;j < xPos.length;j++) {
+                if (isSolidTile(xa, ya, xPos[j], yPos[i])) {
+                    return true;
+                } else if (isSolidEntity(xa, ya, xPos[j], yPos[i])) {
+                    return true;
+                }
             }
         }
-
-        for (int y = yMin;y < yMax;y++) {
-            if (isSolidTile(xa, ya, xMin, y)) {
-                return true;
-            } else if (isSolidEntity(xa, ya, xMin, y)) {
-                return true;
-            }
-        }
-
-        for (int y = yMin;y < yMax;y++) {
-            if (isSolidTile(xa, ya, xMax, y)) {
-                return true;
-            } else if (isSolidEntity(xa, ya, xMax, y)) {
-                return true;
-            }
-        }
-
         return false;
     }
-
-
 }

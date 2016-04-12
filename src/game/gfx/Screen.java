@@ -35,7 +35,11 @@ public class Screen {
 
         this.pixels = new int[width*height];
         filterOperator = (n, m) -> n & m;
-        filter = 0xffffff;
+        filter = 0x666666;
+
+//        0x440000;
+
+
     }
 
     public void render(int xPos, int yPos, int tile, int mirrorDir, int scale) {
@@ -93,8 +97,8 @@ public class Screen {
 
 
                 if (!ignoreColors.contains(col)) {
-                    col = filterOperator.apply(col, filter);
-//                    col = col;
+//                    col = filterOperator.apply(col, filter);
+                    col = Screen.colorSelector(col, 0xbb, 0, 0);
                     for (int yScale = 0;yScale < scale;yScale++) {
                         if (yPixel+yScale < 0 || yPixel+yScale >= height)
                             continue;
@@ -108,6 +112,37 @@ public class Screen {
                 }
             }
         }
+    }
+
+//    public static void main(String[] args) {
+//        int kake = new Screen(2, 2, new SpriteSheet("/player16x16.png")).colorSelector(0x33dd55, 1);
+////        System.out.println(Integer.toHexString(kake));
+//
+//    }
+
+
+    private static int colorSelector(int color, int filter) {
+        return colorSelector(color, filter, filter, filter);
+    }
+
+    private static int colorSelector(int color, int red, int green, int blue) {
+        int r = (color/0x10000)%0x100;
+        int g = (color/0x100)%0x100;
+        int b = color%0x100;
+
+        List<Integer> rgb = Arrays.asList(r, g, b);
+        List<Integer> filters = Arrays.asList(red, green, blue);
+
+        for (int i = 0;i < 3;i++) {
+            if (rgb.get(i) + filters.get(i) < 0) rgb.set(i, 0);
+            else if (rgb.get(i) + filters.get(i) > 0xff) rgb.set(i, 0xff);
+            else rgb.set(i, rgb.get(i)+filters.get(i));
+        }
+
+
+
+//        System.out.printf("%s %s %s\n",Integer.toHexString(r), Integer.toHexString(g), Integer.toHexString(b));
+        return (rgb.get(0) << 16)+(rgb.get(1) << 8)+rgb.get(2);
     }
 
     private static int log2(int block) {

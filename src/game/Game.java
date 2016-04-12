@@ -1,7 +1,8 @@
 package game;
 
 import game.entities.Player;
-import game.gfx.*;
+import game.gfx.Screen;
+import game.gfx.SpriteSheet;
 import game.level.Level;
 
 import javax.swing.*;
@@ -9,7 +10,8 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Game extends Canvas implements Runnable {
@@ -222,6 +224,10 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.PINK);
         g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+
+        g.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+        g.setColor(Color.BLACK);
+        g.drawString("kake []", xOffset-2, yOffset-10);
 
         g.dispose();
         bs.show();
