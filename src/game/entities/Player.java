@@ -76,11 +76,11 @@ public class Player extends Mob implements Actable{
         for (int i = 1; i < 30; i++) {
             xp = x * i;
             yp = y * i;
-            Entity e = getEntity(this.x + xp, this.y + yp);
-            if (!(e instanceof Player))
+            Entity e = getEntity(this.x+3 + xp, this.y + yp);
+            if (!(e == null || e.equals(this)))
                 System.out.println(e);
 
-            if (e != null && e instanceof Actable && !(e instanceof Player)) {
+            if (e != null && e instanceof Actable && !e.equals(this)) {
                 ((Actable) e).act();
                 break;
 

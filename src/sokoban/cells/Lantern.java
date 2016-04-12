@@ -7,14 +7,19 @@ import game.level.Level;
 import java.util.Arrays;
 
 public class Lantern extends Mob implements Actable{
+    private boolean isHeld;
 
 
     public Lantern(Level level, String name, int x, int y) {
         super(level, name, x, y, 1);
-        solid = true;
-        pushable = false;
+//        solid = true;
+//        pushable = false;
         dimentions = new int[]{14, 2, 14, 2};
 
+    }
+
+    public boolean isHeld() {
+        return isHeld;
     }
 
     @Override
@@ -24,6 +29,10 @@ public class Lantern extends Mob implements Actable{
 
     @Override
     public void tick() {
+        if (isHeld()) {
+            x = level.player.x;
+            y = level.player.y;
+        }
 
     }
 
@@ -42,6 +51,7 @@ public class Lantern extends Mob implements Actable{
 
     @Override
     public void act() {
+        isHeld = !isHeld;
         System.out.println("kake");
 
     }

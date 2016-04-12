@@ -5,6 +5,7 @@ import game.gfx.Screen;
 import game.level.Level;
 import sokoban.cells.Ball;
 import sokoban.cells.Box;
+import sokoban.cells.Lantern;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,17 +119,8 @@ public abstract class Entity {
             }
         }
 
-
-
-
-
 //                level.entities.stream().
 //                filter(n -> n.entityOn(x, y)).collect(Collectors.toList());
-
-
-
-
-
 
         if (entities.size() > 0) {
             return entities.get(0);
@@ -139,6 +131,8 @@ public abstract class Entity {
     public abstract void isPushed(int x, int y);
 
     public int compareTo(Entity entity) {
+
+        if (this instanceof Lantern) return 1;
 
         if (this instanceof Player) return 1;
 
