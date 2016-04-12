@@ -6,6 +6,7 @@ import game.entities.Mob;
 import game.entities.Player;
 import game.gfx.Screen;
 import game.level.Level;
+import sokoban.cells.Ball;
 import sokoban.cells.Box;
 
 public class Sokoban implements GameListener {
@@ -16,7 +17,7 @@ public class Sokoban implements GameListener {
 
     public Sokoban() {
         game = new Game("Sokoban",this);
-//        Mob ball = new Ball(level, "Ball", player.x, player.y, player);
+        Mob ball = new Ball(level, "Ball", player.x, player.y, player);
         Mob box = new Box(level, "Box", 40, 40);
 
         game.start();

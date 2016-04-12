@@ -15,11 +15,13 @@ public abstract class Entity {
     protected Level level;
     protected boolean solid;
 
+    protected boolean actable;
 
     /**
      * xMax, yMax, xMin, yMin
      */
     protected int[] dimentions = new int[4];
+
 
     public Entity(Level level) {
         init(level);
@@ -51,6 +53,16 @@ public abstract class Entity {
         return isSolidEntity(0, 0, x, y);
     }
 
+    //        Mob mob = (Mob) this;
+//        if (!(this instanceof Mob)) return false;
+
+    public boolean isActable() {
+        return actable;
+    }
+
+
+
+
     protected boolean isSolidEntity(int xa, int ya, int x, int y) {
         if (level == null) return false;
 
@@ -73,8 +85,6 @@ public abstract class Entity {
     }
 
 //    private boolean isPushed(int xa, int ya) {
-//        if (!(this instanceof Mob)) return false;
-//        Mob mob = (Mob) this;
 //        return mob.isPushed(xa, ya);
 //
 //        return false;

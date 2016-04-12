@@ -10,7 +10,7 @@ public class Screen {
 
     public static final byte BIT_MIRROR_X = 0x1;
     public static final byte BIT_MIRROR_Y = 0x2;
-    private static int filterColor = -0xcc;
+    private static int filterColor = -0xdf;
 
     private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
 
@@ -118,21 +118,28 @@ public class Screen {
 //    }
 
     public void setRoundLight(int x, int y, int radius, int filter) {
+        setRoundLight(x, y, radius, filter, 2, 0);
+    }
+    public void setRoundLight(int x, int y, int radius, int filter, int xOff, int yOff) {
 
         int radSqur = radius*radius;
 
-        x -= xOffset - 2;
-        y -= yOffset;
+        x -= xOffset - xOff;
+        y -= yOffset - yOff;
 
         double distance;
 
         for (int xa = 0;xa < width;xa++) {
             for (int ya = 0;ya < height;ya++) {
                 distance = Math.pow(xa-x, 2)+Math.pow(ya-y, 2);
-                if (distance < radSqur) {
+                if (distance < radSqur*0.01) {
                     light[xa+ya*width] = filter;
-                } else if (distance < radSqur*1.4) {
-                    light[xa+ya*width] = (int) (filter + 0x44*((radSqur)/distance));
+                } else
+
+                if (distance < radSqur) {
+                    light[xa+ya*width] = (int)((filterColor-filter)*(distance/radSqur*0.9));
+
+//                            ((filterColor-filter)/(-0.4*radSqur)*(distance - radSqur));
                 } else light[xa+ya*width] = 0;
             }
         }

@@ -11,6 +11,7 @@ public class InputHandler implements KeyListener {
     public Key down = new Key();
     public Key left = new Key();
     public Key right = new Key();
+    public Key act = new Key();
 
     public InputHandler(Game game) {
         game.addKeyListener(this);
@@ -44,6 +45,9 @@ public class InputHandler implements KeyListener {
         }
         if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
             right.toggle(isPressed);
+        }
+        if (keyCode == KeyEvent.VK_E) {
+            act.toggle(isPressed);
         }
 
     }

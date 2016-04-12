@@ -75,6 +75,7 @@ public class Ball extends Mob {
     public void render(Screen screen) {
 
 //        screen.render(x,y,10 + 10 * 16,color,0,1);
+        screen.setRoundLight(x, y, 60, 0x01, 6,6);
         screen.render(x,y,4+5*8, 0, 1, 16, Arrays.asList(0xffffff));
 
 

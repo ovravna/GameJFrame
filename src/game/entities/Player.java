@@ -39,6 +39,9 @@ public class Player extends Mob {
         if (input.down.isPressed()) ya++;
         if (input.left.isPressed()) xa--;
         if (input.right.isPressed()) xa++;
+        if (input.act.isPressed()) {
+            act();
+        }
 
         if (xa != 0 || ya != 0) {
             move(xa, ya);
@@ -56,8 +59,27 @@ public class Player extends Mob {
         tickCount++;
     }
 
+    private void act() {
+        int x;
+        int y;
+
+        if (moveingDir/2 == 0) {
+            x = moveingDir%2 == 0 ? -1:1;
+            y = 0;
+        } else {
+            x = 0;
+            y = moveingDir%2 == 0 ? -1:1;
+        }
+
+        if (getEntity(this.x + x, this.y+y).isActable()) {
+
+        }
+
+    }
+
     @Override
     public void render(Screen screen) {
+        System.out.println(moveingDir);
         int xTile = 0;
         int yTile = screen.sheet.playerLine;
 
@@ -75,8 +97,6 @@ public class Player extends Mob {
         int modifier = 8*scale;
         int xOffset = x-modifier/2;
         int yOffset = y-modifier/2-4;
-
-        screen.setRoundLight(x, y, 50, 0x11);
 
 
         if (isSwimming) {
