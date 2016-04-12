@@ -100,12 +100,6 @@ public abstract class Entity {
         int dy = y-this.y;
 
         if (dx < dimentions[0] && dx >= dimentions[1] && dy < dimentions[2] && dy >= dimentions[3]) {
-//            System.out.println(dx+" "+dy);
-//            for (int i : dimentions) {
-//                System.out.print(i + " ");
-//            }
-//            System.out.println();
-
             return true;
         }
         return false;
