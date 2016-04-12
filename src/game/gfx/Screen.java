@@ -137,17 +137,16 @@ public class Screen {
         for (int xa = 0;xa < width;xa++) {
             for (int ya = 0;ya < height;ya++) {
                 distance = Math.pow(xa-x, 2)+Math.pow(ya-y, 2);
-//                if (distance < radSqur*0.01) {
-//                    light[xa+ya*width] = (Integer) filter;
-//                } else
+                if (distance < radSqur*0.01) {
+                    this.light[xa+ya*width] = filter;
+                } else
 
                 if (distance < radSqur) {
                     if (light == Light.FADE)
                         this.light[xa+ya*width] = (int) ((filterColor-filter)*(distance/radSqur));
                     if (light == Light.HARD) {
-                        this.light[xa+ya*width] = (Integer) filter;
+                        this.light[xa+ya*width] = filter;
                     }
-//                            ((filterColor-filter)/(-0.4*radSqur)*(distance - radSqur));
                 } else if (distance < radSqur*1.1)
                     this.light[xa+ya*width] = null;
 

@@ -50,6 +50,7 @@ public class Player extends Mob implements Actable{
         if (input.right.isPressed()) xa++;
         if (input.act.isPressed()) {
             act();
+            int hold = tickCount%30;
         }
 
         if (xa != 0 || ya != 0) {
@@ -118,6 +119,7 @@ public class Player extends Mob implements Actable{
 
 //        screen.setRoundLight(x + 3, y, 10, 0, 1, 0, Light.HARD);
         if (isSwimming) {
+            speed = 1;
             List<Integer> waterColor = new ArrayList<>(Arrays.asList(0x000000, 0x4444ff, 0x0000ff, 0x8888ff));
 
             yOffset += 4;
@@ -137,7 +139,7 @@ public class Player extends Mob implements Actable{
             screen.render(xOffset, yOffset+3, 6, 0, 1, 8, waterColor);
             screen.render(xOffset+8, yOffset+3, 6, 1, 1, 8 , waterColor);
 
-        }
+        } else speed = 1;
 
 
         screen.render(xOffset + (modifier * flipTop), yOffset,

@@ -1,17 +1,15 @@
 package sokoban.cells;
 
 import game.entities.Mob;
-import game.entities.Player;
 import game.gfx.Colors;
 import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
 
-public class Box extends Mob implements Actable, Cloneable{
+public class Box extends Mob implements Actable {
 
     private int color = Colors.get(432, 543, 432, 000);
     private SpriteSheet sheet = new SpriteSheet("/wall16x16.png");
-    private Player player;
     private boolean isHeld;
 
     public Box(Level level, String name, int x, int y) {
@@ -31,7 +29,16 @@ public class Box extends Mob implements Actable, Cloneable{
             int xa = level.player.getXa();
             int ya = level.player.getYa();
             move(xa, ya);
+            double distSqrt = Math.pow(level.player.x-x, 2)
+                    +Math.pow(level.player.y-y, 2);
+
+            if (distSqrt > 900) {
+                isHeld = false;
+            }
         }
+
+
+
 
 //        this.isHeld = false;
 
@@ -53,9 +60,6 @@ public class Box extends Mob implements Actable, Cloneable{
 
     @Override
     public void act() {
-
-
-
         this.isHeld = !isHeld;
 
     }

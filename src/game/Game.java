@@ -18,13 +18,13 @@ public class Game extends Canvas implements Runnable {
 
     public static final long serialVersionUID = 1L;
 
-    public static final int WIDTH = 160;
+    public static final int WIDTH = 120;
     public static final int HEIGHT = WIDTH/12*9;
-    public static final int SCALE = 7;
+    public static final int SCALE = 9;
     public static String name;
 
     private JFrame frame;
-    public boolean running = false;
+    public boolean running = true;
     public int tickCount = 0;
 
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
