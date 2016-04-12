@@ -2,7 +2,6 @@ package game.gfx;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BinaryOperator;
 
 public class Screen {
 
@@ -12,12 +11,11 @@ public class Screen {
     public static final byte BIT_MIRROR_X = 0x1;
     public static final byte BIT_MIRROR_Y = 0x2;
 
-    private BinaryOperator<Integer> filterOperator;
-    private int filter;
-
     private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
 
     public int[] pixels;
+    public int[] light;
+
 
     public int xOffset = 0;
     public int yOffset = 0;
@@ -34,8 +32,7 @@ public class Screen {
         this.sheet = sheet;
 
         this.pixels = new int[width*height];
-        filterOperator = (n, m) -> n & m;
-        filter = 0x666666;
+        this.light = new int[width*height];
 
 //        0x440000;
 
@@ -97,16 +94,15 @@ public class Screen {
 
 
                 if (!ignoreColors.contains(col)) {
-//                    col = filterOperator.apply(col, filter);
-                    col = Screen.colorSelector(col, 0xbb, 0, 0);
+                    col = Screen.colorSelector(col, -0x55);
                     for (int yScale = 0;yScale < scale;yScale++) {
                         if (yPixel+yScale < 0 || yPixel+yScale >= height)
                             continue;
                         for (int xScale = 0;xScale < scale;xScale++) {
                             if (xPixel+xScale < 0 || xPixel+xScale >= width)
                                 continue;
-                            pixels[(xPixel+xScale)+(yPixel+yScale)*width] = col;
-
+                            pixels[(xPixel+xScale)+(yPixel+yScale)*width]
+                                    = colorSelector(col, light[(xPixel+xScale)+(yPixel+yScale)*width]);
                         }
                     }
                 }
@@ -120,8 +116,31 @@ public class Screen {
 //
 //    }
 
+    public void setRoundLight(int x, int y, int radius, int filter) {
+
+        int xp = 0;
+        int yp = 0;
+        for (int i = 0;i < light.length;i++) {
+            if (xp-x == radius && yp-y == radius) {
+                light[i] = filter;
+            }
+
+            xp++;
+            if (xp == width-1) {
+                xp = 0;
+                yp++;
+            }
+        }
+
+        // i = x + y * w
+        // x = i - y * w
+        // y = (i - x)/w
+    }
+
+
 
     private static int colorSelector(int color, int filter) {
+        if (filter == 0) return color;
         return colorSelector(color, filter, filter, filter);
     }
 
