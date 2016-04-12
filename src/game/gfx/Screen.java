@@ -15,7 +15,7 @@ public class Screen {
     private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
 
     public int[] pixels;
-    public int[] light;
+    public Integer[] light;
 
 
     public int xOffset = 0;
@@ -33,9 +33,7 @@ public class Screen {
         this.sheet = sheet;
 
         this.pixels = new int[width*height];
-        this.light = new int[width*height];
-
-//        0x440000;
+        this.light = new Integer[width*height];
     }
 
     public void render(int xPos, int yPos, int tile, int mirrorDir, int scale) {
@@ -133,21 +131,21 @@ public class Screen {
             for (int ya = 0;ya < height;ya++) {
                 distance = Math.pow(xa-x, 2)+Math.pow(ya-y, 2);
                 if (distance < radSqur*0.01) {
-                    light[xa+ya*width] = filter;
+                    light[xa+ya*width] = (Integer) filter;
                 } else
 
                 if (distance < radSqur) {
-                    light[xa+ya*width] = (int)((filterColor-filter)*(distance/radSqur*0.9));
+                    light[xa+ya*width] = (Integer) (int)((filterColor-filter)*(distance/radSqur));
 
 //                            ((filterColor-filter)/(-0.4*radSqur)*(distance - radSqur));
-                } else light[xa+ya*width] = 0;
+                } else light[xa+ya*width] = null;
             }
         }
     }
 
-    private static int colorSelector(int color, int filter) {
-        if (filter == 0) return Screen.colorSelector(color, filterColor);
-        return colorSelector(color, filter, filter, filter);
+    private static int colorSelector(int color, Integer filter) {
+        if (filter == null) return Screen.colorSelector(color, filterColor);
+        return colorSelector(color, (int)filter, (int)filter, (int)filter);
     }
 
     private static int colorSelector(int color, int red, int green, int blue) {

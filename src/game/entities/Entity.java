@@ -8,19 +8,21 @@ import sokoban.cells.Box;
 import sokoban.cells.Lantern;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public abstract class Entity {
+public abstract class Entity implements Comparable{
 
     public int x, y;
     protected Level level;
     protected boolean solid;
+    private List<Class> renderOrder = Arrays.asList(Player.class, Lantern.class, Ball.class, Box.class);
+
 
     /**
      * xMax, yMax, xMin, yMin
      */
     protected int[] dimentions = new int[4];
-
 
     public Entity(Level level) {
         init(level);
@@ -52,12 +54,11 @@ public abstract class Entity {
         return isSolidEntity(0, 0, x, y);
     }
 
-    //        Mob mob = (Mob) this;
+
+
+
+
 //        if (!(this instanceof Mob)) return false;
-
-
-
-
 
     protected boolean isSolidEntity(int xa, int ya, int x, int y) {
         if (level == null) return false;
@@ -79,22 +80,6 @@ public abstract class Entity {
         }
         return false;
     }
-
-//    private boolean isPushed(int xa, int ya) {
-//        return mob.isPushed(xa, ya);
-//
-//        return false;
-//    }
-
-
-
-//    protected boolean thigs() {
-//        Tile lastTile = level.getTile((this.x+x) >> 3, (this.y+y) >> 3);
-//        Tile newTile = level.getTile((this.x+x+xa) >> 3, (this.y+y+ya) >> 3);
-//        if (!lastTile.equals(newTile) && newTile.isSolid())
-//            return true;
-//    }
-
 
     public boolean entityOn(int x, int y) {
         int dx = x-this.x;
@@ -130,18 +115,11 @@ public abstract class Entity {
 
     public abstract void isPushed(int x, int y);
 
-    public int compareTo(Entity entity) {
 
-        if (this instanceof Lantern) return 1;
-
-        if (this instanceof Player) return 1;
-
-        if (this instanceof Ball) return 1;
-
-        if (this instanceof Box) return -1;
-
-
-        return -1;
+    public int compareTo(Object o) {
+        if (o instanceof Entity)
+            return renderOrder.indexOf(o.getClass())-renderOrder.indexOf(this.getClass());
+        else return 0;
     }
 
 }

@@ -138,6 +138,7 @@ public class Game extends Canvas implements Runnable {
         running = false;
     }
 
+    private long globalTime;
 
 
     @Override
@@ -180,8 +181,9 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis()-lastTimer >= 1000) {
                 lastTimer += 1000;
+                globalTime++;
 
-                frame.setTitle(String.format("  %3d ticks | %3d fps | coordinates: %4d :%4d\n", ticks, frames, player.x, player.y));
+                frame.setTitle(String.format("  %3d ticks | %3d fps | time: %4d\n", ticks, frames, globalTime));
                 frames = 0;
                 ticks = 0;
             }

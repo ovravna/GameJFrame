@@ -17,8 +17,8 @@ public class Sokoban implements GameListener {
 
     public Sokoban() {
         game = new Game("Sokoban",this);
-        Mob lantern = new Lantern(level, "lantern", 30, 50);
-
+        Mob lantern = new Lantern(level, "lantern", 10, 50);
+        Mob box = new Box(level, "box", 40, 40);
         game.start();
     }
 
