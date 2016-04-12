@@ -1,6 +1,7 @@
 package sokoban.cells;
 
 import game.entities.Mob;
+import game.gfx.Light;
 import game.gfx.Screen;
 import game.level.Level;
 
@@ -34,7 +35,7 @@ public class Lantern extends Mob implements Actable{
     @Override
     public void render(Screen screen) {
 
-        screen.setRoundLight(x, y, 60, 0, 6, 6);
+        screen.setRoundLight(x, y, 60, 0, 6, 6, Light.FADE);
 
         if (!isHeld) {
             screen.render(x, y, 4+5*8, 0, 1, 16, Arrays.asList(0xffffff));

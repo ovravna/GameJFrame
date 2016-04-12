@@ -21,6 +21,7 @@ public class Player extends Mob implements Actable{
     protected boolean isSwimming = false;
     private int tickCount = 0;
     private String username;
+    private int xa, ya;
 
     public Player(Level level, int x, int y, InputHandler input, String username) {
         super(level, "Player", x, y, 1);
@@ -29,11 +30,19 @@ public class Player extends Mob implements Actable{
         dimentions = new int[]{7, 0, 7, 3};
     }
 
+    public int getXa() {
+        return xa;
+    }
+
+    public int getYa() {
+        return ya;
+    }
+
     @Override
     public void tick() {
 
-        int xa = 0;
-        int ya = 0;
+        xa = 0;
+        ya = 0;
 
         if (input.up.isPressed()) ya--;
         if (input.down.isPressed()) ya++;
@@ -107,7 +116,7 @@ public class Player extends Mob implements Actable{
         int xOffset = x-modifier/2;
         int yOffset = y-modifier/2-4;
 
-//        screen.setRoundLight(x + 3, y, 1, 10);
+//        screen.setRoundLight(x + 3, y, 10, 0, 1, 0, Light.HARD);
         if (isSwimming) {
             List<Integer> waterColor = new ArrayList<>(Arrays.asList(0x000000, 0x4444ff, 0x0000ff, 0x8888ff));
 

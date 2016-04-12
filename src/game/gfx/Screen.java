@@ -89,7 +89,6 @@ public class Screen {
 
 
                 if (!ignoreColors.contains(col)) {
-//                    col = Screen.colorSelector(col, -0xcc);
                     for (int yScale = 0;yScale < scale;yScale++) {
                         if (yPixel+yScale < 0 || yPixel+yScale >= height)
                             continue;
@@ -112,10 +111,20 @@ public class Screen {
 
     }
 
+
     public void setRoundLight(int x, int y, int radius, int filter) {
-        setRoundLight(x, y, radius, filter, 2, 0);
+        setRoundLight(x, y, radius, filter, Light.FADE);
     }
+
+    public void setRoundLight(int x, int y, int radius, int filter, Light light) {
+        setRoundLight(x, y, radius, filter, 2, 0, light);
+    }
+
     public void setRoundLight(int x, int y, int radius, int filter, int xOff, int yOff) {
+        setRoundLight(x, y, radius, filter, xOff, yOff, Light.FADE);
+    }
+
+    public void setRoundLight(int x, int y, int radius, int filter, int xOff, int yOff, Light light) {
 
         int radSqur = radius*radius;
 
@@ -123,6 +132,7 @@ public class Screen {
         y -= yOffset - yOff;
 
         double distance;
+
 
         for (int xa = 0;xa < width;xa++) {
             for (int ya = 0;ya < height;ya++) {
@@ -132,11 +142,15 @@ public class Screen {
 //                } else
 
                 if (distance < radSqur) {
-                    light[xa+ya*width] = (int)((filterColor-filter)*(distance/radSqur));
-
+                    if (light == Light.FADE)
+                        this.light[xa+ya*width] = (int) ((filterColor-filter)*(distance/radSqur));
+                    if (light == Light.HARD) {
+                        this.light[xa+ya*width] = (Integer) filter;
+                    }
 //                            ((filterColor-filter)/(-0.4*radSqur)*(distance - radSqur));
-                }
-                else light[xa+ya*width] = null;
+                } else if (distance < radSqur*1.1)
+                    this.light[xa+ya*width] = null;
+
             }
         }
     }

@@ -161,7 +161,7 @@ public class Level {
     }
 
     public void addEntities(Entity entity) {
-        if (entity instanceof Player) player = (Player) entity;
+        if (entity instanceof Player) this.player = (Player) entity;
         this.entities.add(entity);
 
     }
