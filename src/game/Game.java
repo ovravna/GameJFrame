@@ -225,9 +225,9 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
-        g.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-        g.setColor(Color.BLACK);
-        g.drawString("kake []", xOffset-2, yOffset-10);
+//        g.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+//        g.setColor(Color.BLACK);
+//        g.drawString("kake []", xOffset-2, yOffset-10);
 
         g.dispose();
         bs.show();

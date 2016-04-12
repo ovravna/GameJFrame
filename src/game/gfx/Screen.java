@@ -10,6 +10,7 @@ public class Screen {
 
     public static final byte BIT_MIRROR_X = 0x1;
     public static final byte BIT_MIRROR_Y = 0x2;
+    private static int filterColor = -0xcc;
 
     private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
 
@@ -66,6 +67,8 @@ public class Screen {
         yPos -= yOffset;
 
 
+
+
         boolean mirrorX = (mirrorDir & BIT_MIRROR_X) > 0;
         boolean mirrorY = (mirrorDir & BIT_MIRROR_Y) > 0;
 
@@ -92,7 +95,7 @@ public class Screen {
 
 
                 if (!ignoreColors.contains(col)) {
-                    col = Screen.colorSelector(col, -0x55);
+//                    col = Screen.colorSelector(col, -0xcc);
                     for (int yScale = 0;yScale < scale;yScale++) {
                         if (yPixel+yScale < 0 || yPixel+yScale >= height)
                             continue;
@@ -118,44 +121,25 @@ public class Screen {
 
         int radSqur = radius*radius;
 
-//        x = width*(x/512);
-//        y = height*(y/512);
+        x -= xOffset - 2;
+        y -= yOffset;
 
-
-//        System.out.println(x+" "+y);
-//        int xp = 0;
-//        int yp = 0;
-////        System.out.printf("%s %s\n", xp-x, yp-y);
-//        for (int i = 0;i < light.length;i++) {
-//
-//            if (Math.pow(xp-x,2) + Math.pow(yp-y, 2) < radSqur) {
-//                light[i] = filter;
-//            } else light[i] = 0;
-//
-//            xp++;
-//            if (xp == width-1) {
-//                xp = 0;
-//                yp++;
-//            }
-//        }
+        double distance;
 
         for (int xa = 0;xa < width;xa++) {
             for (int ya = 0;ya < height;ya++) {
-                if (Math.pow(xa-x, 2)+Math.pow(ya-y, 2) < radSqur) {
-                    light[xa + ya*width] = filter;
-                } else light[xa + ya*width] = 0;
+                distance = Math.pow(xa-x, 2)+Math.pow(ya-y, 2);
+                if (distance < radSqur) {
+                    light[xa+ya*width] = filter;
+                } else if (distance < radSqur*1.4) {
+                    light[xa+ya*width] = (int) (filter + 0x44*((radSqur)/distance));
+                } else light[xa+ya*width] = 0;
             }
         }
-
-        // i = x + y * w
-        // x = i - y * w
-        // y = (i - x)/w
     }
 
-
-
     private static int colorSelector(int color, int filter) {
-        if (filter == 0) return color;
+        if (filter == 0) return Screen.colorSelector(color, filterColor);
         return colorSelector(color, filter, filter, filter);
     }
 

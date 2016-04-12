@@ -76,7 +76,8 @@ public class Player extends Mob {
         int xOffset = x-modifier/2;
         int yOffset = y-modifier/2-4;
 
-        screen.setRoundLight(x, y, 20, 0x66);
+        screen.setRoundLight(x, y, 50, 0x11);
+
 
         if (isSwimming) {
             List<Integer> waterColor = new ArrayList<>(Arrays.asList(0x000000, 0x4444ff, 0x0000ff, 0x8888ff));
