@@ -35,8 +35,6 @@ public class Screen {
         this.light = new int[width*height];
 
 //        0x440000;
-
-
     }
 
     public void render(int xPos, int yPos, int tile, int mirrorDir, int scale) {
@@ -118,17 +116,34 @@ public class Screen {
 
     public void setRoundLight(int x, int y, int radius, int filter) {
 
-        int xp = 0;
-        int yp = 0;
-        for (int i = 0;i < light.length;i++) {
-            if (xp-x == radius && yp-y == radius) {
-                light[i] = filter;
-            }
+        int radSqur = radius*radius;
 
-            xp++;
-            if (xp == width-1) {
-                xp = 0;
-                yp++;
+//        x = width*(x/512);
+//        y = height*(y/512);
+
+
+//        System.out.println(x+" "+y);
+//        int xp = 0;
+//        int yp = 0;
+////        System.out.printf("%s %s\n", xp-x, yp-y);
+//        for (int i = 0;i < light.length;i++) {
+//
+//            if (Math.pow(xp-x,2) + Math.pow(yp-y, 2) < radSqur) {
+//                light[i] = filter;
+//            } else light[i] = 0;
+//
+//            xp++;
+//            if (xp == width-1) {
+//                xp = 0;
+//                yp++;
+//            }
+//        }
+
+        for (int xa = 0;xa < width;xa++) {
+            for (int ya = 0;ya < height;ya++) {
+                if (Math.pow(xa-x, 2)+Math.pow(ya-y, 2) < radSqur) {
+                    light[xa + ya*width] = filter;
+                } else light[xa + ya*width] = 0;
             }
         }
 

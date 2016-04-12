@@ -39,8 +39,6 @@ public abstract class Mob extends Entity {
 
             x += xa*speed;
             y += ya*speed;
-        } else {
-            System.out.println("kake12");
         }
     }
 
