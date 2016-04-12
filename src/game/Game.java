@@ -40,6 +40,7 @@ public class Game extends Canvas implements Runnable {
     public List<GameListener> listeners = new ArrayList<>();
 
     private String fps;
+    private boolean daylightCycle;
 
 
 //    private int x = 0;
@@ -58,7 +59,7 @@ public class Game extends Canvas implements Runnable {
         setMaximumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         this.name = name;
-
+        this.daylightCycle = false;
         frame = new JFrame();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -176,9 +177,12 @@ public class Game extends Canvas implements Runnable {
 
             if (shouldRender) {
                 frames++;
-                globalTime++;
                 render();
-                screen.setFilter(globalTime);
+
+                if (daylightCycle) {
+                    globalTime++;
+                    screen.setFilter(globalTime);
+                }
             }
 
             if (System.currentTimeMillis()-lastTimer >= 1000) {
@@ -216,7 +220,7 @@ public class Game extends Canvas implements Runnable {
 
         for (int y = 0;y < screen.height;y++) {
             for (int x = 0;x < screen.width;x++) {
-                int colorCode = screen.pixels[x+y*WIDTH];7
+                int colorCode = screen.pixels[x+y*WIDTH];
                 pixels[x+y*WIDTH] = colorCode;
             }
         }

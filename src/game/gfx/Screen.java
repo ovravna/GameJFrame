@@ -127,15 +127,16 @@ public class Screen {
         for (int xa = 0;xa < width;xa++) {
             for (int ya = 0;ya < height;ya++) {
                 distance = Math.pow(xa-x, 2)+Math.pow(ya-y, 2);
-                if (distance < radSqur*0.01) {
-                    light[xa+ya*width] = (Integer) filter;
-                } else
+//                if (distance < radSqur*0.01) {
+//                    light[xa+ya*width] = (Integer) filter;
+//                } else
 
                 if (distance < radSqur) {
-                    light[xa+ya*width] = (Integer) (int)((filterColor-filter)*(distance/radSqur));
+                    light[xa+ya*width] = (int)((filterColor-filter)*(distance/radSqur));
 
 //                            ((filterColor-filter)/(-0.4*radSqur)*(distance - radSqur));
-                } else light[xa+ya*width] = null;
+                }
+                else light[xa+ya*width] = null;
             }
         }
     }
