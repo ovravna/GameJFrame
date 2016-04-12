@@ -6,14 +6,14 @@ import game.InputHandler;
 import game.gfx.Colors;
 import game.gfx.Screen;
 import game.level.Level;
+import sokoban.cells.Actable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
-
-public class Player extends Mob {
+public class Player extends Mob implements Actable{
 
     private InputHandler input;
     private int color = Colors.get(-1, 111, 145, 543);
@@ -59,10 +59,10 @@ public class Player extends Mob {
         tickCount++;
     }
 
-    private void act() {
+    public void act() {
         int x;
         int y;
-
+//        System.out.println("bolle");
         if (moveingDir/2 == 0) {
             x = moveingDir%2 == 0 ? -1:1;
             y = 0;
@@ -70,16 +70,25 @@ public class Player extends Mob {
             x = 0;
             y = moveingDir%2 == 0 ? -1:1;
         }
+        int xp;
+        int yp;
 
-        if (getEntity(this.x + x, this.y+y).isActable()) {
+        for (int i = 3; i < 30; i++) {
+            xp = x * i + 2;
+            yp = y * i;
+            Entity e = getEntity(this.x + xp, this.y + yp);
 
+            if (e != null && e instanceof Actable && !(e instanceof Player)) {
+                ((Actable) e).act();
+                break;
+
+            }
         }
 
     }
 
     @Override
     public void render(Screen screen) {
-        System.out.println(moveingDir);
         int xTile = 0;
         int yTile = screen.sheet.playerLine;
 

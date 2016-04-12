@@ -6,12 +6,15 @@ import game.level.Level;
 
 import java.util.Arrays;
 
-public class Lantern extends Mob {
+public class Lantern extends Mob implements Actable{
 
 
     public Lantern(Level level, String name, int x, int y) {
         super(level, name, x, y, 1);
-        actable = true;
+        solid = true;
+        pushable = false;
+        dimentions = new int[]{14, 2, 14, 2};
+
     }
 
     @Override
@@ -34,6 +37,12 @@ public class Lantern extends Mob {
 
     @Override
     public void isPushed(int x, int y) {
+
+    }
+
+    @Override
+    public void act() {
+        System.out.println("kake");
 
     }
 }

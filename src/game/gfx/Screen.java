@@ -10,7 +10,7 @@ public class Screen {
 
     public static final byte BIT_MIRROR_X = 0x1;
     public static final byte BIT_MIRROR_Y = 0x2;
-    private static int filterColor = -0xdf;
+    private static int filterColor = 0x01; //-0xdf;
 
     private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
 

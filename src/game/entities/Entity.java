@@ -6,16 +6,14 @@ import game.level.Level;
 import sokoban.cells.Ball;
 import sokoban.cells.Box;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class Entity {
 
     public int x, y;
     protected Level level;
     protected boolean solid;
-
-    protected boolean actable;
 
     /**
      * xMax, yMax, xMin, yMin
@@ -56,9 +54,6 @@ public abstract class Entity {
     //        Mob mob = (Mob) this;
 //        if (!(this instanceof Mob)) return false;
 
-    public boolean isActable() {
-        return actable;
-    }
 
 
 
@@ -118,8 +113,29 @@ public abstract class Entity {
     }
 
     public Entity getEntity(int x, int y) {
-        List<Entity> entities = level.entities.stream().
-                filter(n -> n.entityOn(x, y)).collect(Collectors.toList());
+        List<Entity> entities = new ArrayList<>();
+
+
+
+        for (int i = 0;i < level.entities.size();i++) {
+            Entity e = level.entities.get(i);
+            if (e.entityOn(x, y)) {
+                entities.add(e);
+            }
+        }
+
+
+
+
+
+//                level.entities.stream().
+//                filter(n -> n.entityOn(x, y)).collect(Collectors.toList());
+
+
+
+
+
+
         if (entities.size() > 0) {
             return entities.get(0);
         }
