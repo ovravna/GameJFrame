@@ -88,9 +88,4 @@ public class Ball extends Mob {
         return;
     }
 
-
-    @Override
-    protected boolean hasColided(int xa, int ya) {
-        return false;
-    }
 }

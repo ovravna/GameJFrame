@@ -16,7 +16,7 @@ public class Box extends Mob{
         super(level, name, x, y, 1);
         solid = true;
         pushable = true;
-        dimentions = new int[]{16, 0, 16, 0};
+        dimentions = new int[]{15, 1, 15, 1};
 
     }
 
@@ -41,8 +41,4 @@ public class Box extends Mob{
 
     }
 
-    @Override
-    protected boolean hasColided(int xa, int ya) {
-        return false;
-    }
 }

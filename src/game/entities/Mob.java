@@ -55,9 +55,21 @@ public abstract class Mob extends Entity {
     }
 
 
+    public boolean hasColided(int xa, int ya) {
+        int[] xPos = new int[]{dimentions[0], dimentions[1]};
+        int[] yPos = new int[]{dimentions[2], dimentions[3]};
 
-    protected abstract boolean hasColided(int xa, int ya);
-
+        for (int i = 0;i < yPos.length;i++) {
+            for (int j = 0;j < xPos.length;j++) {
+                if (isSolidTile(xa, ya, xPos[j], yPos[i])) {
+                    return true;
+                } else if (isSolidEntity(xa, ya, xPos[j], yPos[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 
 }

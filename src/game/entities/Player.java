@@ -59,6 +59,7 @@ public class Player extends Mob implements Actable{
         tickCount++;
     }
 
+    @Override
     public void act() {
         int x;
         int y;
@@ -106,7 +107,7 @@ public class Player extends Mob implements Actable{
         int xOffset = x-modifier/2;
         int yOffset = y-modifier/2-4;
 
-
+//        screen.setRoundLight(x + 3, y, 1, 10);
         if (isSwimming) {
             List<Integer> waterColor = new ArrayList<>(Arrays.asList(0x000000, 0x4444ff, 0x0000ff, 0x8888ff));
 
@@ -156,20 +157,20 @@ public class Player extends Mob implements Actable{
     }
 
 
-    @Override
-    public boolean hasColided(int xa, int ya) {
-        int[] xPos = new int[]{dimentions[0], dimentions[1]};
-        int[] yPos = new int[]{dimentions[2], dimentions[3]};
-
-        for (int i = 0;i < yPos.length;i++) {
-            for (int j = 0;j < xPos.length;j++) {
-                if (isSolidTile(xa, ya, xPos[j], yPos[i])) {
-                    return true;
-                } else if (isSolidEntity(xa, ya, xPos[j], yPos[i])) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean hasColided(int xa, int ya) {
+//        int[] xPos = new int[]{dimentions[0], dimentions[1]};
+//        int[] yPos = new int[]{dimentions[2], dimentions[3]};
+//
+//        for (int i = 0;i < yPos.length;i++) {
+//            for (int j = 0;j < xPos.length;j++) {
+//                if (isSolidTile(xa, ya, xPos[j], yPos[i])) {
+//                    return true;
+//                } else if (isSolidEntity(xa, ya, xPos[j], yPos[i])) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 }

@@ -138,7 +138,7 @@ public class Game extends Canvas implements Runnable {
         running = false;
     }
 
-    private long globalTime;
+    public long globalTime;
 
 
     @Override
@@ -176,13 +176,13 @@ public class Game extends Canvas implements Runnable {
 
             if (shouldRender) {
                 frames++;
+                globalTime++;
                 render();
+                screen.setFilter(globalTime);
             }
 
             if (System.currentTimeMillis()-lastTimer >= 1000) {
                 lastTimer += 1000;
-                globalTime++;
-
                 frame.setTitle(String.format("  %3d ticks | %3d fps | time: %4d\n", ticks, frames, globalTime));
                 frames = 0;
                 ticks = 0;
@@ -216,7 +216,7 @@ public class Game extends Canvas implements Runnable {
 
         for (int y = 0;y < screen.height;y++) {
             for (int x = 0;x < screen.width;x++) {
-                int colorCode = screen.pixels[x+y*WIDTH];
+                int colorCode = screen.pixels[x+y*WIDTH];7
                 pixels[x+y*WIDTH] = colorCode;
             }
         }

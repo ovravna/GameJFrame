@@ -69,7 +69,7 @@ public abstract class Entity implements Comparable{
         Entity e;
         for (Entity entity : level.entities) {
             if (!entity.equals(this) && (e = entity.getEntity(x, y)) != null) {
-                if (e.isSolid()) {
+                if (e.isSolid() && !e.equals(this)) {
                     if (e instanceof Mob) {
                         e.isPushed(xa, ya);
                     }
@@ -94,7 +94,6 @@ public abstract class Entity implements Comparable{
 
     public Entity getEntity(int x, int y) {
         List<Entity> entities = new ArrayList<>();
-
 
 
         for (int i = 0;i < level.entities.size();i++) {

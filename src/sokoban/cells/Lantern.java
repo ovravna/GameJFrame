@@ -23,11 +23,6 @@ public class Lantern extends Mob implements Actable{
     }
 
     @Override
-    protected boolean hasColided(int xa, int ya) {
-        return false;
-    }
-
-    @Override
     public void tick() {
         if (isHeld) {
             x = level.player.x-3;

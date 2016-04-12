@@ -54,7 +54,6 @@ public class Screen {
     }
 
 
-
     public void render(int xPos, int yPos, SpriteSheet sheet, int tile, int mirrorDir, int scale, int block, List<Integer> ignoreColors) {
 
         int logBlock = log2(block);
@@ -63,9 +62,6 @@ public class Screen {
 
         xPos -= xOffset;
         yPos -= yOffset;
-
-
-
 
         boolean mirrorX = (mirrorDir & BIT_MIRROR_X) > 0;
         boolean mirrorY = (mirrorDir & BIT_MIRROR_Y) > 0;
@@ -109,11 +105,12 @@ public class Screen {
         }
     }
 
-//    public static void main(String[] args) {
-//        int kake = new Screen(2, 2, new SpriteSheet("/player16x16.png")).colorSelector(0x33dd55, 1);
-////        System.out.println(Integer.toHexString(kake));
-//
-//    }
+    public void setFilter(long clock) {
+        double time = 60*20;
+
+        filterColor = (int) (-0xdf* 0.5*(1-Math.cos(2*(clock/time))));
+
+    }
 
     public void setRoundLight(int x, int y, int radius, int filter) {
         setRoundLight(x, y, radius, filter, 2, 0);
