@@ -133,7 +133,6 @@ public class Screen {
 
         double distance;
 
-
         for (int xa = 0;xa < width;xa++) {
             for (int ya = 0;ya < height;ya++) {
                 distance = Math.pow(xa-x, 2)+Math.pow(ya-y, 2);
@@ -149,7 +148,6 @@ public class Screen {
                     }
                 } else if (distance < radSqur*1.1)
                     this.light[xa+ya*width] = null;
-
             }
         }
     }
