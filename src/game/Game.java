@@ -20,7 +20,7 @@ public class Game extends Canvas implements Runnable {
 
     public static final int WIDTH = 120;
     public static final int HEIGHT = WIDTH/12*9;
-    public static final int SCALE = 7;
+    public static final int SCALE = 10;
     public static String name;
     private JFrame frame;
 
@@ -192,6 +192,10 @@ public class Game extends Canvas implements Runnable {
                 tick();
                 delta--;
                 shouldRender = true;
+                if (daylightCycle) {
+                    globalTime++;
+                    screen.setFilter(globalTime, cycleTime);
+                }
 
             }
 //            try {
@@ -204,10 +208,7 @@ public class Game extends Canvas implements Runnable {
                 frames++;
                 render();
 
-                if (daylightCycle) {
-                    globalTime++;
-                    screen.setFilter(globalTime, cycleTime);
-                }
+
             }
 
             if (System.currentTimeMillis()-lastTimer >= 1000) {

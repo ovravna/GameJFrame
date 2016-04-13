@@ -49,9 +49,8 @@ public class Player extends Mob implements Actable {
         if (input.left.isPressed()) xa--;
         if (input.right.isPressed()) xa++;
 
-        System.out.println(input.act.isReleased());
         if (input.act.isReleased()) {
-            act();
+                act();
         }
 
         if (xa != 0 || ya != 0) {
@@ -74,28 +73,27 @@ public class Player extends Mob implements Actable {
     public void act() {
         int x;
         int y;
-//        System.out.println("bolle");
         if (moveingDir/2 == 0) {
-            x = moveingDir%2 == 0 ? -1:1;
-            y = 0;
-        } else {
-            x = 0;
             y = moveingDir%2 == 0 ? -1:1;
+            x = 0;
+        } else {
+            y = 0;
+            x = moveingDir%2 == 0 ? -1:1;
         }
         int xp;
         int yp;
 
-        for (int i = 1; i < 30; i++) {
+        for (int i = 1; i < 10; i++) {
             xp = x * i;
             yp = y * i;
             Entity e = getEntity(this.x+3 + xp, this.y + yp);
+//            System.out.print(e == null ? "":e.getClass().getSimpleName()+"\n");
 
             if (e != null && e instanceof Actable && !e.equals(this)) {
                 ((Actable) e).act();
                 return;
             }
         }
-
     }
 
     @Override

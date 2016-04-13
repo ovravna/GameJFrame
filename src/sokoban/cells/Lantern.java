@@ -3,6 +3,7 @@ package sokoban.cells;
 import game.entities.Mob;
 import game.gfx.Light;
 import game.gfx.Screen;
+import game.gfx.SpriteSheet;
 import game.level.Level;
 
 import java.util.Arrays;
@@ -39,7 +40,7 @@ public class Lantern extends Mob implements Actable{
         screen.setRoundLight(x, y, 100, 0, 6, 6, light);
 
         if (!isHeld) {
-            screen.render(x, y, 4+5*8, 0, 1, 16, Arrays.asList(0xffffff));
+            screen.render(x, y, new SpriteSheet("/box16x16.png"), 0 , 0, 1, 16, Arrays.asList(0xffffff));
         }
 
     }

@@ -20,8 +20,8 @@ public class Sokoban implements GameListener {
         new Lantern(level, "lantern", 10, 50, Light.SOFT);
         new Box(level, "box", 40, 40);
 //        new Ball(level, "Ball", player.x, player.y);
-        game.setDaylightCycle(false);
-        game.setCycleTime(10);
+        game.setDaylightCycle(true);
+        game.setCycleTime(1);
         game.setLight(-0xff);
 
         game.start();
