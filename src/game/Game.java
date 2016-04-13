@@ -20,35 +20,32 @@ public class Game extends Canvas implements Runnable {
 
     public static final int WIDTH = 120;
     public static final int HEIGHT = WIDTH/12*9;
-    public static final int SCALE = 9;
+    public static final int SCALE = 7;
     public static String name;
-
     private JFrame frame;
+
     public boolean running = true;
     public int tickCount = 0;
-
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private int[] colors = new int[6*6*6];
-
-
     private Screen screen;
+
+
     public InputHandler input;
     public Level level;
     public Player player;
-
     public List<GameListener> listeners = new ArrayList<>();
 
-    private String fps;
-    private boolean daylightCycle;
+    private boolean daylightCycle = true;
+    private static int light = -0xdf;
+    private int cycleTime;
 
+    //    private int x = 0;
 
-//    private int x = 0;
-//    private int y = 0;
 
 //    public Game() {
-//        this(new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png")));
-//    }
 
     public Game(GameListener... listeners) {
         this("Game", listeners);
@@ -59,7 +56,11 @@ public class Game extends Canvas implements Runnable {
         setMaximumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         this.name = name;
-        this.daylightCycle = false;
+
+//        this.daylightCycle = false;
+//        this.light = 0;
+
+
         frame = new JFrame();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,6 +85,30 @@ public class Game extends Canvas implements Runnable {
         screen.sheet.setPlayerLine(10);
 
 
+    }
+
+    public void setDaylightCycle(boolean daylightCycle) {
+        this.daylightCycle = daylightCycle;
+    }
+
+    public static void setLight() {
+        setLight(-0xdf);
+    }
+
+    public static void setLight(Integer light) {
+        if (light == null) {
+            setLight();
+            return;
+        }
+        Game.light = light;
+    }
+
+    public void setCycleTime(int cycleTime) {
+        this.cycleTime = cycleTime;
+    }
+
+    public static int getLight() {
+        return light;
     }
 
     private void addListener(GameListener... listeners) {
@@ -181,7 +206,7 @@ public class Game extends Canvas implements Runnable {
 
                 if (daylightCycle) {
                     globalTime++;
-                    screen.setFilter(globalTime);
+                    screen.setFilter(globalTime, cycleTime);
                 }
             }
 

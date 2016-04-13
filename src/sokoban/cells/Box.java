@@ -16,7 +16,7 @@ public class Box extends Mob implements Actable {
         super(level, name, x, y, 1);
         solid = true;
         pushable = true;
-        dimentions = new int[]{15, 1, 15, 1};
+        dimentions = new int[]{15, 0, 16, 0};
 
     }
 

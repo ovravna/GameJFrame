@@ -20,7 +20,7 @@ public abstract class Entity implements Comparable{
 
 
     /**
-     * xMax, yMax, xMin, yMin
+     * xMax, xMin, yMax, yMin
      */
     protected int[] dimentions = new int[4];
 

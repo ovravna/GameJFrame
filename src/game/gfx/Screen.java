@@ -1,5 +1,7 @@
 package game.gfx;
 
+import game.Game;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public class Screen {
 
     public static final byte BIT_MIRROR_X = 0x1;
     public static final byte BIT_MIRROR_Y = 0x2;
-    private static int filterColor = -0xdf;
+    private static int filterColor = Game.getLight();
 
     private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
 
@@ -105,15 +107,19 @@ public class Screen {
     }
 
     public void setFilter(long clock) {
-        double time = 60*20;
+        setFilter(clock, 20);
+    }
 
-        filterColor = (int) (-0xdf* 0.5*(1-Math.cos(2*(clock/time))));
+    public void setFilter(long clock, int cycleSeconds) {
+        double time = 60*cycleSeconds;
+
+        filterColor = (int) (Game.getLight()* 0.5*(1-Math.sin(2*(clock/time))));
 
     }
 
 
     public void setRoundLight(int x, int y, int radius, int filter) {
-        setRoundLight(x, y, radius, filter, Light.FADE);
+        setRoundLight(x, y, radius, filter, Light.SOFT);
     }
 
     public void setRoundLight(int x, int y, int radius, int filter, Light light) {
@@ -121,7 +127,7 @@ public class Screen {
     }
 
     public void setRoundLight(int x, int y, int radius, int filter, int xOff, int yOff) {
-        setRoundLight(x, y, radius, filter, xOff, yOff, Light.FADE);
+        setRoundLight(x, y, radius, filter, xOff, yOff, Light.SOFT);
     }
 
     public void setRoundLight(int x, int y, int radius, int filter, int xOff, int yOff, Light light) {
@@ -141,7 +147,7 @@ public class Screen {
                 } else
 
                 if (distance < radSqur) {
-                    if (light == Light.FADE)
+                    if (light == Light.SOFT)
                         this.light[xa+ya*width] = (int) ((filterColor-filter)*(distance/radSqur));
                     if (light == Light.HARD) {
                         this.light[xa+ya*width] = filter;

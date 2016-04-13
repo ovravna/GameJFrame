@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class Player extends Mob implements Actable{
+public class Player extends Mob implements Actable {
 
     private InputHandler input;
     private int color = Colors.get(-1, 111, 145, 543);
@@ -48,9 +48,10 @@ public class Player extends Mob implements Actable{
         if (input.down.isPressed()) ya++;
         if (input.left.isPressed()) xa--;
         if (input.right.isPressed()) xa++;
-        if (input.act.isPressed()) {
+
+        System.out.println(input.act.isReleased());
+        if (input.act.isReleased()) {
             act();
-            int hold = tickCount%30;
         }
 
         if (xa != 0 || ya != 0) {

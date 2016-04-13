@@ -18,13 +18,16 @@ public class Ball extends Mob {
     Player player;
     List<Integer> xPos = new ArrayList<>();
     List<Integer> yPos = new ArrayList<>();
+    private boolean isHeld;
 
 
 
-    public Ball(Level level, String name, int x, int y, Player player) {
-        super(level, name, x, y, player.speed);
-        this.player = player;
+    public Ball(Level level, String name, int x, int y) {
+        super(level, name, x, y, level.player.speed);
+        this.player = level.player;
         solid = true;
+
+//        dimentions = new int[]{16, 0, 16, 0};
 
     }
 
@@ -76,8 +79,8 @@ public class Ball extends Mob {
     public void render(Screen screen) {
 
 //        screen.render(x,y,10 + 10 * 16,color,0,1);
-        screen.setRoundLight(x, y, 60, 0x01, 6,6, Light.FADE);
-        screen.render(x,y,4+5*8, 0, 1, 16, Arrays.asList(0xffffff));
+        screen.setRoundLight(x, y, 60, 0x01, 6,6, Light.SOFT);
+        screen.render(x,y,sheet,0, 0, 1, 16, Arrays.asList(0xffffff));
 
 
 

@@ -54,10 +54,22 @@ public class InputHandler implements KeyListener {
 
     public class Key {
         private boolean pressed;
+        private boolean lastPressed;
         private int numTimesPressed = 0;
 
         public boolean isPressed() {
             return pressed;
+        }
+
+        public boolean isReleased() {
+            if (lastPressed && pressed != lastPressed) {
+                lastPressed = pressed;
+                return true;
+            }
+
+            lastPressed = pressed;
+
+            return false;
         }
 
         public int getNumTimesPressed() {
