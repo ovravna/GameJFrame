@@ -2,18 +2,19 @@ package sokoban.cells;
 
 import game.entities.Mob;
 import game.gfx.Colors;
+import game.gfx.Light;
 import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
 
-public class Box extends Mob implements Actable {
+public class Box extends Mob {
 
     private int color = Colors.get(432, 543, 432, 000);
     private SpriteSheet sheet = new SpriteSheet("/wall16x16.png");
-    private boolean isHeld;
+    private boolean renderLight;
 
-    public Box(Level level, String name, int x, int y) {
-        super(level, name, x, y, 1);
+    public Box(Level level, int x, int y) {
+        super(level, "Box", x, y, 1);
         solid = true;
         pushable = true;
         dimentions = new int[]{15, 0, 16, 0};
@@ -25,30 +26,22 @@ public class Box extends Mob implements Actable {
     public void tick() {
         if (level.player == null) return;
 
-        if (isHeld) {
-            int xa = level.player.getXa();
-            int ya = level.player.getYa();
-            move(xa, ya);
-            double distSqrt = Math.pow(level.player.x-x, 2)
-                    +Math.pow(level.player.y-y, 2);
+        if (getEntity(x+8, y+8) instanceof Goal) {
+            renderLight = true;
+        } else renderLight = false;
 
-            if (distSqrt > 900) {
-                isHeld = false;
-            }
-        }
-
-
-
-
-//        this.isHeld = false;
-
-//        if (level.player )
 
     }
 
     @Override
     public void render(Screen screen) {
-        screen.render(x, y, sheet,0, 0, 1, 16);
+        screen.render(x, y, sheet, 0, 0, 1, 16);
+
+        if (renderLight) {
+            screen.renderRoundLight(x + 5, y + 8, 13, -0x66, Light.SOFT);
+        }
+//        else screen.renderRoundLight(x, y, 15, 0, Light.HARD);
+
 
     }
 
@@ -58,9 +51,4 @@ public class Box extends Mob implements Actable {
 
     }
 
-    @Override
-    public void act() {
-        this.isHeld = !isHeld;
-
-    }
 }

@@ -123,33 +123,32 @@ public class Screen {
     }
 
 
-    public void setRoundLight(int x, int y, int radius, int filter) {
-        setRoundLight(x, y, radius, filter, Light.SOFT);
+    public void renderRoundLight(int x, int y, int radius, int filter) {
+        renderRoundLight(x, y, radius, filter, Light.SOFT);
     }
 
-    public void setRoundLight(int x, int y, int radius, int filter, Light light) {
-        setRoundLight(x, y, radius, filter, 2, 0, light);
+    public void renderRoundLight(int x, int y, int radius, int filter, Light light) {
+        renderRoundLight(x, y, radius, filter, 2, 0, light);
     }
 
-    public void setRoundLight(int x, int y, int radius, int filter, int xOff, int yOff) {
-        setRoundLight(x, y, radius, filter, xOff, yOff, Light.SOFT);
+    public void renderRoundLight(int x, int y, int radius, int filter, int xOff, int yOff) {
+        renderRoundLight(x, y, radius, filter, xOff, yOff, Light.SOFT);
     }
 
-    public void setRoundLight(int x, int y, int radius, int filter, int xOff, int yOff, Light light) {
-
+    public void renderRoundLight(int x, int y, int radius, int filter, int xOffset, int yOffset, Light light) {
         int radSqur = radius*radius;
 
-        x -= xOffset - xOff;
-        y -= yOffset - yOff;
+        x -= this.xOffset-xOffset;
+        y -= this.yOffset-yOffset;
 
         double distance;
 
         for (int xa = 0;xa < width;xa++) {
             for (int ya = 0;ya < height;ya++) {
                 distance = Math.pow(xa-x, 2)+Math.pow(ya-y, 2);
-                if (distance < radSqur*0.01) {
-                    this.light[xa+ya*width] = filter;
-                } else
+//                if (distance < radSqur*0.01) {
+//                    this.light[xa+ya*width] = filter;
+//                } else
 
                 if (distance < radSqur) {
                     if (light == Light.SOFT)
@@ -157,7 +156,8 @@ public class Screen {
                     if (light == Light.HARD) {
                         this.light[xa+ya*width] = filter;
                     }
-                } else if (distance < radSqur*1.1)
+                } else
+//                if (distance < radSqur*1.1)
                     this.light[xa+ya*width] = null;
             }
         }

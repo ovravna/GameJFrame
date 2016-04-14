@@ -24,7 +24,7 @@ public class Wall extends Mob {
 
     @Override
     public void render(Screen screen) {
-        screen.render(x, y, 10+5*(screen.width >> 4), 0, 1, 16, Arrays.asList());
+        screen.render(x, y, 11+5*(screen.width >> 4), 0, 1, 16, Arrays.asList());
 
     }
 

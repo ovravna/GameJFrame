@@ -3,10 +3,7 @@ package game.entities;
 
 import game.gfx.Screen;
 import game.level.Level;
-import sokoban.cells.Ball;
-import sokoban.cells.Box;
-import sokoban.cells.Lantern;
-import sokoban.cells.Wall;
+import sokoban.cells.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +14,7 @@ public abstract class Entity implements Comparable{
     public int x, y;
     protected Level level;
     protected boolean solid;
-    private List<Class> renderOrder = Arrays.asList(Player.class, Lantern.class, Ball.class, Box.class, Wall.class);
+    private List<Class> renderOrder = Arrays.asList(Player.class, Lantern.class, Ball.class, Box.class, Goal.class, Wall.class);
 
 
     /**
@@ -108,6 +105,13 @@ public abstract class Entity implements Comparable{
 //                filter(n -> n.entityOn(x, y)).collect(Collectors.toList());
 
         if (entities.size() > 0) {
+            if (entities.get(0).equals(this)) {
+                for (Entity entity : entities) {
+                    if (!entity.equals(this)) {
+                        return entity;
+                    }
+                }
+            }
             return entities.get(0);
         }
         return null;

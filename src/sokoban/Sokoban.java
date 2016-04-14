@@ -3,11 +3,9 @@ package sokoban;
 import game.Game;
 import game.GameListener;
 import game.entities.Player;
-import game.gfx.Light;
 import game.gfx.Screen;
 import game.level.Level;
-import sokoban.cells.Lantern;
-import sokoban.cells.Wall;
+import sokoban.cells.*;
 
 public class Sokoban implements GameListener {
     Game game;
@@ -17,15 +15,18 @@ public class Sokoban implements GameListener {
 
     public Sokoban() {
         game = new Game("Sokoban",this);
-        new Lantern(level, "lantern", 10, 50, Light.SOFT);
-        new Wall(level, 50, 50);
+//        new Lantern(level, "lantern", 10, 50, Light.SOFT);
+//        new Wall(level, 50, 50);
+        new Box(level, 10, 50);
+        new Goal(level, 40, 50);
+
 
 //        new Box(level, "box", 40, 40);
 //        new Ball(level, "Ball", player.x, player.y);
-        game.setLighting(false);
+        game.setLighting(true);
         game.setDaylightCycle(false);
         game.setCycleTime(1);
-        game.setLight();
+        game.setLight(0);
 
         game.start();
     }

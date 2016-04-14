@@ -121,7 +121,7 @@ public class Player extends Mob implements Actable {
         int xOffset = x-modifier/2;
         int yOffset = y-modifier/2-4;
 
-//        screen.setRoundLight(x + 3, y, 10, 0, 1, 0, Light.HARD);
+//        screen.renderRoundLight(x + 3, y, 10, 0, 1, 0, Light.HARD);
 
         if (isJumping && !isSwimming) {
             yOffset -= 6;
