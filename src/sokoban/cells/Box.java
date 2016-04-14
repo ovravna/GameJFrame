@@ -7,6 +7,8 @@ import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
 
+import java.util.Arrays;
+
 public class Box extends Mob {
 
     private int color = Colors.get(432, 543, 432, 000);
@@ -35,10 +37,10 @@ public class Box extends Mob {
 
     @Override
     public void render(Screen screen) {
-        screen.render(x, y, sheet, 0, 0, 1, 16);
+        screen.render(x, y, 5 + 5*8, 0, 1, 16, Arrays.asList(0xffffff));
 
         if (renderLight) {
-            screen.renderRoundLight(x + 5, y + 8, 13, -0x66, Light.SOFT, this);
+            screen.renderRoundLight(x + 5, y + 8, 8, -0x66, Light.SOFT, this);
         } else screen.removeLightSource(this);
 
 

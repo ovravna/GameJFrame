@@ -2,11 +2,14 @@ package sokoban.cells;
 
 import game.entities.Mob;
 import game.gfx.Screen;
+import game.gfx.SpriteSheet;
 import game.level.Level;
 
 import java.util.Arrays;
 
 public class Wall extends Mob {
+
+    private SpriteSheet sheet;
 
     public Wall(Level level, int x, int y) {
         super(level, "Wall", x, y, 0);
@@ -14,6 +17,7 @@ public class Wall extends Mob {
         solid = true;
         pushable = false;
         dimentions = new int[] {16, 0, 16, 0};
+        sheet = new SpriteSheet("/wall16x16.png");
 
     }
 
@@ -24,7 +28,7 @@ public class Wall extends Mob {
 
     @Override
     public void render(Screen screen) {
-        screen.render(x, y, 11+5*(screen.width >> 4), 0, 1, 16, Arrays.asList());
+        screen.render(x, y, sheet , 0, 0, 1, 16, Arrays.asList());
 
     }
 

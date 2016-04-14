@@ -40,9 +40,9 @@ public class Game extends Canvas implements Runnable {
 
     private boolean daylightCycle = true;
 
-    public static void setLight(int light) {
-        Game.light = light;
-    }
+//    public static void setLight(int light) {
+//        Game.light = light;
+//    }
 
     private static int light;
     private int cycleTime;
@@ -80,9 +80,9 @@ public class Game extends Canvas implements Runnable {
 
         addListener(listeners);
         setScreen(new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png")));
-        input = new InputHandler(this);
+        setInputHandler(new InputHandler(this));
         setLevel(new Level("/levels/sokoban_test.png"));
-        setPlayer(new Player(level, 0, 0, input, "Player"));
+//        setPlayer(new Player(level, 0, 0, input, "Player"));
 
 
 //        this.screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png"));
@@ -105,7 +105,7 @@ public class Game extends Canvas implements Runnable {
             setLight();
             return;
         }
-        Game.setLight((int)light);
+        Game.light = light;
     }
 
     public void setLighting(boolean lighting) {
@@ -117,7 +117,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static int getLight() {
-        return light;
+        return Game.light;
     }
 
     private void addListener(GameListener... listeners) {
@@ -135,6 +135,11 @@ public class Game extends Canvas implements Runnable {
     private void setScreen(Screen screen) {
         this.screen = screen;
         listeners.forEach(n -> n.newScreen(screen));
+    }
+
+    public void setInputHandler(InputHandler input) {
+        this.input = input;
+        listeners.forEach(n -> n.newInputHandler(input));
     }
 
     private void setLevel(Level level) {
@@ -173,8 +178,8 @@ public class Game extends Canvas implements Runnable {
         running = false;
     }
 
-    public long globalTime;
 
+    public long globalTime;
 
     @Override
     public void run() {
@@ -238,6 +243,10 @@ public class Game extends Canvas implements Runnable {
 
     }
 
+
+
+
+
     public void render() {
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
@@ -275,12 +284,7 @@ public class Game extends Canvas implements Runnable {
 
     }
 
-
-
-
-
     public static void main(String... args) {
         new Game().start();
     }
-
 }

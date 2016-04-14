@@ -12,4 +12,5 @@ public interface GameListener {
 
     void newPlayer(Player player);
 
+    void newInputHandler(InputHandler input);
 }

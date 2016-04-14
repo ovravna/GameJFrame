@@ -42,7 +42,7 @@ public class Lantern extends Mob implements Actable{
     @Override
     public void render(Screen screen) {
 
-        screen.renderRoundLight(x, y, 50, -0x66, 6, 6, light, this);
+        screen.renderRoundLight(x, y, 50, -0x33, 6, 6, light, this);
 
         if (!isHeld) {
             screen.render(x, y, lanternSheet, 0 , 0, 1, 16, Arrays.asList(0xffffff));

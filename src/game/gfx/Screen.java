@@ -42,6 +42,10 @@ public class Screen {
         render(xPos, yPos, tile, mirrorDir, scale, 8, defaultIgnoreColors);
     }
 
+    public void render(int xPos, int yPos, int tile, int mirrorDir, int scale, int block) {
+        render(xPos, yPos, tile, mirrorDir, scale, block, defaultIgnoreColors);
+    }
+
     public void render(int xPos, int yPos, int tile, int mirrorDir, int scale, int block, List<Integer> ignoreColors) {
         render(xPos, yPos, this.sheet, tile, mirrorDir, scale, block, ignoreColors);
     }
@@ -107,8 +111,9 @@ public class Screen {
     }
 
 
-    private int lightCombiner(int i) {
+    private Integer lightCombiner(int i) {
         int r = 0;
+        boolean isNull = true;
 
         Integer temp;
         for (Integer[] light : lightSources.values()) {
@@ -117,7 +122,14 @@ public class Screen {
 //                System.out.println(integer);
 //            }
             temp = light[i];
-            r += temp == null ? 0:temp;
+            if (temp != null) {
+                isNull = false;
+                r = temp;
+            }
+        }
+
+        if (isNull) {
+            return null;
         }
 
         return r;
@@ -125,10 +137,6 @@ public class Screen {
 
     public void setLightOn(boolean lightOn) {
         this.lightOn = lightOn;
-    }
-
-    public void setFilter(long clock) {
-        setFilter(clock, 20);
     }
 
     public void setFilter(long clock, int cycleSeconds) {
@@ -169,10 +177,13 @@ public class Screen {
 //                if (distance < radSqur*0.01) {
 //                    this.light[xa+ya*width] = filter;
 //                } else
+
                 // TODO: 14.04.2016 ender kode for håndtering av filter > 0xff
                 if (distance < radSqur) {
-                    if (lighting == Light.SOFT)
-                        light[xa+ya*width] = (int) ((filterColor-filter)*(distance/radSqur));
+                    if (lighting == Light.SOFT) {
+                        light[xa+ya*width] = (int) ((Game.getLight()*distance)-filter*(radSqur-distance))/radSqur;
+
+                    }
                     if (lighting == Light.HARD) {
                         light[xa+ya*width] = filter;
                     }
@@ -245,6 +256,8 @@ public class Screen {
 
 
     }
+
+    
 }
 
 
