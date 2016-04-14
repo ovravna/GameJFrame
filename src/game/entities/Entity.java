@@ -114,7 +114,7 @@ public abstract class Entity implements Comparable{
 
     public abstract void isPushed(int x, int y);
 
-
+    @Override
     public int compareTo(Object o) {
         if (o instanceof Entity)
             return renderOrder.indexOf(o.getClass())-renderOrder.indexOf(this.getClass());

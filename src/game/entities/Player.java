@@ -22,6 +22,8 @@ public class Player extends Mob implements Actable {
     private int tickCount = 0;
     private String username;
     private int xa, ya;
+    private boolean isJumping;
+    private int jumpTime;
 
     public Player(Level level, int x, int y, InputHandler input, String username) {
         super(level, "Player", x, y, 1);
@@ -48,10 +50,12 @@ public class Player extends Mob implements Actable {
         if (input.down.isPressed()) ya++;
         if (input.left.isPressed()) xa--;
         if (input.right.isPressed()) xa++;
-
-        if (input.act.isReleased()) {
-                act();
+        if (input.act.isReleased()) act();
+        if (input.jump.isReleased()) {
+            isJumping = true;
+            jumpTime = tickCount;
         }
+
 
         if (xa != 0 || ya != 0) {
             move(xa, ya);
@@ -117,8 +121,14 @@ public class Player extends Mob implements Actable {
         int yOffset = y-modifier/2-4;
 
 //        screen.setRoundLight(x + 3, y, 10, 0, 1, 0, Light.HARD);
+
+        if (isJumping && !isSwimming) {
+            yOffset -= 6;
+            if (tickCount-jumpTime > 20) {
+                isJumping = false;
+            }
+        }
         if (isSwimming) {
-            speed = 1;
             List<Integer> waterColor = new ArrayList<>(Arrays.asList(0x000000, 0x4444ff, 0x0000ff, 0x8888ff));
 
             yOffset += 4;
@@ -138,7 +148,9 @@ public class Player extends Mob implements Actable {
             screen.render(xOffset, yOffset+3, 6, 0, 1, 8, waterColor);
             screen.render(xOffset+8, yOffset+3, 6, 1, 1, 8 , waterColor);
 
-        } else speed = 1;
+        }
+
+
 
 
         screen.render(xOffset + (modifier * flipTop), yOffset,
