@@ -24,10 +24,11 @@ public class SpriteSheet {
             image = ImageIO.read(getClass().getResourceAsStream(path));
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-        if (image == null) {
-            return;
+        } finally {
+            image.flush();
+            if (image == null) {
+                return;
+            }
         }
 
         this.path = path;
@@ -35,7 +36,6 @@ public class SpriteSheet {
         this.height = image.getHeight();
 
         pixels = image.getRGB(0, 0, width, height, null, 0, width);
-
 
 
 //        for (int i : pixels) {

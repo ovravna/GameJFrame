@@ -22,7 +22,7 @@ public class Sokoban implements GameListener {
 //        new Ball(level, "Ball", player.x, player.y);
         game.setDaylightCycle(false);
         game.setCycleTime(1);
-        game.setLight(-0xff);
+        game.setLight(0xdd);
 
         game.start();
     }

@@ -39,7 +39,12 @@ public class Game extends Canvas implements Runnable {
     public List<GameListener> listeners = new ArrayList<>();
 
     private boolean daylightCycle = true;
-    private static int light = -0xdf;
+
+    public static void setLight(int light) {
+        Game.light = light;
+    }
+
+    private static int light;
     private int cycleTime;
 
     //    private int x = 0;
@@ -100,7 +105,7 @@ public class Game extends Canvas implements Runnable {
             setLight();
             return;
         }
-        Game.light = light;
+        Game.setLight((int)light);
     }
 
     public void setCycleTime(int cycleTime) {

@@ -111,7 +111,10 @@ public class Player extends Mob implements Actable {
             xTile += 2;
         } else if (moveingDir > 1) {
             xTile += 4+((numSteps >> walkingSpeed) & 1)*2;
-            flipTop = (moveingDir-1)%2;
+            if (!isJumping) {
+                flipTop = (moveingDir-1)%2;
+            }
+
         }
 
         int modifier = 8*scale;
@@ -151,18 +154,14 @@ public class Player extends Mob implements Actable {
 
 
 
-        screen.render(xOffset + (modifier * flipTop), yOffset,
-                xTile+yTile*(screen.sheet.width >> 3), flipTop, scale);
+        screen.render(xOffset + (modifier * flipTop), yOffset, xTile+yTile*(screen.sheet.width >> 3), flipTop, scale);
 
-        screen.render(xOffset+modifier- (modifier * flipTop), yOffset,
-                (xTile+1)+yTile*(screen.sheet.width >> 3), flipTop, scale);
+        screen.render(xOffset+modifier- (modifier * flipTop), yOffset, (xTile+1)+yTile*(screen.sheet.width >> 3), flipTop, scale);
 
         if (!isSwimming) {
-            screen.render(xOffset + (modifier * flipBottom), yOffset+modifier,
-                    xTile+(yTile+1)*(screen.sheet.width >> 3), flipBottom, scale);
+            screen.render(xOffset + (modifier * flipBottom), yOffset+modifier, xTile+(yTile+1)*(screen.sheet.width >> 3), flipBottom, scale);
 
-            screen.render(xOffset+modifier - (modifier * flipBottom), yOffset+modifier,
-                    (xTile+1)+(yTile+1)*(screen.sheet.width >> 3), flipBottom, scale);
+            screen.render(xOffset+modifier - (modifier * flipBottom), yOffset+modifier, (xTile+1)+(yTile+1)*(screen.sheet.width >> 3), flipBottom, scale);
         }
 
 //        if (username != null) {

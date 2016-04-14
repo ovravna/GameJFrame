@@ -12,7 +12,7 @@ public class Screen {
 
     public static final byte BIT_MIRROR_X = 0x1;
     public static final byte BIT_MIRROR_Y = 0x2;
-    private static int filterColor = Game.getLight();
+    private static int filterColor;
 
     private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
 
@@ -57,7 +57,7 @@ public class Screen {
 
 
     public void render(int xPos, int yPos, SpriteSheet sheet, int tile, int mirrorDir, int scale, int block, List<Integer> ignoreColors) {
-
+        filterColor = Game.getLight();
         int logBlock = log2(block);
 
         if (logBlock == -1) throw new RuntimeException("Invalid block");
