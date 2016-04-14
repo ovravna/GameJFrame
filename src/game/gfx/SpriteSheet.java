@@ -38,6 +38,7 @@ public class SpriteSheet {
         pixels = image.getRGB(0, 0, width, height, null, 0, width);
 
 
+
 //        for (int i : pixels) {
 //            System.out.println(Integer.toHexString(i));
 //        }
