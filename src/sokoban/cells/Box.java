@@ -38,9 +38,8 @@ public class Box extends Mob {
         screen.render(x, y, sheet, 0, 0, 1, 16);
 
         if (renderLight) {
-            screen.renderRoundLight(x + 5, y + 8, 13, -0x66, Light.SOFT);
-        }
-//        else screen.renderRoundLight(x, y, 15, 0, Light.HARD);
+            screen.renderRoundLight(x + 5, y + 8, 13, -0x66, Light.SOFT, this);
+        } else screen.removeLightSource(this);
 
 
     }

@@ -13,8 +13,12 @@ public class Lantern extends Mob implements Actable{
     private Light light;
     private final SpriteSheet lanternSheet;
 
-    public Lantern(Level level, String name, int x, int y, Light light) {
-        super(level, name, x, y, 1);
+    public Lantern(Level level, int x, int y) {
+        this(level, x, y, Light.SOFT);
+    }
+
+    public Lantern(Level level, int x, int y, Light light) {
+        super(level, "Lantern", x, y, 1);
 //        solid = true;
 //        pushable = true;
         this.light = light;
@@ -38,7 +42,7 @@ public class Lantern extends Mob implements Actable{
     @Override
     public void render(Screen screen) {
 
-        screen.renderRoundLight(x, y, 50, 0, 6, 6, light);
+        screen.renderRoundLight(x, y, 50, -0x66, 6, 6, light, this);
 
         if (!isHeld) {
             screen.render(x, y, lanternSheet, 0 , 0, 1, 16, Arrays.asList(0xffffff));

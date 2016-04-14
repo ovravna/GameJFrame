@@ -48,8 +48,6 @@ public class Level {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void loadTiles() {
@@ -70,6 +68,7 @@ public class Level {
             }
         }
     }
+
 
     private void saveLevelToFile() {
 

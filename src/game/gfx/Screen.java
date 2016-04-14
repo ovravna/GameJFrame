@@ -1,9 +1,9 @@
 package game.gfx;
 
 import game.Game;
+import game.entities.Entity;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Screen {
 
@@ -14,12 +14,11 @@ public class Screen {
     public static final byte BIT_MIRROR_Y = 0x2;
     private static int filterColor;
     private boolean lightOn = true;
+    HashMap<Entity, Integer[]> lightSources = new HashMap<>();
 
     private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
 
     public int[] pixels;
-    public Integer[] light;
-
 
     public int xOffset = 0;
     public int yOffset = 0;
@@ -36,7 +35,7 @@ public class Screen {
         this.sheet = sheet;
 
         this.pixels = new int[width*height];
-        this.light = new Integer[width*height];
+//        this.light = new Integer[width*height];
     }
 
     public void render(int xPos, int yPos, int tile, int mirrorDir, int scale) {
@@ -99,12 +98,29 @@ public class Screen {
                             if (xPixel+xScale < 0 || xPixel+xScale >= width)
                                 continue;
                             pixels[(xPixel+xScale)+(yPixel+yScale)*width] =
-                                    !lightOn ? col : colorSelector(col, light[(xPixel+xScale)+(yPixel+yScale)*width]);
+                                    !lightOn ? col : colorSelector(col, lightCombiner((xPixel+xScale)+(yPixel+yScale)*width));
                         }
                     }
                 }
             }
         }
+    }
+
+
+    private int lightCombiner(int i) {
+        int r = 0;
+
+        Integer temp;
+        for (Integer[] light : lightSources.values()) {
+//            System.out.println(lights.size());
+//            for (Integer integer : light) {
+//                System.out.println(integer);
+//            }
+            temp = light[i];
+            r += temp == null ? 0:temp;
+        }
+
+        return r;
     }
 
     public void setLightOn(boolean lightOn) {
@@ -123,19 +139,22 @@ public class Screen {
     }
 
 
-    public void renderRoundLight(int x, int y, int radius, int filter) {
-        renderRoundLight(x, y, radius, filter, Light.SOFT);
+    public void renderRoundLight(int x, int y, int radius, int filter, Entity this_entity) {
+        renderRoundLight(x, y, radius, filter, Light.SOFT, this_entity);
     }
 
-    public void renderRoundLight(int x, int y, int radius, int filter, Light light) {
-        renderRoundLight(x, y, radius, filter, 2, 0, light);
+    public void renderRoundLight(int x, int y, int radius, int filter, Light light, Entity this_entity) {
+        renderRoundLight(x, y, radius, filter, 2, 0, light, this_entity);
     }
 
-    public void renderRoundLight(int x, int y, int radius, int filter, int xOff, int yOff) {
-        renderRoundLight(x, y, radius, filter, xOff, yOff, Light.SOFT);
+    public void renderRoundLight(int x, int y, int radius, int filter, int xOff, int yOff, Entity this_entity) {
+        renderRoundLight(x, y, radius, filter, xOff, yOff, Light.SOFT, this_entity);
     }
 
-    public void renderRoundLight(int x, int y, int radius, int filter, int xOffset, int yOffset, Light light) {
+    public void renderRoundLight(int x, int y, int radius, int filter, int xOffset, int yOffset, Light lighting, Entity this_entity) {
+        Integer[] light = new Integer[width*height];
+
+
         int radSqur = radius*radius;
 
         x -= this.xOffset-xOffset;
@@ -146,36 +165,57 @@ public class Screen {
         for (int xa = 0;xa < width;xa++) {
             for (int ya = 0;ya < height;ya++) {
                 distance = Math.pow(xa-x, 2)+Math.pow(ya-y, 2);
+
 //                if (distance < radSqur*0.01) {
 //                    this.light[xa+ya*width] = filter;
 //                } else
-
+                // TODO: 14.04.2016 ender kode for håndtering av filter > 0xff
                 if (distance < radSqur) {
-                    if (light == Light.SOFT)
-                        this.light[xa+ya*width] = (int) ((filterColor-filter)*(distance/radSqur));
-                    if (light == Light.HARD) {
-                        this.light[xa+ya*width] = filter;
+                    if (lighting == Light.SOFT)
+                        light[xa+ya*width] = (int) ((filterColor-filter)*(distance/radSqur));
+                    if (lighting == Light.HARD) {
+                        light[xa+ya*width] = filter;
                     }
                 } else
 //                if (distance < radSqur*1.1)
-                    this.light[xa+ya*width] = null;
+                    light[xa+ya*width] = null;
             }
         }
+        lightSources.put(this_entity, light);
     }
+
+    public void removeLightSource(Entity entity) {
+        lightSources.remove(entity);
+    }
+
 
     private static int colorSelector(int color, Integer filter) {
         if (filter == null) return Screen.colorSelector(color, filterColor);
-        return colorSelector(color, (int)filter, (int)filter, (int)filter);
+//        System.out.println(Integer.toHexString(filter));
+        if (filter > Math.abs(0xff)) {
+            int r = (filter/0x10000)%0x100;
+            int g = (filter/0x100)%0x100;
+            int b = filter%0x100;
+//            System.out.printf("filter: %s %s %s\n", r, g, b);
+
+
+            return colorSelector(color, r, g, b);
+        }
+
+        return colorSelector(color, filter, filter, filter);
     }
 
-    private static int colorSelector(int color, int red, int green, int blue) {
+    private static int colorSelector(int color, int rFilter, int gFilter, int bFilter) {
 
         int r = (color/0x10000)%0x100;
         int g = (color/0x100)%0x100;
         int b = color%0x100;
 
+
+//        System.out.printf("color: %s %s %s\n", r, g, b);
+
         List<Integer> rgb = Arrays.asList(r, g, b);
-        List<Integer> filters = Arrays.asList(red, green, blue);
+        List<Integer> filters = Arrays.asList(rFilter, gFilter, bFilter);
 
         for (int i = 0;i < 3;i++) {
             if (rgb.get(i) + filters.get(i) < 0) rgb.set(i, 0);

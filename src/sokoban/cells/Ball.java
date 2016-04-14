@@ -14,12 +14,11 @@ import java.util.List;
 
 public class Ball extends Mob {
     private SpriteSheet sheet = new SpriteSheet("/box16x16.png");
-    private int color = Colors.get(555, 334, 445 , -1);
+    private int color = Colors.get(555, 334, 445, -1);
     Player player;
     List<Integer> xPos = new ArrayList<>();
     List<Integer> yPos = new ArrayList<>();
     private boolean isHeld;
-
 
 
     public Ball(Level level, String name, int x, int y) {
@@ -30,7 +29,6 @@ public class Ball extends Mob {
 //        dimentions = new int[]{16, 0, 16, 0};
 
     }
-
 
 
 //    @Override
@@ -79,10 +77,8 @@ public class Ball extends Mob {
     public void render(Screen screen) {
 
 //        screen.render(x,y,10 + 10 * 16,color,0,1);
-        screen.renderRoundLight(x, y, 60, 0x01, 6,6, Light.SOFT);
-        screen.render(x,y,sheet,0, 0, 1, 16, Arrays.asList(0xffffff));
-
-
+        screen.renderRoundLight(x, y, 60, 0x01, 6, 6, Light.SOFT, this);
+        screen.render(x, y, sheet, 0, 0, 1, 16, Arrays.asList(0xffffff));
 
 
     }

@@ -20,6 +20,10 @@ public class Sokoban implements GameListener {
         new Box(level, 10, 50);
         new Goal(level, 40, 50);
 
+        new Box(level, 10, 80);
+        new Goal(level, 40, 80);
+
+        new Lantern(level, 20, 10);
 
 //        new Box(level, "box", 40, 40);
 //        new Ball(level, "Ball", player.x, player.y);
