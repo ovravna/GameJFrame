@@ -60,9 +60,7 @@ public class Player extends Mob implements Actable {
         if (xa != 0 || ya != 0) {
             move(xa, ya);
             isMoving = true;
-        } else {
-            isMoving = false;
-        }
+        } else isMoving = false;
 
         if (level.getTile(this.x >> 3, this.y >> 3).getId() == 3) {
             isSwimming = true;

@@ -77,7 +77,7 @@ public class Game extends Canvas implements Runnable {
         setScreen(new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png")));
         input = new InputHandler(this);
         setLevel(new Level("/levels/sokoban_test.png"));
-        setPlayer(new Player(level, 20, 20, input, "Player"));
+        setPlayer(new Player(level, 0, 0, input, "Player"));
 
 
 //        this.screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png"));
