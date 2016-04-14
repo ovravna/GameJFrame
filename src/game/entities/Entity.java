@@ -6,6 +6,7 @@ import game.level.Level;
 import sokoban.cells.Ball;
 import sokoban.cells.Box;
 import sokoban.cells.Lantern;
+import sokoban.cells.Wall;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +17,7 @@ public abstract class Entity implements Comparable{
     public int x, y;
     protected Level level;
     protected boolean solid;
-    private List<Class> renderOrder = Arrays.asList(Player.class, Lantern.class, Ball.class, Box.class);
+    private List<Class> renderOrder = Arrays.asList(Player.class, Lantern.class, Ball.class, Box.class, Wall.class);
 
 
     /**

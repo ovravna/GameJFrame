@@ -6,8 +6,8 @@ import game.entities.Player;
 import game.gfx.Light;
 import game.gfx.Screen;
 import game.level.Level;
-import sokoban.cells.Box;
 import sokoban.cells.Lantern;
+import sokoban.cells.Wall;
 
 public class Sokoban implements GameListener {
     Game game;
@@ -18,11 +18,14 @@ public class Sokoban implements GameListener {
     public Sokoban() {
         game = new Game("Sokoban",this);
         new Lantern(level, "lantern", 10, 50, Light.SOFT);
-        new Box(level, "box", 40, 40);
+        new Wall(level, 50, 50);
+
+//        new Box(level, "box", 40, 40);
 //        new Ball(level, "Ball", player.x, player.y);
+        game.setLighting(false);
         game.setDaylightCycle(false);
         game.setCycleTime(1);
-        game.setLight(0xdd);
+        game.setLight();
 
         game.start();
     }

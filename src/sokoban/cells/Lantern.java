@@ -10,7 +10,8 @@ import java.util.Arrays;
 
 public class Lantern extends Mob implements Actable{
     private boolean isHeld;
-    Light light;
+    private Light light;
+    private SpriteSheet lanternSheet;
 
     public Lantern(Level level, String name, int x, int y, Light light) {
         super(level, name, x, y, 1);
@@ -18,7 +19,7 @@ public class Lantern extends Mob implements Actable{
 //        pushable = true;
         this.light = light;
         dimentions = new int[]{14, 2, 14, 2};
-
+        lanternSheet = new SpriteSheet("/box16x16.png");
     }
 
     public boolean isHeld() {
@@ -40,7 +41,7 @@ public class Lantern extends Mob implements Actable{
         screen.setRoundLight(x, y, 50, 0, 6, 6, light);
 
         if (!isHeld) {
-            screen.render(x, y, new SpriteSheet("/box16x16.png"), 0 , 0, 1, 16, Arrays.asList(0xffffff));
+            screen.render(x, y, lanternSheet, 0 , 0, 1, 16, Arrays.asList(0xffffff));
         }
 
     }

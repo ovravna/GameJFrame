@@ -13,6 +13,7 @@ public class Screen {
     public static final byte BIT_MIRROR_X = 0x1;
     public static final byte BIT_MIRROR_Y = 0x2;
     private static int filterColor;
+    private boolean lightOn = true;
 
     private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
 
@@ -97,13 +98,17 @@ public class Screen {
                         for (int xScale = 0;xScale < scale;xScale++) {
                             if (xPixel+xScale < 0 || xPixel+xScale >= width)
                                 continue;
-                            pixels[(xPixel+xScale)+(yPixel+yScale)*width]
-                                    = colorSelector(col, light[(xPixel+xScale)+(yPixel+yScale)*width]);
+                            pixels[(xPixel+xScale)+(yPixel+yScale)*width] =
+                                    !lightOn ? col : colorSelector(col, light[(xPixel+xScale)+(yPixel+yScale)*width]);
                         }
                     }
                 }
             }
         }
+    }
+
+    public void setLightOn(boolean lightOn) {
+        this.lightOn = lightOn;
     }
 
     public void setFilter(long clock) {
@@ -164,6 +169,7 @@ public class Screen {
     }
 
     private static int colorSelector(int color, int red, int green, int blue) {
+
         int r = (color/0x10000)%0x100;
         int g = (color/0x100)%0x100;
         int b = color%0x100;
