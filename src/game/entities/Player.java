@@ -66,7 +66,7 @@ public class Player extends Mob implements Actable {
             isMoving = true;
         } else isMoving = false;
 
-        if (level.getTile(this.x >> 3, this.y >> 3).getId() == 3) {
+        if (level.getTile(this.x >> 3, this.y >> 3).getId() == 3 && !isJumping) {
             isSwimming = true;
         }
         if (isSwimming && level.getTile(this.x >> 3, this.y >> 3).getId() != 3) {
@@ -115,10 +115,7 @@ public class Player extends Mob implements Actable {
             xTile += 2;
         } else if (moveingDir > 1) {
             xTile += 4+((numSteps >> walkingSpeed) & 1)*2;
-            if (!isJumping) {
-                flipTop = (moveingDir-1)%2;
-            }
-
+            flipTop = (moveingDir-1)%2;
         }
 
         int modifier = 8*scale;
@@ -129,8 +126,10 @@ public class Player extends Mob implements Actable {
 
         if (isJumping && !isSwimming) {
             yOffset -= 6;
+            scale = 2;
             if (tickCount-jumpTime > 20) {
                 isJumping = false;
+                scale = 1;
             }
         }
         if (isSwimming) {

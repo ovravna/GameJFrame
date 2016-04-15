@@ -119,23 +119,74 @@ public class Screen {
 
 
         Integer temp;
-        for (Integer[] light : lightSources.values()) {
 
+//        int size = 0;
+//
+//        List<Integer> lights = new ArrayList<>();
+//
+//        for (Integer[] light : lightSources.values()) {
+//            lights.add(light[i]);
+//        }
+////        List<Integer> lightStream = lights.stream().filter(n -> n != null).collect(Collectors.toList());
+//
+//        for (Integer integer : lights) {
+//            if (integer != null) {
+//                size++;
+//            }
+//        }
+//
+//
+//        if (size == 0) {
+//            return filterColor;
+//        } else if (size == 1) {
+//            for (Integer integer : lights) {
+//                if (integer != null) {
+//                    return integer;
+//                }
+//            }
+//            return filterColor;
+//        } else {
+//            for (Integer integer : lights) {
+//                Integer num = integer;
+//                if (num == null) {
+//                    num = 1;
+//                }
+//                r = (int) (num > r ? num:r);
+//            }
+//        }
+//
+        for (Integer[] light : lightSources.values()) {
             temp = light[i];
 
             if (temp == null) {
                 temp = filterColor;
             }
 
-            r = r == -0xffffff ? temp:r+temp;
-//            if (temp > r && r == -0xffffff) {
-//                r = temp;
-//            } else {
-//                r += temp;
-//            }
-
+            r = temp > r ? temp:r;
 
         }
+
+        if (r == -0xffffff) {
+            r = filterColor;
+        }
+
+//        boolean isNull = true;
+//
+//        for (Integer[] light : lightSources.values()) {
+////
+//            temp = light[i];
+//            if (temp != null) {
+//                isNull = false;
+//
+//                r = temp > r ? temp:r;
+//            }
+//        }
+//
+//
+//        if (isNull) {
+//            return null;
+//        }
+
 
         return r;
     }
