@@ -36,6 +36,32 @@ public class Sokoban implements GameListener {
                     "#  *  #\n"+
                     "#######";
 
+    static String p = "           ###\n"+
+            "          #   #\n"+
+            "         #  *  #\n"+
+            "        #  *$*  #\n"+
+            "        # * * * #\n"+
+            "        #  *$*  #\n"+
+            "         #  *  #\n"+
+            "          #   #\n"+
+            "   ###     # #     ###\n"+
+            "  #   #   #   #   #   #\n"+
+            " #  *  # #  .  # #  *  #\n"+
+            "#  * *  #  . .  #  * *  #\n"+
+            "# *$*$*   .$+ .   *$*$* #\n"+
+            "#  * *  #  . .  #  * *  #\n"+
+            " #  *  # #  .  # #  *  #\n"+
+            "  #   #   #   #   #   #\n"+
+            "   ###     # #     ###\n"+
+            "          #   #\n"+
+            "         #  *  #\n"+
+            "        #  *$*  #\n"+
+            "        # * * * #\n"+
+            "        #  *$*  #\n"+
+            "         #  *  #\n"+
+            "          #   #\n"+
+            "           ###\n";
+
 
 
     public Sokoban() {
@@ -49,11 +75,12 @@ public class Sokoban implements GameListener {
 ////        new Goal(level, 40, 80);
 //////
 
-        game.player = new Player(level, 0, 50, input);
-        new Lantern(level, 20, 10, 0);
-        new Lantern(level, 60, 10, 0);
+//        game.player = new Player(level, 0, 50, input);
+//        new Lantern(level, 20, 10, 0);
+//        new Lantern(level, 60, 10, 0);
 
-//        init(q);
+        init(w);
+
 
 
 //        new Box(level, "box", 40, 40);
@@ -61,7 +88,7 @@ public class Sokoban implements GameListener {
         game.setLighting(true);
         game.setDaylightCycle(false);
         game.setCycleTime(20);
-        game.setLight(-0xdf);
+        game.setLight(-0x66);
 
 
         game.start();
