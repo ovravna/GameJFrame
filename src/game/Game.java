@@ -4,6 +4,7 @@ import game.entities.Player;
 import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
+import sokoban.cells.Goal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,8 +45,10 @@ public class Game extends Canvas implements Runnable {
 //        Game.light = light;
 //    }
 
-    private static int light;
-    private int cycleTime;
+    private static int light = -0xdf;
+    private int cycleTime = 20;
+    private boolean smoothRise;
+    private boolean wonFlag;
 
     //    private int x = 0;
 
@@ -105,7 +108,7 @@ public class Game extends Canvas implements Runnable {
             setLight();
             return;
         }
-        Game.light = light;
+        Screen.filterColor = light;
     }
 
     public void setLighting(boolean lighting) {
@@ -130,6 +133,9 @@ public class Game extends Canvas implements Runnable {
 
     }
 
+    public void action() {
+        listeners.forEach(GameListener::action);
+    }
 
 
     private void setScreen(Screen screen) {
@@ -211,6 +217,12 @@ public class Game extends Canvas implements Runnable {
                     screen.setFilter(globalTime, cycleTime);
                 }
 
+                if (smoothRise) {
+                    globalTime++;
+                    smoothRise = !screen.setFilter(globalTime, cycleTime);
+
+                }
+
             }
 //            try {
 //                Thread.sleep(1);
@@ -227,7 +239,7 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis()-lastTimer >= 1000) {
                 lastTimer += 1000;
-                frame.setTitle(String.format("  %3d ticks | %3d fps | time: %4d\n", ticks, frames, globalTime));
+                frame.setTitle(String.format("  %3d ticks | %3d fps | color: %4s \n", ticks, frames, screen.filterColor));
                 frames = 0;
                 ticks = 0;
             }
@@ -237,6 +249,15 @@ public class Game extends Canvas implements Runnable {
     public void tick() {
         tickCount++;
         level.tick();
+        if (Goal.goals.stream().anyMatch(Goal::isWon) && !wonFlag) {
+            smoothRise = true;
+            setCycleTime(5);
+            wonFlag = true;
+        }
+
+
+
+
 //        for (int i = 0;i < pixels.length;i++) {
 //            pixels[i] = i+tickCount;
 //        }

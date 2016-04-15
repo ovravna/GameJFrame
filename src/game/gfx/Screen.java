@@ -15,7 +15,7 @@ public class Screen {
 
     public static final byte BIT_MIRROR_X = 0x1;
     public static final byte BIT_MIRROR_Y = 0x2;
-    private static int filterColor;
+    public static int filterColor;
     private boolean lightOn = true;
     HashMap<Entity, Integer[]> lightSources = new HashMap<>();
 
@@ -64,7 +64,7 @@ public class Screen {
 
 
     public void render(int xPos, int yPos, SpriteSheet sheet, int tile, int mirrorDir, int scale, int block, List<Integer> ignoreColors) {
-        filterColor = Game.getLight();
+//        filterColor = Game.getLight();
         int logBlock = log2(block);
 
         if (logBlock == -1) throw new RuntimeException("Invalid block");
@@ -143,11 +143,11 @@ public class Screen {
         this.lightOn = lightOn;
     }
 
-    public void setFilter(long clock, int cycleSeconds) {
+    public boolean setFilter(long clock, int cycleSeconds) {
         double time = 60*cycleSeconds;
 
-        filterColor = (int) (Game.getLight()* 0.5*(1-Math.sin(2*(clock/time))));
-
+        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock/time))));
+        return filterColor == 0;
     }
 
 
@@ -185,7 +185,7 @@ public class Screen {
                 // TODO: 14.04.2016 ender kode for håndtering av filter > 0xff
                 if (distance < radSqur) {
                     if (lighting == Light.SOFT) {
-                        light[xa+ya*width] = (int) ((Game.getLight()*distance)-filter*(radSqur-distance))/radSqur;
+                        light[xa+ya*width] = (int) ((filterColor*distance)-filter*(radSqur-distance))/radSqur;
 
                     }
                     if (lighting == Light.HARD) {

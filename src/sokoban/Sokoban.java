@@ -21,10 +21,10 @@ public class Sokoban implements GameListener {
 
     static String q =
                     "#######\n"+
-                    "#.  # #\n"+
-                    "#$* $ #\n"+
-                    "#  $@ #\n"+
-                    "# ..  #\n"+
+                    "#*  # #\n"+
+                    "# *   #\n"+
+                    "# .$@ #\n"+
+                    "# *   #\n"+
                     "#  *  #\n"+
                     "#######";
 
@@ -38,11 +38,12 @@ public class Sokoban implements GameListener {
 //        new Box(level, 10, 50);
 //        new Goal(level, 40, 50);
         game.player = new Player(level, 0, 50, input);
-        new Box(level, 10, 80);
-        new Goal(level, 40, 80);
 //
-        new Lantern(level, 20, 10);
-        new Lantern(level, 60, 10);
+//        new Box(level, 10, 80);
+//        new Goal(level, 40, 80);
+////
+        new Lantern(level, 20, 10, 0);
+        new Lantern(level, 60, 10, 0x33);
 
         init(q);
 
@@ -52,7 +53,7 @@ public class Sokoban implements GameListener {
 //        new Ball(level, "Ball", player.x, player.y);
         game.setLighting(true);
         game.setDaylightCycle(false);
-        game.setCycleTime(1);
+        game.setCycleTime(20);
         game.setLight();
 
 
@@ -74,6 +75,7 @@ public class Sokoban implements GameListener {
         
         int x = xOrigo;
         int y = yOrigo;
+        int goals = 0;
 
         for (char cell : sokoban.toCharArray()) {
             switch (cell) {
@@ -140,5 +142,10 @@ public class Sokoban implements GameListener {
     @Override
     public void newInputHandler(InputHandler input) {
         this.input = input;
+    }
+
+    @Override
+    public void action() {
+
     }
 }

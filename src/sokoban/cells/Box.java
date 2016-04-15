@@ -1,5 +1,6 @@
 package sokoban.cells;
 
+import game.entities.Entity;
 import game.entities.Mob;
 import game.gfx.Colors;
 import game.gfx.Light;
@@ -27,9 +28,11 @@ public class Box extends Mob {
     @Override
     public void tick() {
         if (level.player == null) return;
-
-        if (getEntity(x+8, y+8) instanceof Goal) {
+        Entity entity = getEntity(x+8, y+8);
+        if (entity instanceof Goal) {
             renderLight = true;
+            ((Goal) entity).setFilled();
+
         } else renderLight = false;
 
 

@@ -12,18 +12,20 @@ public class Lantern extends Mob implements Actable{
     private boolean isHeld;
     private Light light;
     private final SpriteSheet lanternSheet;
+    private int filter;
 
-    public Lantern(Level level, int x, int y) {
-        this(level, x, y, Light.SOFT);
+    public Lantern(Level level, int x, int y, int filter) {
+        this(level, x, y, Light.SOFT, filter);
     }
 
-    public Lantern(Level level, int x, int y, Light light) {
+    public Lantern(Level level, int x, int y, Light light, int filter) {
         super(level, "Lantern", x, y, 1);
 //        solid = true;
 //        pushable = true;
         this.light = light;
         dimentions = new int[]{14, 2, 14, 2};
         lanternSheet = new SpriteSheet("/box16x16.png");
+        this.filter = filter;
     }
 
     public boolean isHeld() {
@@ -42,7 +44,7 @@ public class Lantern extends Mob implements Actable{
     @Override
     public void render(Screen screen) {
 
-        screen.renderRoundLight(x, y, 50, 0, 6, 6, light, this);
+        screen.renderRoundLight(x, y, 50, filter, 6, 6, light, this);
 
         if (!isHeld) {
             screen.render(x, y, lanternSheet, 0 , 0, 1, 16, Arrays.asList(0xffffff));
