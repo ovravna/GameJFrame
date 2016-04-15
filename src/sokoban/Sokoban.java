@@ -79,7 +79,7 @@ public class Sokoban implements GameListener {
 //        new Lantern(level, 20, 10, 0);
 //        new Lantern(level, 60, 10, 0);
 
-        init(w);
+        init(p);
 
 
 
@@ -88,7 +88,7 @@ public class Sokoban implements GameListener {
         game.setLighting(true);
         game.setDaylightCycle(false);
         game.setCycleTime(20);
-        game.setLight(-0x66);
+        game.setLight(-0xdf);
 
 
         game.start();
@@ -104,8 +104,11 @@ public class Sokoban implements GameListener {
         int x_level_centrum = (level.width<<3)/2;
         int y_level_centrum = (level.height << 3)/2;
 
+        new LightPoint(level, x_level_centrum, y_level_centrum, sokoban_height<<3, 0x33);
+
         int xOrigo = (x_level_centrum-(sokoban_width<<3));
         int yOrigo = (y_level_centrum-(sokoban_height<<3));
+
         
         int x = xOrigo;
         int y = yOrigo;

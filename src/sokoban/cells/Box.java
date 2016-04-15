@@ -43,7 +43,7 @@ public class Box extends Mob {
         screen.render(x, y, 5 + 5*8, 0, 1, 16, Arrays.asList(0xfa05f0));
 
         if (renderLight) {
-            screen.renderRoundLight(x + 4, y + 7 , 8, 0, Light.SOFT, this);
+            screen.renderRoundLight(x + 4, y + 7 , 6, -0x55, Light.SOFT, this);
         } else screen.removeLightSource(this);
 
 

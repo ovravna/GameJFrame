@@ -219,13 +219,16 @@ public class Game extends Canvas implements Runnable {
 
                 if (smoothRise > 0) {
                     globalTime++;
-                    if (screen.setFilter(globalTime, cycleTime, smoothRise == 1? true:false, 0)) {
+                    if (screen.setFilter(globalTime, cycleTime, smoothRise == 1 ? true:false, 0)) {
                         smoothRise = 0;
                     }
 
                 }
 
             }
+
+
+
 //            try {
 //                Thread.sleep(1);
 //            } catch (InterruptedException e) {
@@ -241,7 +244,7 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis()-lastTimer >= 1000) {
                 lastTimer += 1000;
-                frame.setTitle(String.format("  %3d ticks | %3d fps | color: %4s \n", ticks, frames, screen.filterColor));
+                frame.setTitle(String.format("  %3d ticks | %3d fps | color: %4s  %4s\n", ticks, frames, screen.filterColor, Game.light));
                 frames = 0;
                 ticks = 0;
             }
@@ -251,18 +254,13 @@ public class Game extends Canvas implements Runnable {
     public void tick() {
         tickCount++;
         level.tick();
+
+
         if (Goal.goals.stream().anyMatch(Goal::isWon) && !wonFlag) {
             smoothRise = 1;
             setCycleTime(1);
             wonFlag = true;
         }
-
-
-
-
-//        for (int i = 0;i < pixels.length;i++) {
-//            pixels[i] = i+tickCount;
-//        }
 
     }
 

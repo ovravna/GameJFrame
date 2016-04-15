@@ -198,11 +198,12 @@ public class Screen {
     public boolean setFilter(long clock, int cycleSeconds, boolean rise, int maxFilter) {
         double time = 60*cycleSeconds;
 
-        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock/time)))) + maxFilter;
+        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock*Math.PI/time))));
+
         if (rise) {
             return filterColor == maxFilter;
         } else
-            return filterColor == Game.getLight();
+            return filterColor < Game.getLight();
 
     }
 
