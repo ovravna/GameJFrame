@@ -25,6 +25,10 @@ public class Player extends Mob implements Actable {
     private boolean isJumping;
     private int jumpTime;
 
+    public Player(Level level, int x, int y, InputHandler input) {
+        this(level, x, y, input, "Player");
+    }
+
     public Player(Level level, int x, int y, InputHandler input, String username) {
         super(level, "Player", x, y, 1);
         this.input = input;

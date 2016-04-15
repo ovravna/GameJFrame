@@ -3,7 +3,10 @@ package game.gfx;
 import game.Game;
 import game.entities.Entity;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 
 public class Screen {
 
@@ -16,7 +19,7 @@ public class Screen {
     private boolean lightOn = true;
     HashMap<Entity, Integer[]> lightSources = new HashMap<>();
 
-    private List<Integer> defaultIgnoreColors = Arrays.asList(0x000000);
+    private List<Integer> defaultIgnoreColors = Arrays.asList(0xfa05f0);
 
     public int[] pixels;
 
@@ -112,21 +115,22 @@ public class Screen {
 
 
     private Integer lightCombiner(int i) {
-        int r = 0;
+        int r = -0xffffff;
         boolean isNull = true;
 
         Integer temp;
         for (Integer[] light : lightSources.values()) {
-//            System.out.println(lights.size());
-//            for (Integer integer : light) {
-//                System.out.println(integer);
-//            }
+//
             temp = light[i];
             if (temp != null) {
                 isNull = false;
-                r = temp;
+
+                r = temp > r ? temp:r;
             }
         }
+
+
+
 
         if (isNull) {
             return null;

@@ -61,6 +61,10 @@ public abstract class Entity implements Comparable{
     protected boolean isSolidEntity(int xa, int ya, int x, int y) {
         if (level == null) return false;
 
+//        if (!(this instanceof Player)) {
+//            return true;
+//        }
+
         x += this.x+xa;
         y += this.y+ya;
 
@@ -68,7 +72,7 @@ public abstract class Entity implements Comparable{
         for (Entity entity : level.entities) {
             if (!entity.equals(this) && (e = entity.getEntity(x, y)) != null) {
                 if (e.isSolid() && !e.equals(this)) {
-                    if (e instanceof Mob) {
+                    if (e instanceof Mob && this instanceof Player) {
                         e.isPushed(xa, ya);
                     }
                     return true;

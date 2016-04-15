@@ -19,7 +19,7 @@ public class Box extends Mob {
         super(level, "Box", x, y, 1);
         solid = true;
         pushable = true;
-        dimentions = new int[]{15, 0, 16, 0};
+        dimentions = new int[]{14, 1, 14, 1};
 
     }
 
@@ -37,10 +37,10 @@ public class Box extends Mob {
 
     @Override
     public void render(Screen screen) {
-        screen.render(x, y, 5 + 5*8, 0, 1, 16, Arrays.asList(0xffffff));
+        screen.render(x, y, 5 + 5*8, 0, 1, 16, Arrays.asList(0xfa05f0));
 
         if (renderLight) {
-            screen.renderRoundLight(x + 5, y + 8, 8, -0x66, Light.SOFT, this);
+            screen.renderRoundLight(x + 4, y + 7 , 9, -0x77, Light.SOFT, this);
         } else screen.removeLightSource(this);
 
 
@@ -49,7 +49,6 @@ public class Box extends Mob {
     @Override
     public void isPushed(int x, int y) {
         move(x, y);
-
     }
 
 }
