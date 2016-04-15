@@ -47,7 +47,7 @@ public class Game extends Canvas implements Runnable {
 
     private static int light = -0xdf;
     private int cycleTime = 20;
-    private boolean smoothRise;
+    private int smoothRise = 0;
     private boolean wonFlag;
 
     //    private int x = 0;
@@ -214,12 +214,14 @@ public class Game extends Canvas implements Runnable {
                 shouldRender = true;
                 if (daylightCycle) {
                     globalTime++;
-                    screen.setFilter(globalTime, cycleTime);
+                    screen.setFilter(globalTime, cycleTime, true, 0);
                 }
 
-                if (smoothRise) {
+                if (smoothRise > 0) {
                     globalTime++;
-                    smoothRise = !screen.setFilter(globalTime, cycleTime);
+                    if (screen.setFilter(globalTime, cycleTime, smoothRise == 1? true:false, 0)) {
+                        smoothRise = 0;
+                    }
 
                 }
 
@@ -250,8 +252,8 @@ public class Game extends Canvas implements Runnable {
         tickCount++;
         level.tick();
         if (Goal.goals.stream().anyMatch(Goal::isWon) && !wonFlag) {
-            smoothRise = true;
-            setCycleTime(5);
+            smoothRise = 1;
+            setCycleTime(1);
             wonFlag = true;
         }
 

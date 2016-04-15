@@ -1,5 +1,6 @@
 package sokoban.cells;
 
+import game.entities.Entity;
 import game.entities.Mob;
 import game.gfx.Screen;
 import game.gfx.SpriteSheet;
@@ -44,7 +45,15 @@ public class Goal extends Mob {
     public void tick() {
         if (isFilled && goals.stream().allMatch(Goal::isFilled) && !wonFlag) {
             isWon = true;
-            removeEntity(250, 213);
+
+            for (Entity entity : level.entities) {
+                if (entity instanceof Wall) {
+                    entity.changePosition(0,-400);
+                }
+            }
+
+
+//            removeEntity(250, 213);
             wonFlag = true;
 
         }

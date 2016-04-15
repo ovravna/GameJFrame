@@ -116,24 +116,25 @@ public class Screen {
 
     private Integer lightCombiner(int i) {
         int r = -0xffffff;
-        boolean isNull = true;
+
 
         Integer temp;
         for (Integer[] light : lightSources.values()) {
-//
+
             temp = light[i];
-            if (temp != null) {
-                isNull = false;
 
-                r = temp > r ? temp:r;
+            if (temp == null) {
+                temp = filterColor;
             }
-        }
+
+            r = r == -0xffffff ? temp:r+temp;
+//            if (temp > r && r == -0xffffff) {
+//                r = temp;
+//            } else {
+//                r += temp;
+//            }
 
 
-
-
-        if (isNull) {
-            return null;
         }
 
         return r;
@@ -143,11 +144,15 @@ public class Screen {
         this.lightOn = lightOn;
     }
 
-    public boolean setFilter(long clock, int cycleSeconds) {
+    public boolean setFilter(long clock, int cycleSeconds, boolean rise, int maxFilter) {
         double time = 60*cycleSeconds;
 
-        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock/time))));
-        return filterColor == 0;
+        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock/time)))) + maxFilter;
+        if (rise) {
+            return filterColor == maxFilter;
+        } else
+            return filterColor == Game.getLight();
+
     }
 
 

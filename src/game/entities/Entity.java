@@ -124,9 +124,13 @@ public abstract class Entity implements Comparable{
     public void removeEntity(int x, int y) {
         Entity entity = getEntity(x, y);
         if (entity != null)
-            entity.changePosition(0, -200);
+            entity.changePosition();
 
 //        level.entities.remove(getEntity(x, y));
+    }
+
+    public void changePosition() {
+        changePosition(0, -300);
     }
 
     public void changePosition(int x, int y) {
