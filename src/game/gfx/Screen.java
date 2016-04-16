@@ -169,25 +169,7 @@ public class Screen {
         if (r == -0xffffff) {
             r = filterColor;
         }
-
-//        boolean isNull = true;
-//
-//        for (Integer[] light : lightSources.values()) {
-////
-//            temp = light[i];
-//            if (temp != null) {
-//                isNull = false;
-//
-//                r = temp > r ? temp:r;
-//            }
-//        }
-//
-//
-//        if (isNull) {
-//            return null;
-//        }
-
-
+        
         return r;
     }
 
@@ -198,7 +180,7 @@ public class Screen {
     public boolean setFilter(long clock, int cycleSeconds, boolean rise, int maxFilter) {
         double time = 60*cycleSeconds;
 
-        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock*Math.PI/time))));
+        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock/time))));
 
         if (rise) {
             return filterColor == maxFilter;

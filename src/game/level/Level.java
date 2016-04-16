@@ -27,10 +27,12 @@ public class Level {
 
 
     public Level(String imagePath) {
+        System.out.println(imagePath);
         if (imagePath != null) {
             this.imagePath = imagePath;
             this.loadLevelFromFile();
         } else {
+            System.out.println("ninja");
             this.width = 64;
             this.height = 64;
             tiles = new byte[width*height];
@@ -152,6 +154,7 @@ public class Level {
 
     public void tick() {
         entities.forEach(Entity::tick);
+//        System.out.println(entities.size());
         for (Tile t : Tile.tiles) {
             if (t == null) break;
             t.tick();

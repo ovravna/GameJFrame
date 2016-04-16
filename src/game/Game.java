@@ -4,6 +4,7 @@ import game.entities.Player;
 import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
+import game.level.LevelManager;
 import sokoban.cells.Goal;
 
 import javax.swing.*;
@@ -33,8 +34,8 @@ public class Game extends Canvas implements Runnable {
     private int[] colors = new int[6*6*6];
     private Screen screen;
 
-
-    public InputHandler input;
+    private LevelManager levelManager;
+    public static InputHandler input;
     public Level level;
     public Player player;
     public List<GameListener> listeners = new ArrayList<>();
@@ -64,7 +65,6 @@ public class Game extends Canvas implements Runnable {
         setMaximumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         this.name = name;
-
 //        this.daylightCycle = false;
 //        this.light = 0;
 
@@ -84,7 +84,12 @@ public class Game extends Canvas implements Runnable {
         addListener(listeners);
         setScreen(new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png")));
         setInputHandler(new InputHandler(this));
+
         setLevel(new Level("/levels/sokoban_test.png"));
+
+        levelManager = new LevelManager(input, level);
+
+
 //        setPlayer(new Player(level, 0, 0, input, "Player"));
 
 
@@ -241,7 +246,7 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis()-lastTimer >= 1000) {
                 lastTimer += 1000;
-                frame.setTitle(String.format("  %3d ticks | %3d fps | color: %4s  %4s\n", ticks, frames, screen.filterColor, Game.light));
+                frame.setTitle(String.format("  %3d ticks | %3d fps \n", ticks, frames));
                 frames = 0;
                 ticks = 0;
             }
@@ -250,7 +255,7 @@ public class Game extends Canvas implements Runnable {
 
     public void tick() {
         tickCount++;
-        level.tick();
+        levelManager.currentLevel().tick();
 
 
         if (Goal.goals.stream().anyMatch(Goal::isWon) && !wonFlag) {
@@ -271,14 +276,18 @@ public class Game extends Canvas implements Runnable {
             createBufferStrategy(3);
             return;
         }
+        int xOffset = 0;
+        int yOffset = 0;
 
+        if (levelManager.currentLevel().player != null) {
+            xOffset = levelManager.currentLevel().player.x -screen.width/2;
+            yOffset = levelManager.currentLevel().player.y -screen.height/2;
 
-        int xOffset = player.x -screen.width/2;
-        int yOffset = player.y -screen.height/2;
+        }
 
-        level.renderTiles(screen, xOffset, yOffset);
+        levelManager.currentLevel().renderTiles(screen, xOffset, yOffset);
 
-        level.renderEntities(screen);
+        levelManager.currentLevel().renderEntities(screen);
 
         for (int y = 0;y < screen.height;y++) {
             for (int x = 0;x < screen.width;x++) {
