@@ -1,7 +1,6 @@
 package sokoban;
 
 import game.Game;
-import game.InputHandler;
 import game.entities.Player;
 import game.level.Level;
 import sokoban.cells.Box;
@@ -11,9 +10,7 @@ import sokoban.cells.Wall;
 
 public class Sokoban {
     Game game;
-    Player player;
     Level level;
-    InputHandler input;
 
     static String q =
                     "#######\n"+
@@ -119,7 +116,7 @@ public class Sokoban {
                     new Goal(level, x, y);
                     break;
                 case '@':
-                    new Player(level, x, y, "Player");
+                    new Player(level, x, y);
                     break;
                 case '$':
                     new Box(level, x, y);
@@ -129,7 +126,7 @@ public class Sokoban {
                     new Goal(level, x, y);
                     break;
                 case '+':
-                    new Player(level, x, y,  "Player");
+                    new Player(level, x, y);
                     new Goal(level, x, y);
                     break;
                 default:

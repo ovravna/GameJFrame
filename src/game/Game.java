@@ -56,13 +56,13 @@ public class Game extends Canvas implements Runnable {
 //        this.daylightCycle = false;
 //        this.light = 0;
 
-
         screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png"));
 
         input = new InputHandler(this);
 
 
         levelManager = new LevelManager(screen, input);
+        levelManager.addLevel(level);
 
         screen.sheet.setFontLine(1);
         screen.sheet.setPlayerLine(10);

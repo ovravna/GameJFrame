@@ -55,7 +55,13 @@ public class LevelManager {
         gameLevel.loadLevel();
     }
 
-    public void addLevel(Level... levels) {
+    public void addLevel(Level level) {
+        if (level != null && !levels.contains(level)) {
+            levels.add(level);
+        }
+    }
+
+    public void addLevels(Level... levels) {
         for (Level level : levels) {
             if (!(level == null || this.levels.contains(level))) {
                 this.levels.add(level);
