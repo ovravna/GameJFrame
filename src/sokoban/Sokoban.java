@@ -1,23 +1,19 @@
 package sokoban;
 
 import game.Game;
-import game.GameListener;
 import game.InputHandler;
 import game.entities.Player;
-import game.gfx.Screen;
 import game.level.Level;
-import sokoban.cells.*;
+import sokoban.cells.Box;
+import sokoban.cells.Goal;
+import sokoban.cells.LightPoint;
+import sokoban.cells.Wall;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Sokoban implements GameListener {
+public class Sokoban {
     Game game;
     Player player;
-    Screen screen;
     Level level;
     InputHandler input;
-    private List<List<Boolean>> frame = new ArrayList<>();
 
     static String q =
                     "#######\n"+
@@ -64,38 +60,31 @@ public class Sokoban implements GameListener {
 
 
 
-    public Sokoban() {
-        game = new Game("Sokoban",this);
-//        new Lantern(level, "lantern", 10, 50, Light.SOFT);
-//        new Wall(level, 50, 50);
-//        new Box(level, 10, 50);
-//        new Goal(level, 40, 50);
-////
-////        new Box(level, 10, 80);
-////        new Goal(level, 40, 80);
-//////
+    public Sokoban(String board) {
+        this.level = init(board);
+
+        game = new Game("Sokoban", this.level);
 
 //        game.player = new Player(level, 0, 50, input);
 //        new Lantern(level, 20, 10, 0);
 //        new Lantern(level, 60, 10, 0);
 
-        init(q);
-
-
 
 //        new Box(level, "box", 40, 40);
 //        new Ball(level, "Ball", player.x, player.y);
+
         game.setLighting(true);
         game.setDaylightCycle(false);
         game.setCycleTime(20);
         game.setLight();
-
+        game.init();
 
         game.start();
     }
 
 
-    public void init(String sokoban) {
+    public static Level init(String sokoban) {
+        Level level = new Level("/levels/sokoban_test.png");
         String[] sokobanSplit = sokoban.split("\\||\\n");
 
         int sokoban_width = sokobanSplit[0].length();
@@ -105,10 +94,10 @@ public class Sokoban implements GameListener {
         int y_level_centrum = (level.height << 3)/2;
 //        System.out.printf("%s %s", x_level_centrum, y_level_centrum);
 
-        new LightPoint(level, x_level_centrum, y_level_centrum, sokoban_height<<3, 0x33);
+        new LightPoint(level, x_level_centrum, y_level_centrum, sokoban_height << 3, 0x33);
 
-        int xOrigo = (x_level_centrum-(sokoban_width<<3));
-        int yOrigo = (y_level_centrum-(sokoban_height<<3));
+        int xOrigo = (x_level_centrum-(sokoban_width << 3));
+        int yOrigo = (y_level_centrum-(sokoban_height << 3));
 
 
         int x = xOrigo;
@@ -118,7 +107,6 @@ public class Sokoban implements GameListener {
             switch (cell) {
                 case '\n':
                 case '|':
-                    frame.add(new ArrayList<>());
                     x = xOrigo;
                     y += 16;
                     continue;
@@ -128,10 +116,10 @@ public class Sokoban implements GameListener {
                     new Wall(level, x, y);
                     break;
                 case '.':
-                    new Goal(level,x, y);
+                    new Goal(level, x, y);
                     break;
                 case '@':
-                    game.player = new Player(level, x, y, input, "Player");
+                    new Player(level, x, y, "Player");
                     break;
                 case '$':
                     new Box(level, x, y);
@@ -141,7 +129,7 @@ public class Sokoban implements GameListener {
                     new Goal(level, x, y);
                     break;
                 case '+':
-                    game.player = new Player(level, x, y, input, "Player");
+                    new Player(level, x, y,  "Player");
                     new Goal(level, x, y);
                     break;
                 default:
@@ -149,40 +137,26 @@ public class Sokoban implements GameListener {
             }
             x += 16;
         }
+        return level;
     }
 
 
-
-
-
-
+    public Level getLevel() {
+        return level;
+    }
 
     public static void main(String[] args) {
-        new Sokoban();
+        new Sokoban(w);
     }
 
-    @Override
-    public void newScreen(Screen screen) {
-        this.screen = screen;
-    }
 
-    @Override
-    public void newLevel(Level level) {
-        this.level = level;
-    }
-
-    @Override
-    public void newPlayer(Player player) {
-        this.player = player;
-    }
-
-    @Override
-    public void newInputHandler(InputHandler input) {
-        this.input = input;
-    }
-
-    @Override
-    public void action() {
-
-    }
+//    @Override
+//    public void newInputHandler(InputHandler input) {
+////        this.input = input;
+//    }
+//
+//    @Override
+//    public void action() {
+//
+//    }
 }

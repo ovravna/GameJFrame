@@ -29,6 +29,15 @@ public class LevelManager {
 
     }
 
+    public void loadLevel(Level level) {
+        gameLevel = level;
+        if (gameLevel.containsPlayer()) {
+            gameLevel.player.setInputHandler(input);
+        }
+
+        gameLevel.loadLevel();
+    }
+
     public void loadLevel(Levels currentLevel) {
         gameLevel = null;
         switch (currentLevel) {
@@ -37,6 +46,10 @@ public class LevelManager {
                 break;
             case FIRST_LEVEL:
                 gameLevel = levels.get(0);
+        }
+
+        if (gameLevel.containsPlayer()) {
+            gameLevel.player.setInputHandler(input);
         }
 
         gameLevel.loadLevel();

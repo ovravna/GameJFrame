@@ -12,11 +12,10 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Game extends Canvas implements Runnable {
+
+    public static Game game;
 
     public static final long serialVersionUID = 1L;
 
@@ -38,62 +37,33 @@ public class Game extends Canvas implements Runnable {
     public static InputHandler input;
     public Level level;
     public Player player;
-    public List<GameListener> listeners = new ArrayList<>();
 
     private boolean daylightCycle = true;
-
-//    public static void setLight(int light) {
-//        Game.light = light;
-//    }
 
     private static int light = -0xdf;
     private int cycleTime = 20;
     private int smoothRise = 0;
     private boolean wonFlag;
 
-    //    private int x = 0;
-
-
-//    public Game() {
-
-    public Game(GameListener... listeners) {
-        this("Game", listeners);
+    public Game() {
+        this("Game", null);
     }
 
-    public Game(String name, GameListener... listeners) {
-        setMinimumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
-        setMaximumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
-        setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
+    public Game(String name, Level level) {
+
         this.name = name;
+        game = this;
 //        this.daylightCycle = false;
 //        this.light = 0;
 
 
-        frame = new JFrame();
+        screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png"));
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-
-        frame.add(this, BorderLayout.CENTER);
-        frame.pack();
-
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-        addListener(listeners);
-        setScreen(new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png")));
-        setInputHandler(new InputHandler(this));
-
-        setLevel(new Level("/levels/sokoban_test.png"));
-
-        levelManager = new LevelManager(screen, input, level);
+        input = new InputHandler(this);
 
 
-//        setPlayer(new Player(level, 0, 0, input, "Player"));
+        levelManager = new LevelManager(screen, input);
 
-
-//        this.screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png"));
         screen.sheet.setFontLine(1);
         screen.sheet.setPlayerLine(10);
 
@@ -128,56 +98,23 @@ public class Game extends Canvas implements Runnable {
         return Game.light;
     }
 
-    private void addListener(GameListener... listeners) {
-        this.listeners.addAll(Arrays.asList(listeners));
-    }
-
-    private void setPlayer(Player player) {
-        this.player = player;
-        listeners.forEach(n -> n.newPlayer(player));
-
-    }
-
-    public void action() {
-        listeners.forEach(GameListener::action);
-    }
-
-
-    private void setScreen(Screen screen) {
-        this.screen = screen;
-        listeners.forEach(n -> n.newScreen(screen));
-    }
-
-    public void setInputHandler(InputHandler input) {
-        this.input = input;
-        listeners.forEach(n -> n.newInputHandler(input));
-    }
-
-    private void setLevel(Level level) {
-        this.level = level;
-        listeners.forEach(n -> n.newLevel(level));
-    }
-
     public void init() {
-//        int index = 0;
-//
-//        for (int r = 0;r < 6;r++) {
-//            for (int g = 0;g < 6;g++) {
-//                for (int b = 0;b < 6;b++) {
-//                    int rr = (r*255/5);
-//                    int gg = (g*255/5);
-//                    int bb = (b*255/5);
-//
-//                    colors[index++] = rr << 16 | gg << 8 | bb;
-//                }
-//            }
-//        }
+        System.out.println("game.init()");
+        setMinimumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
+        setMaximumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
+        setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
 
+        frame = new JFrame();
 
-//        level.addEntities(player);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
+        frame.add(this, BorderLayout.CENTER);
+        frame.pack();
 
-        // JOptionPane.showInputDialog(this, "Enter username")
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public synchronized void start() {
@@ -195,14 +132,14 @@ public class Game extends Canvas implements Runnable {
     @Override
     public void run() {
         long lastTime = System.nanoTime();
-        double nsPerTick = 1_000_000_000D / 60D;
+        double nsPerTick = 1_000_000_000D/60D;
 
         int ticks = 0;
         int frames = 0;
 
         long lastTimer = System.currentTimeMillis();
         double delta = 0;
-        init();
+//        init();
 
         long now;
         boolean shouldRender;
@@ -254,7 +191,6 @@ public class Game extends Canvas implements Runnable {
                     y = levelManager.currentLevel().player.y;
                 }
 
-
                 frame.setTitle(String.format("  %3d ticks | %3d fps | pos  %4s %4s\n", ticks, frames, x, y));
                 frames = 0;
                 ticks = 0;
@@ -276,9 +212,6 @@ public class Game extends Canvas implements Runnable {
     }
 
 
-
-
-
     public void render() {
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
@@ -289,8 +222,8 @@ public class Game extends Canvas implements Runnable {
         int yOffset = 0;
 
         if (levelManager.currentLevel().player != null) {
-            xOffset = levelManager.currentLevel().player.x -screen.width/2;
-            yOffset = levelManager.currentLevel().player.y -screen.height/2;
+            xOffset = levelManager.currentLevel().player.x-screen.width/2;
+            yOffset = levelManager.currentLevel().player.y-screen.height/2;
 
         }
 

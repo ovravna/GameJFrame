@@ -3,7 +3,9 @@ package game.level;
 import game.InputHandler;
 import game.entities.Player;
 import game.gfx.Screen;
+import sokoban.Sokoban;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Menu extends Level {
@@ -18,6 +20,7 @@ public class Menu extends Level {
 
     private String[] options = {
             "Start",
+            "Add Board",
             "Help",
             "Quit"
     };
@@ -67,10 +70,10 @@ public class Menu extends Level {
 
     @Override
     public void draw(Graphics g, Screen screen) {
-        String title = "Dragon Tale";
+        String title = "Sokoban";
         g.setColor(titleColor);
         g.setFont(titleFont);
-        g.drawString(title, 250, 200);
+        g.drawString(title, 350, 200);
 
 
         g.setFont(font);
@@ -80,7 +83,7 @@ public class Menu extends Level {
             } else {
                 g.setColor(Color.RED);
             }
-            g.drawString(options[i], 500, 400+i*80);
+            g.drawString(options[i], 600-options[i].length()*20, 400+i*80);
         }
     }
 
@@ -89,9 +92,18 @@ public class Menu extends Level {
             levelManager.loadLevel(Levels.FIRST_LEVEL);
         }
         if (currentChoice == 1) {
-            // help
+            // Add board
+            String board = JOptionPane.showInputDialog("Enter Board");
+            if (board != null) {
+                levelManager.loadLevel(Sokoban.init(board));
+            }
         }
+
         if (currentChoice == 2) {
+            //help
+        }
+
+        if (currentChoice == 3) {
             System.exit(0);
         }
     }

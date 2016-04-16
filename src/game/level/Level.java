@@ -59,13 +59,9 @@ public class Level {
 
     }
 
+
+
     public void loadLevel() {
-        this.loadLevelFromFile();
-
-    }
-
-
-    private void loadLevelFromFile() {
 
 
         tiles = new byte[width*height];
@@ -83,6 +79,7 @@ public class Level {
             }
         }
     }
+
 
 
     private void saveLevelToFile() {
@@ -173,6 +170,10 @@ public class Level {
             t.tick();
         }
 
+    }
+
+    public boolean containsPlayer() {
+        return player != null;
     }
 
     public void addEntities(Entity entity) {
