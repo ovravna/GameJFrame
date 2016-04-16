@@ -157,6 +157,8 @@ public class Player extends Mob implements Actable {
 
 
 
+
+
         screen.render(xOffset + (modifier * flipTop), yOffset, xTile+yTile*(screen.sheet.width >> 3), flipTop, scale);
 
         screen.render(xOffset+modifier- (modifier * flipTop), yOffset, (xTile+1)+yTile*(screen.sheet.width >> 3), flipTop, scale);
