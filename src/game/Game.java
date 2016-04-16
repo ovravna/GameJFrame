@@ -117,7 +117,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void setLighting(boolean lighting) {
-        screen.setLightOn(lighting);
+        screen.setLighting(lighting);
     }
 
     public void setCycleTime(int cycleTime) {

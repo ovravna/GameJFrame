@@ -28,8 +28,12 @@ public class Level {
 
     public Level(String imagePath) {
         System.out.println(imagePath);
+        this.imagePath = imagePath;
+
+    }
+
+    public void loadLevel() {
         if (imagePath != null) {
-            this.imagePath = imagePath;
             this.loadLevelFromFile();
         } else {
             System.out.println("ninja");
@@ -39,6 +43,7 @@ public class Level {
             this.generateLevel();
         }
     }
+
 
     private void loadLevelFromFile() {
         try {
@@ -59,8 +64,7 @@ public class Level {
             for (int x = 0;x < width;x++) {
                 tileCheck:
                 for (Tile t : Tile.tiles) {
-                    if (t != null && t.getLevelColor() == tileColor[x+y*width]) {
-
+                    if (t != null && tileColor[x+y*width] == t.getLevelColor()) {
 
                         this.tiles[x+y*width] = t.getId();
                         break tileCheck;

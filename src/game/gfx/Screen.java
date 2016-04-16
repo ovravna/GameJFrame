@@ -173,7 +173,7 @@ public class Screen {
         return r;
     }
 
-    public void setLightOn(boolean lightOn) {
+    public void setLighting(boolean lightOn) {
         this.lightOn = lightOn;
     }
 

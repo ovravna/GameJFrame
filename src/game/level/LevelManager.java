@@ -33,6 +33,8 @@ public class LevelManager {
             case FIRST_LEVEL:
                 gameLevel = levels.get(0);
         }
+
+        gameLevel.loadLevel();
     }
 
     public void addLevel(Level... levels) {
