@@ -2,7 +2,6 @@ package game.level.tiles;
 
 //import java.util.*;
 
-import game.gfx.Colors;
 import game.gfx.Screen;
 import game.level.Level;
 
@@ -13,15 +12,14 @@ public abstract class Tile {
 
 
     public static final Tile[] tiles = new Tile[256];
-    public static final Tile VOID = new BasicSolidTile(0, 0, 0, Colors.get(000, -1, -1, -1), 0xff000000);
-    public static final Tile STONE = new BasicSolidTile(1, 1, 0, Colors.get(-1, 333, -1, -1), 0xff555555);
-    public static final Tile GRASS = new BasicTile(2, 2, 0, Colors.get(-1, 131, -1, 141), 0xff00ff00);
-    public static final Tile WATER = new AnimatedTile(3, new int[][]{{3, 0}, {4, 0}, {5, 0}, {4, 0}},
-            Colors.get(-1, 004, 115, -1), 0xff0000ff, 700);
-    public static final Tile SAND = new BasicTile(4, 7, 0, Colors.get(-1, 542, -1, 431), 0xffDD8800);
-    public static final Tile ROCK1 = new BasicSolidTile(11, 1, 7, Colors.get(111, 222, 333, 444),
+    public static final Tile VOID = new BasicSolidTile(0, 0, 0,  0xff000000);
+    public static final Tile STONE = new BasicSolidTile(1, 1, 0,  0xff555555);
+    public static final Tile GRASS = new BasicTile(2, 2, 0,  0xff00ff00);
+    public static final Tile WATER = new AnimatedTile(3, new int[][]{{3, 0}, {4, 0}, {5, 0}, {4, 0}}, 0xff0000ff, 700);
+    public static final Tile SAND = new BasicTile(4, 7, 0, 0xffDD8800);
+    public static final Tile ROCK1 = new BasicSolidTile(11, 1, 7,
             0xff111111, 16, Arrays.asList(0xffffff));
-
+    public static final Tile BLACK = new BasicSolidTile(5, 0, 0, 0x000000);
 
 
 

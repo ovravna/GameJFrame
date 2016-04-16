@@ -49,7 +49,6 @@ public class Game extends Canvas implements Runnable {
     private int cycleTime = 20;
     private int smoothRise = 0;
     private boolean wonFlag;
-    private boolean test;
 
     //    private int x = 0;
 

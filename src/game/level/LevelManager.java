@@ -5,7 +5,24 @@ import java.util.List;
 
 public class LevelManager {
     List<Level> levels = new ArrayList<>();
+    Levels currentLevel;
 
+
+
+    public LevelManager() {
+        currentLevel = Levels.MENU;
+
+        loadLevel(currentLevel);
+
+
+
+
+    }
+
+    private void loadLevel(Levels currentLevel) {
+
+
+    }
 
     public void addLevel(Level level) {
         if (level == null || levels.contains(level)) {
@@ -13,9 +30,6 @@ public class LevelManager {
         }
         levels.add(level);
     }
-
-
-
 
 
 }
