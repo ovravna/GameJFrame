@@ -33,7 +33,6 @@ public class Level {
         System.out.println(imagePath);
         this.imagePath = imagePath;
 
-
         if (imagePath != null) {
             loadImage();
         } else {
@@ -42,9 +41,6 @@ public class Level {
             tiles = new byte[width*height];
             this.generateLevel();
         }
-
-
-
     }
 
     private void loadImage() {
@@ -56,13 +52,9 @@ public class Level {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-
-
     public void loadLevel() {
-
 
         tiles = new byte[width*height];
         this.loadTiles();

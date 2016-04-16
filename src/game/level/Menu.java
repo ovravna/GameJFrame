@@ -1,17 +1,27 @@
 package game.level;
 
 import game.InputHandler;
+import game.audio.AudioPlayer;
+import game.entities.Player;
 import game.gfx.Screen;
 import game.level.tiles.Background;
 import sokoban.Sokoban;
+import sokoban.cells.Lantern;
+import sokoban.cells.LightPoint;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import static game.Game.*;
 
 public class Menu extends Level {
     private final LevelManager levelManager;
     private final InputHandler input;
-        private Background bg;
+    private Background bg;
+    private BufferedImage bgImage;
 
 
     private Color titleColor;
@@ -24,7 +34,8 @@ public class Menu extends Level {
 
     private String[] options = {
             "Start",
-            "Add Board",
+            "Test",
+            "Make Board",
             "Help",
             "Quit"
     };
@@ -36,32 +47,37 @@ public class Menu extends Level {
         this.levelManager = levelManager;
         this.input = input;
 
-        bg = new Background("/backgrounds/menubg.gif", 0);
-//        bg.setVector(-1, 0);
+//        bg = new Background("/backgrounds/menubg.gif", 0);
 
         titleColor = new Color(246, 198, 77);
-        fontColor1 = new Color(247, 246, 184);
+        fontColor1 = new Color(255, 220, 142);
         fontColor2 = new Color(255, 136, 18);
 
 
-        titleFont = new Font("Century Gothic", Font.BOLD, 120);
+        titleFont = new Font("Old English Text MT", Font.BOLD, 120);
+
+        font = new Font("OCR A EXTENDED", Font.PLAIN, 80);
+
+        try {
+            bgImage = ImageIO.read(getClass().getResourceAsStream("/backgrounds/menubg.gif"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
-
-        font = new Font("Arial", Font.PLAIN, 80);
-
-
-
-//        player = new Player(this, 0, 0, input);
+//        player = new Player(this, 0, 0);
     }
 
     @Override
     public void tick() {
         super.tick();
-        bg.update();
+        if (bg != null) {
+            bg.update();
+        }
 
 
         if (input.up.isReleased()) {
+            AudioPlayer.MENUOPTION.play();
             currentChoice--;
             if (currentChoice == -1) {
                 currentChoice = options.length-1;
@@ -69,6 +85,7 @@ public class Menu extends Level {
         }
 
         if (input.down.isReleased()) {
+            AudioPlayer.MENUOPTION.play();
             currentChoice++;
             if (currentChoice == options.length) {
                 currentChoice = 0;
@@ -76,13 +93,21 @@ public class Menu extends Level {
         }
 
         if (input.enter.isReleased()) {
+            AudioPlayer.MENUSELECT.play();
             select();
         }
     }
 
     @Override
     public void draw(Graphics g, Screen screen) {
-        bg.draw(g);
+        if (bg != null) {
+            bg.draw(g);
+        }
+
+        if (bgImage != null) {
+            g.drawImage(bgImage, 0, 0, WIDTH*SCALE+20, HEIGHT*SCALE+20, null);
+        }
+
 
         String title = "Sokoban";
         g.setColor(titleColor);
@@ -93,11 +118,11 @@ public class Menu extends Level {
         g.setFont(font);
         for (int i = 0;i < options.length;i++) {
             if (currentChoice == i) {
-                g.setColor(fontColor1);
-            } else {
                 g.setColor(fontColor2);
+            } else {
+                g.setColor(fontColor1);
             }
-            g.drawString(options[i], 600-options[i].length()*20, 400+i*80);
+            g.drawString(options[i], 600-options[i].length()*20, 530+i*80);
         }
     }
 
@@ -105,7 +130,19 @@ public class Menu extends Level {
         if (currentChoice == 0) {
             levelManager.loadLevel(Levels.FIRST_LEVEL);
         }
+
         if (currentChoice == 1) {
+            Level level = new Level(Sokoban.LEVEL);
+            new Player(level, 0, 0);
+            new Lantern(level, 20, 10, -0x11);
+            new Lantern(level, 30, 10, -0x11);
+
+            new LightPoint(level, 40, 40, -0xaa, 20);
+
+            levelManager.loadLevel(level);
+        }
+
+        if (currentChoice == 2) {
             // Add board
             String board = JOptionPane.showInputDialog("Enter Board");
             if (board != null) {
@@ -113,11 +150,11 @@ public class Menu extends Level {
             }
         }
 
-        if (currentChoice == 2) {
+        if (currentChoice == 3) {
             //help
         }
 
-        if (currentChoice == 3) {
+        if (currentChoice == 4) {
             System.exit(0);
         }
     }

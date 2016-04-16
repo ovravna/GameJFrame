@@ -5,9 +5,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static game.Game.HEIGHT;
-import static game.Game.SCALE;
-import static game.Game.WIDTH;
+import static game.Game.*;
 
 public class Background {
 
@@ -23,9 +21,8 @@ public class Background {
     public Background(String s, double ms) {
 
         try {
-            image = ImageIO.read(
-                    getClass().getResourceAsStream(s)
-            );
+            image = ImageIO.read(getClass().getResourceAsStream(s));
+//            image = ImageIO.read(new File(s));
             moveScale = ms;
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,12 +49,12 @@ public class Background {
 
         g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE,null);
 
-//        if (x < 0) {
-//            g.drawImage(image, (int) x+WIDTH, (int) y, WIDTH*SCALE, HEIGHT*SCALE, null);
-//        }
-//        if (x > 0) {
-//            g.drawImage(image, (int) x-WIDTH, (int) y, WIDTH*SCALE, HEIGHT*SCALE, null);
-//        }
+        if (x < 0) {
+            g.drawImage(image, (int) x+WIDTH, (int) y, WIDTH*SCALE, HEIGHT*SCALE, null);
+        }
+        if (x > 0) {
+            g.drawImage(image, (int) x-WIDTH, (int) y, WIDTH*SCALE, HEIGHT*SCALE, null);
+        }
     }
 
 }

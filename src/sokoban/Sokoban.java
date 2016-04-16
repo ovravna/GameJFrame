@@ -12,6 +12,8 @@ public class Sokoban {
     Game game;
     Level level;
 
+    public static final String LEVEL = "/levels/sokoban_test.png";
+
     static String q =
                     "#######\n"+
                     "#*  # #\n"+
@@ -81,7 +83,7 @@ public class Sokoban {
 
 
     public static Level init(String sokoban) {
-        Level level = new Level("/levels/sokoban_test.png");
+        Level level = new Level(Sokoban.LEVEL);
         String[] sokobanSplit = sokoban.split("\\||\\n");
 
         int sokoban_width = sokobanSplit[0].length();

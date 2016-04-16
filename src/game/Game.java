@@ -99,7 +99,6 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void init() {
-        System.out.println("game.init()");
         setMinimumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         setMaximumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
@@ -231,13 +230,13 @@ public class Game extends Canvas implements Runnable {
 
         levelManager.currentLevel().renderEntities(screen);
 
+
         for (int y = 0;y < screen.height;y++) {
             for (int x = 0;x < screen.width;x++) {
                 int colorCode = screen.pixels[x+y*WIDTH];
                 pixels[x+y*WIDTH] = colorCode;
             }
         }
-
 
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.PINK);

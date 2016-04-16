@@ -3,7 +3,6 @@ package game.entities;
 //import java.util.*;
 
 import game.InputHandler;
-import game.gfx.Colors;
 import game.gfx.Screen;
 import game.level.Level;
 import sokoban.cells.Actable;
@@ -16,7 +15,6 @@ import java.util.List;
 public class Player extends Mob implements Actable {
 
     private InputHandler input;
-    private int color = Colors.get(-1, 111, 145, 543);
     private int scale = 1;
     protected boolean isSwimming = false;
     private int tickCount = 0;
@@ -33,14 +31,6 @@ public class Player extends Mob implements Actable {
         super(level, "Player", x, y, 1);
         this.username = username;
         dimentions = new int[]{7, 0, 7, 3};
-    }
-
-    public int getXa() {
-        return xa;
-    }
-
-    public int getYa() {
-        return ya;
     }
 
     public void setInputHandler(InputHandler input) {

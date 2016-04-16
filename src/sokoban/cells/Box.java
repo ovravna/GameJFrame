@@ -2,7 +2,6 @@ package sokoban.cells;
 
 import game.entities.Entity;
 import game.entities.Mob;
-import game.gfx.Colors;
 import game.gfx.Light;
 import game.gfx.Screen;
 import game.gfx.SpriteSheet;

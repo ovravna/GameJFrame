@@ -115,7 +115,7 @@ public class Screen {
 
 
     private Integer lightCombiner(int i) {
-        int r = -0xffffff;
+        int r = -0xff;
 
 
         Integer temp;
@@ -161,12 +161,10 @@ public class Screen {
             if (temp == null) {
                 temp = filterColor;
             }
-
             r = temp > r ? temp:r;
-
         }
 
-        if (r == -0xffffff) {
+        if (r == -0xff) {
             r = filterColor;
         }
         
@@ -225,9 +223,7 @@ public class Screen {
                 if (distance < radSqur) {
                     if (lighting == Light.SOFT) {
                         light[xa+ya*width] = (int) ((filterColor*distance)-filter*(radSqur-distance))/radSqur;
-
-                    }
-                    if (lighting == Light.HARD) {
+                    } else if (lighting == Light.HARD) {
                         light[xa+ya*width] = filter;
                     }
                 } else

@@ -5,7 +5,6 @@ import game.gfx.Screen;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static game.level.Levels.MENU;
@@ -13,16 +12,15 @@ import static game.level.Levels.MENU;
 public class LevelManager {
     private final Screen screen;
     private final InputHandler input;
-    List<Level> levels = new ArrayList<>();
-    Levels currentLevel;
-    Level gameLevel;
+    private List<Level> levels = new ArrayList<>();
+    private Levels currentLevel;
+    private Level gameLevel;
 
 
 
-    public LevelManager(Screen screen, InputHandler input, Level... levels) {
+    public LevelManager(Screen screen, InputHandler input) {
         this.screen = screen;
         this.input = input;
-        Arrays.asList(levels).forEach(level -> this.levels.add(level));
         currentLevel = MENU;
         loadLevel(currentLevel);
 
@@ -67,10 +65,7 @@ public class LevelManager {
                 this.levels.add(level);
             }
         }
-
-
     }
-
 
     public Level currentLevel() {
         return gameLevel;
