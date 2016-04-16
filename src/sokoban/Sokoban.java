@@ -75,9 +75,9 @@ public class Sokoban implements GameListener {
 ////        new Goal(level, 40, 80);
 //////
 
-        game.player = new Player(level, 0, 50, input);
-        new Lantern(level, 20, 10, 0);
-        new Lantern(level, 60, 10, 0);
+//        game.player = new Player(level, 0, 50, input);
+//        new Lantern(level, 20, 10, 0);
+//        new Lantern(level, 60, 10, 0);
 
         init(q);
 
@@ -88,7 +88,7 @@ public class Sokoban implements GameListener {
         game.setLighting(true);
         game.setDaylightCycle(false);
         game.setCycleTime(20);
-        game.setLight(0);
+        game.setLight();
 
 
         game.start();

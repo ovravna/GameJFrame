@@ -36,6 +36,6 @@ public class BasicTile extends Tile {
 
     @Override
     public void render(Screen screen, Level level, int x, int y) {
-        screen.render(x, y, tileId, 0, 1, block, Arrays.asList(0x000000));
+        screen.render(x, y, tileId, 0, 1, block);
     }
 }

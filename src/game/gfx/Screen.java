@@ -19,7 +19,7 @@ public class Screen {
     private boolean lightOn = true;
     HashMap<Entity, Integer[]> lightSources = new HashMap<>();
 
-    private List<Integer> defaultIgnoreColors = Arrays.asList(0xfa05f0);
+    public static List<Integer> defaultIgnoreColors = Arrays.asList(0xfa05f0);
 
     public int[] pixels;
 

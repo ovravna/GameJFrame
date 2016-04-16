@@ -2,13 +2,14 @@ package game.level.tiles;
 
 //import java.util.*;
 
-import java.util.Arrays;
+import game.gfx.Screen;
+
 import java.util.List;
 
 public class BasicSolidTile extends BasicTile {
 
     public BasicSolidTile(int id, int x, int y,  int levelColor) {
-        this(id, x, y, levelColor, Arrays.asList(0x000000));
+        this(id, x, y, levelColor, Screen.defaultIgnoreColors);
     }
 
     public BasicSolidTile(int id, int x, int y, int levelColor, List<Integer> ignoreColors) {

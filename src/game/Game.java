@@ -87,7 +87,7 @@ public class Game extends Canvas implements Runnable {
 
         setLevel(new Level("/levels/sokoban_test.png"));
 
-        levelManager = new LevelManager(input, level);
+        levelManager = new LevelManager(screen, input, level);
 
 
 //        setPlayer(new Player(level, 0, 0, input, "Player"));
@@ -255,7 +255,7 @@ public class Game extends Canvas implements Runnable {
 
     public void tick() {
         tickCount++;
-        levelManager.currentLevel().tick();
+        levelManager.tick();
 
 
         if (Goal.goals.stream().anyMatch(Goal::isWon) && !wonFlag) {
@@ -301,6 +301,7 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.PINK);
         g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        levelManager.draw(g);
 
 //        g.setFont(new Font("OCR A Extended", Font.BOLD, 40));
 //        g.setColor(Color.BLACK);

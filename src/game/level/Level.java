@@ -8,10 +8,12 @@ import game.gfx.Screen;
 import game.level.tiles.Tile;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,12 +26,12 @@ public class Level {
     private String imagePath;
     private BufferedImage image;
     public Player player;
+    public static HashMap<Integer, Tile> tileColors = new HashMap<>();
 
 
     public Level(String imagePath) {
         System.out.println(imagePath);
         this.imagePath = imagePath;
-
     }
 
     public void loadLevel() {
@@ -62,15 +64,10 @@ public class Level {
 
         for (int y = 0;y < height;y++) {
             for (int x = 0;x < width;x++) {
-                tileCheck:
-                for (Tile t : Tile.tiles) {
-                    if (t != null && tileColor[x+y*width] == t.getLevelColor()) {
 
-                        this.tiles[x+y*width] = t.getId();
-                        break tileCheck;
-                    }
+                if (tileColors.containsKey(tileColor[x+y*width])) {
+                    this.tiles[x+y*width] = tileColors.get(tileColor[x+y*width]).getId();
                 }
-
             }
         }
     }
@@ -169,6 +166,10 @@ public class Level {
     public void addEntities(Entity entity) {
         if (entity instanceof Player) this.player = (Player) entity;
         this.entities.add(entity);
+
+    }
+
+    public void draw(Graphics g, Screen screen) {
 
     }
 }

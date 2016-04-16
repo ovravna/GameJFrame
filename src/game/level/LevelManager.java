@@ -1,14 +1,17 @@
 package game.level;
 
 import game.InputHandler;
+import game.gfx.Screen;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static game.level.Levels.FIRST_LEVEL;
+import static game.level.Levels.MENU;
 
 public class LevelManager {
+    private final Screen screen;
     private final InputHandler input;
     List<Level> levels = new ArrayList<>();
     Levels currentLevel;
@@ -16,19 +19,21 @@ public class LevelManager {
 
 
 
-    public LevelManager(InputHandler input, Level... levels) {
+    public LevelManager(Screen screen, InputHandler input, Level... levels) {
+        this.screen = screen;
         this.input = input;
         Arrays.asList(levels).forEach(level -> this.levels.add(level));
-        currentLevel = FIRST_LEVEL;
+        currentLevel = MENU;
         loadLevel(currentLevel);
 
 
     }
 
-    private void loadLevel(Levels currentLevel) {
+    public void loadLevel(Levels currentLevel) {
+        gameLevel = null;
         switch (currentLevel) {
             case MENU:
-                gameLevel = new Menu(input, "/levels/Black.png");
+                gameLevel = new Menu(this, input, "/levels/Black.png");
                 break;
             case FIRST_LEVEL:
                 gameLevel = levels.get(0);
@@ -50,5 +55,16 @@ public class LevelManager {
 
     public Level currentLevel() {
         return gameLevel;
+    }
+
+    public void tick() {
+        gameLevel.tick();
+
+    }
+
+    public void draw(Graphics g) {
+        gameLevel.draw(g, screen);
+
+
     }
 }

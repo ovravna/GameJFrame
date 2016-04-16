@@ -13,6 +13,7 @@ public class InputHandler implements KeyListener {
     public Key right = new Key();
     public Key act = new Key();
     public Key jump = new Key();
+    public Key enter = new Key();
 
     public InputHandler(Game game) {
         game.addKeyListener(this);
@@ -53,6 +54,10 @@ public class InputHandler implements KeyListener {
 
         if (keyCode == KeyEvent.VK_SPACE) {
             jump.toggle(isPressed);
+        }
+
+        if (keyCode == KeyEvent.VK_ENTER) {
+            enter.toggle(isPressed);
         }
 
     }
