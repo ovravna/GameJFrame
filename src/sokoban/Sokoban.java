@@ -101,15 +101,16 @@ public class Sokoban implements GameListener {
         int sokoban_width = sokobanSplit[0].length();
         int sokoban_height = sokobanSplit.length;
 
-        int x_level_centrum = (level.width<<3)/2;
+        int x_level_centrum = (level.width << 3)/2;
         int y_level_centrum = (level.height << 3)/2;
+//        System.out.printf("%s %s", x_level_centrum, y_level_centrum);
 
         new LightPoint(level, x_level_centrum, y_level_centrum, sokoban_height<<3, 0x33);
 
         int xOrigo = (x_level_centrum-(sokoban_width<<3));
         int yOrigo = (y_level_centrum-(sokoban_height<<3));
 
-        
+
         int x = xOrigo;
         int y = yOrigo;
 

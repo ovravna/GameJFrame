@@ -246,7 +246,16 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis()-lastTimer >= 1000) {
                 lastTimer += 1000;
-                frame.setTitle(String.format("  %3d ticks | %3d fps \n", ticks, frames));
+
+                int x = 0;
+                int y = 0;
+                if (levelManager.currentLevel().player != null) {
+                    x = levelManager.currentLevel().player.x;
+                    y = levelManager.currentLevel().player.y;
+                }
+
+
+                frame.setTitle(String.format("  %3d ticks | %3d fps | pos  %4s %4s\n", ticks, frames, x, y));
                 frames = 0;
                 ticks = 0;
             }
