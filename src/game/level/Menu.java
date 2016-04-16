@@ -1,8 +1,8 @@
 package game.level;
 
 import game.InputHandler;
-import game.entities.Player;
 import game.gfx.Screen;
+import game.level.tiles.Background;
 import sokoban.Sokoban;
 
 import javax.swing.*;
@@ -11,12 +11,16 @@ import java.awt.*;
 public class Menu extends Level {
     private final LevelManager levelManager;
     private final InputHandler input;
-    Player player;
+        private Background bg;
+
 
     private Color titleColor;
+    private Color fontColor1;
+    private Color fontColor2;
+
+
     private Font titleFont;
     private Font font;
-    private Graphics2D g;
 
     private String[] options = {
             "Start",
@@ -32,8 +36,17 @@ public class Menu extends Level {
         this.levelManager = levelManager;
         this.input = input;
 
-        titleColor = new Color(128, 0, 0);
+        bg = new Background("/backgrounds/menubg.gif", 0);
+//        bg.setVector(-1, 0);
+
+        titleColor = new Color(246, 198, 77);
+        fontColor1 = new Color(247, 246, 184);
+        fontColor2 = new Color(255, 136, 18);
+
+
         titleFont = new Font("Century Gothic", Font.BOLD, 120);
+
+
 
         font = new Font("Arial", Font.PLAIN, 80);
 
@@ -45,6 +58,8 @@ public class Menu extends Level {
     @Override
     public void tick() {
         super.tick();
+        bg.update();
+
 
         if (input.up.isReleased()) {
             currentChoice--;
@@ -63,13 +78,12 @@ public class Menu extends Level {
         if (input.enter.isReleased()) {
             select();
         }
-
-
-
     }
 
     @Override
     public void draw(Graphics g, Screen screen) {
+        bg.draw(g);
+
         String title = "Sokoban";
         g.setColor(titleColor);
         g.setFont(titleFont);
@@ -79,9 +93,9 @@ public class Menu extends Level {
         g.setFont(font);
         for (int i = 0;i < options.length;i++) {
             if (currentChoice == i) {
-                g.setColor(Color.WHITE);
+                g.setColor(fontColor1);
             } else {
-                g.setColor(Color.RED);
+                g.setColor(fontColor2);
             }
             g.drawString(options[i], 600-options[i].length()*20, 400+i*80);
         }

@@ -8,11 +8,8 @@ import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
 
-import java.util.Arrays;
-
 public class Box extends Mob {
 
-    private int color = Colors.get(432, 543, 432, 000);
     private SpriteSheet sheet = new SpriteSheet("/wall16x16.png");
     private boolean renderLight;
 
@@ -29,6 +26,7 @@ public class Box extends Mob {
     public void tick() {
         if (level.player == null) return;
         Entity entity = getEntity(x+8, y+8);
+
         if (entity instanceof Goal) {
             renderLight = true;
             ((Goal) entity).setFilled();
@@ -40,7 +38,7 @@ public class Box extends Mob {
 
     @Override
     public void render(Screen screen) {
-        screen.render(x, y, 5 + 5*8, 0, 1, 16, Arrays.asList(0xfa05f0));
+        screen.render(x, y, 5 + 5*8, 0, 1, 16);
 
         if (renderLight) {
             screen.renderRoundLight(x + 4, y + 7 , 6, -0x88, Light.SOFT, this);

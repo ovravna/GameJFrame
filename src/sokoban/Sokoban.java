@@ -91,7 +91,9 @@ public class Sokoban {
         int y_level_centrum = (level.height << 3)/2;
 //        System.out.printf("%s %s", x_level_centrum, y_level_centrum);
 
-        new LightPoint(level, x_level_centrum, y_level_centrum, sokoban_height << 3, 0x33);
+        if (sokoban_height > 1) {
+            new LightPoint(level, x_level_centrum, y_level_centrum, sokoban_height << 3, 0x33);
+        }
 
         int xOrigo = (x_level_centrum-(sokoban_width << 3));
         int yOrigo = (y_level_centrum-(sokoban_height << 3));
