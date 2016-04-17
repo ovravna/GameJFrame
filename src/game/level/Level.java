@@ -30,7 +30,7 @@ public class Level {
 
 
     public Level(String imagePath) {
-        System.out.println(imagePath);
+//        System.out.println(imagePath);
         this.imagePath = imagePath;
 
         if (imagePath != null) {

@@ -1,6 +1,5 @@
 package game;
 
-import game.entities.Player;
 import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
@@ -15,28 +14,22 @@ import java.awt.image.DataBufferInt;
 
 public class Game extends Canvas implements Runnable {
 
-    public static Game game;
-
     public static final long serialVersionUID = 1L;
 
     public static final int WIDTH = 120;
     public static final int HEIGHT = WIDTH/12*9;
     public static final int SCALE = 10;
-    public static String name;
+    private static String name;
     private JFrame frame;
 
-    public boolean running = true;
+    private boolean running = true;
     public int tickCount = 0;
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-    private int[] colors = new int[6*6*6];
     private Screen screen;
 
     private LevelManager levelManager;
-    public static InputHandler input;
-    public Level level;
-    public Player player;
 
     private boolean daylightCycle = true;
 
@@ -52,23 +45,29 @@ public class Game extends Canvas implements Runnable {
     public Game(String name, Level level) {
 
         this.name = name;
-        game = this;
 //        this.daylightCycle = false;
 //        this.light = 0;
 
         screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png"));
 
-        input = new InputHandler(this);
 
 
-        levelManager = new LevelManager(screen, input);
+        levelManager = new LevelManager(screen, new InputHandler(this));
         levelManager.addLevel(level);
+
 
         screen.sheet.setFontLine(1);
         screen.sheet.setPlayerLine(10);
 
 
     }
+
+    public void addInputHandler(InputHandler input) {
+
+    }
+
+
+
 
     public void setDaylightCycle(boolean daylightCycle) {
         this.daylightCycle = daylightCycle;

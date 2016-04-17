@@ -169,6 +169,7 @@ public class Screen {
     public void renderRoundLight(int x, int y, int radius, int filter, int xOffset, int yOffset, Light lighting, Entity this_entity) {
         Integer[] light = new Integer[width*height];
         List<Integer> filters = new ArrayList<>();
+        boolean rgbFilter = false;
 
         int radSqur = radius*radius;
 
@@ -177,13 +178,15 @@ public class Screen {
 
         double distance;
 
+        int a, r = 0, g = 0, b = 0;
         if (Math.abs(filter)> 0xff) {
-            int r = (filter>>16);
-            int g = filter>>8;
-            int b = filter;
+            a = filter >> 24;
+            r = filter >> 16;
+            g = filter >> 8;
+            b = filter;
+            rgbFilter = true;
 
-            filters.addAll(Arrays.asList(r, g, b));
-        } else filters.add(filter);
+        } else a = filter;
 
 
 
@@ -199,23 +202,23 @@ public class Screen {
                 // TODO: 14.04.2016 ender kode for håndtering av filter > 0xff
                 if (distance < radSqur) {
 
-                    int[] temp = new int[filters.size()];
-                    for (int i = 0;i < filters.size();i++) {
-                        int f = filters.get(i);
+                    int shade = 1;
 
-                        if (lighting == Light.SOFT) {
-                            temp[i] = ((int) ((filterColor*distance)-f*(radSqur-distance))/radSqur);
-                        } else if (lighting == Light.HARD) {
-                            temp[i] = f;
-                        }
+                    if (lighting == Light.SOFT) {
+                        shade = ((int) ((filterColor*distance)-a*(radSqur-distance))/radSqur);
+                    } else if (lighting == Light.HARD) {
+                        shade = a;
                     }
-                    int sum = 0;
+
 //                    System.out.println(temp.length);
-                    for (int i = temp.length-1;i >= 0;i--) {
-                        sum = temp[i] << 8*i;
-                    }
+                    if (rgbFilter) {
+                        int f = (shade-a)/filterColor;
 
-                    light[xa+ya*width] = sum;
+
+
+                        light[xa+ya*width] = ((f*r) << 16)+((f*b) << 8)+(f*g);
+
+                    } else light[xa+ya*width] = shade;
 
                 } else
 //                if (distance < radSqur*1.1)

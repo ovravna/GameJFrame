@@ -60,6 +60,10 @@ public class InputHandler implements KeyListener {
             enter.toggle(isPressed);
         }
 
+        if (keyCode == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+
     }
 
     public class Key {

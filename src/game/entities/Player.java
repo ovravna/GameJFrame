@@ -3,6 +3,7 @@ package game.entities;
 //import java.util.*;
 
 import game.InputHandler;
+import game.InputObject;
 import game.gfx.Screen;
 import game.level.Level;
 import sokoban.cells.Actable;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class Player extends Mob implements Actable {
+public class Player extends Mob implements Actable, InputObject {
 
     private InputHandler input;
     private int scale = 1;
@@ -31,14 +32,18 @@ public class Player extends Mob implements Actable {
         super(level, "Player", x, y, 1);
         this.username = username;
         dimentions = new int[]{7, 0, 7, 3};
+        super.addInputObject(this);
     }
 
+    @Override
     public void setInputHandler(InputHandler input) {
         this.input = input;
+        System.out.println("Input from: "+input);
     }
 
     @Override
     public void tick() {
+
         if (input == null) {
             return;
         }

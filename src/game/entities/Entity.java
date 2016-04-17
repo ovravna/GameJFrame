@@ -1,6 +1,7 @@
 package game.entities;
 
 
+import game.InputManager;
 import game.gfx.Screen;
 import game.level.Level;
 import sokoban.cells.*;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Entity implements Comparable{
+public abstract class Entity extends InputManager implements Comparable{
 
     public int x, y;
     protected Level level;
