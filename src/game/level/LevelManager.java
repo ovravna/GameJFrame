@@ -33,11 +33,12 @@ public class LevelManager extends InputManager {
     }
 
     public void loadLevel(Level level) {
+        gameLevel = level;
+
         if (gameLevel.levelManager == null) {
             gameLevel.addManager(this);
         }
 
-        gameLevel = level;
         gameLevel.loadLevel();
     }
 

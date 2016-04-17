@@ -94,7 +94,6 @@ public class Player extends Mob implements Actable, InputObject {
             xp = x * i;
             yp = y * i;
             Entity e = getEntity(this.x+3 + xp, this.y + yp);
-//            System.out.print(e == null ? "":e.getClass().getSimpleName()+"\n");
 
             if (e != null && e instanceof Actable && !e.equals(this)) {
                 ((Actable) e).act();
@@ -127,10 +126,8 @@ public class Player extends Mob implements Actable, InputObject {
 
         if (isJumping && !isSwimming) {
             yOffset -= 6;
-            scale = 2;
             if (tickCount-jumpTime > 20) {
                 isJumping = false;
-                scale = 1;
             }
         }
         if (isSwimming) {

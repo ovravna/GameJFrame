@@ -44,6 +44,7 @@ public class Lighting {
 
     public void renderRoundLight(int x, int y, int radius, int filter, int xOffset, int yOffset, Light lighting, Entity this_entity) {
         Integer[] light = new Integer[width*height];
+
         boolean rgbFilter = false;
 
         int radSqur = radius*radius;
@@ -63,14 +64,19 @@ public class Lighting {
 
         } else a = filter;
 
+//        System.out.println("x: "+(x-radius)+" "+(x+radius));
+//        System.out.println("y: "+(y-radius)+" "+(y+radius));
+//        int xMin, xMax, yMin, yMax;
 
-        for (int xa = 0;xa < width;xa++) {
-            for (int ya = 0;ya < height;ya++) {
+        int xMin = x-radius < 0 ? 0:x-radius;
+        int xMax = x+radius > width ? width:x+radius;
+        int yMin = y-radius < 0 ? 0:y-radius;
+        int yMax = y+radius > height ? height:y+radius;
+
+        for (int xa = xMin;xa < xMax;xa++) {
+            for (int ya = yMin;ya < yMax;ya++) {
+
                 distance = Math.pow(xa-x, 2)+Math.pow(ya-y, 2);
-
-//                if (distance < radSqur*0.01) {
-//                    this.light[xa+ya*width] = filter;
-//                } else
 
                 // TODO: 14.04.2016 ender kode for håndtering av filter > 0xff
                 if (distance < radSqur) {
@@ -92,9 +98,7 @@ public class Lighting {
 
                     } else light[xa+ya*width] = shade;
 
-                } else
-//                if (distance < radSqur*1.1)
-                    light[xa+ya*width] = filterColor;
+                } else light[xa+ya*width] = null;
             }
         }
         lightSources.put(this_entity, light);
@@ -109,24 +113,33 @@ public class Lighting {
         this.filterColor = filterColor;
     }
 
+    private static final int INITIAL_R = -0xff;
+    private static int sources = 0;
 
     public Integer lightCombiner(int i) {
-        int r = -0xff;
+
+        Integer r = INITIAL_R;
 
         Integer temp;
+
+        if (sources != lightSources.size()) {
+            System.out.println("Lightsources "+ lightSources.size());
+        }
+
+        sources = lightSources.size();
 
         for (Integer[] light : lightSources.values()) {
             temp = light[i];
 
-            if (temp == null) {
-                temp = filterColor;
+            if (temp != null) {
+                r = temp > r ? temp:r;
             }
-            r = temp > r ? temp:r;
         }
 
-        if (r == -0xff) {
-            r = filterColor;
+        if (r == INITIAL_R) {
+            r = null;
         }
+
 
         return r;
     }
