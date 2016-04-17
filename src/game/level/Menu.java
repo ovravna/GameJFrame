@@ -1,13 +1,11 @@
 package game.level;
 
 import game.InputHandler;
-import game.audio.AudioPlayer;
 import game.entities.Player;
 import game.gfx.Screen;
 import game.level.tiles.Background;
 import sokoban.Sokoban;
 import sokoban.cells.Lantern;
-import sokoban.cells.LightPoint;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -77,7 +75,7 @@ public class Menu extends Level {
 
 
         if (input.up.isReleased()) {
-            AudioPlayer.MENUOPTION.play();
+//            AudioPlayer.MENUOPTION.play();
             currentChoice--;
             if (currentChoice == -1) {
                 currentChoice = options.length-1;
@@ -85,7 +83,7 @@ public class Menu extends Level {
         }
 
         if (input.down.isReleased()) {
-            AudioPlayer.MENUOPTION.play();
+//            AudioPlayer.MENUOPTION.play();
             currentChoice++;
             if (currentChoice == options.length) {
                 currentChoice = 0;
@@ -93,7 +91,7 @@ public class Menu extends Level {
         }
 
         if (input.enter.isReleased()) {
-            AudioPlayer.MENUSELECT.play();
+//            AudioPlayer.MENUSELECT.play();
             select();
         }
     }
@@ -127,17 +125,17 @@ public class Menu extends Level {
     }
 
     private void select() {
-        if (currentChoice == 0) {
+        if (currentChoice == 1) {
             levelManager.loadLevel(Levels.FIRST_LEVEL);
         }
 
-        if (currentChoice == 1) {
+        if (currentChoice == 0) {
             Level level = new Level(Sokoban.LEVEL);
             new Player(level, 0, 0);
-            new Lantern(level, 20, 10, -0x11);
-            new Lantern(level, 30, 10, -0x11);
+            new Lantern(level, 20, 10, -0x00ff11);
+//            new Lantern(level, 30, 10, -0x11);
 
-            new LightPoint(level, 40, 40, -0xaa, 20);
+//            new LightPoint(level, 40, 40, -0x661100, 20);
 
             levelManager.loadLevel(level);
         }

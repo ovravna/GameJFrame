@@ -3,6 +3,7 @@ package game.gfx;
 import game.Game;
 import game.entities.Entity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -120,41 +121,6 @@ public class Screen {
 
         Integer temp;
 
-//        int size = 0;
-//
-//        List<Integer> lights = new ArrayList<>();
-//
-//        for (Integer[] light : lightSources.values()) {
-//            lights.add(light[i]);
-//        }
-////        List<Integer> lightStream = lights.stream().filter(n -> n != null).collect(Collectors.toList());
-//
-//        for (Integer integer : lights) {
-//            if (integer != null) {
-//                size++;
-//            }
-//        }
-//
-//
-//        if (size == 0) {
-//            return filterColor;
-//        } else if (size == 1) {
-//            for (Integer integer : lights) {
-//                if (integer != null) {
-//                    return integer;
-//                }
-//            }
-//            return filterColor;
-//        } else {
-//            for (Integer integer : lights) {
-//                Integer num = integer;
-//                if (num == null) {
-//                    num = 1;
-//                }
-//                r = (int) (num > r ? num:r);
-//            }
-//        }
-//
         for (Integer[] light : lightSources.values()) {
             temp = light[i];
 
@@ -202,7 +168,7 @@ public class Screen {
 
     public void renderRoundLight(int x, int y, int radius, int filter, int xOffset, int yOffset, Light lighting, Entity this_entity) {
         Integer[] light = new Integer[width*height];
-
+        List<Integer> filters = new ArrayList<>();
 
         int radSqur = radius*radius;
 
@@ -210,6 +176,17 @@ public class Screen {
         y -= this.yOffset-yOffset;
 
         double distance;
+
+        if (Math.abs(filter)> 0xff) {
+            int r = (filter>>16);
+            int g = filter>>8;
+            int b = filter;
+
+            filters.addAll(Arrays.asList(r, g, b));
+        } else filters.add(filter);
+
+
+
 
         for (int xa = 0;xa < width;xa++) {
             for (int ya = 0;ya < height;ya++) {
@@ -221,14 +198,28 @@ public class Screen {
 
                 // TODO: 14.04.2016 ender kode for håndtering av filter > 0xff
                 if (distance < radSqur) {
-                    if (lighting == Light.SOFT) {
-                        light[xa+ya*width] = (int) ((filterColor*distance)-filter*(radSqur-distance))/radSqur;
-                    } else if (lighting == Light.HARD) {
-                        light[xa+ya*width] = filter;
+
+                    int[] temp = new int[filters.size()];
+                    for (int i = 0;i < filters.size();i++) {
+                        int f = filters.get(i);
+
+                        if (lighting == Light.SOFT) {
+                            temp[i] = ((int) ((filterColor*distance)-f*(radSqur-distance))/radSqur);
+                        } else if (lighting == Light.HARD) {
+                            temp[i] = f;
+                        }
                     }
+                    int sum = 0;
+//                    System.out.println(temp.length);
+                    for (int i = temp.length-1;i >= 0;i--) {
+                        sum = temp[i] << 8*i;
+                    }
+
+                    light[xa+ya*width] = sum;
+
                 } else
 //                if (distance < radSqur*1.1)
-                    light[xa+ya*width] = null;
+                    light[xa+ya*width] = filterColor;
             }
         }
         lightSources.put(this_entity, light);

@@ -22,6 +22,7 @@ public class LevelManager {
         this.screen = screen;
         this.input = input;
         currentLevel = MENU;
+
         loadLevel(currentLevel);
 
 
