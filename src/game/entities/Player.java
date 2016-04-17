@@ -130,6 +130,7 @@ public class Player extends Mob implements Actable, InputObject {
                 isJumping = false;
             }
         }
+
         if (isSwimming) {
             List<Integer> waterColor = new ArrayList<>(Arrays.asList(0xfa05f0, 0x4444ff, 0x0000ff, 0x8888ff));
 

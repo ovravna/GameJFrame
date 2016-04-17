@@ -132,7 +132,7 @@ public class Lighting {
             temp = light[i];
 
             if (temp != null) {
-                r = temp > r ? temp:r;
+                r = temp > r ? temp > filterColor ? temp:filterColor:r;
             }
         }
 

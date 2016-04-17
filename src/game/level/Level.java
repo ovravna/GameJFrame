@@ -1,7 +1,5 @@
 package game.level;
 
-//import java.util.*;
-
 import game.entities.Entity;
 import game.entities.Player;
 import game.gfx.Screen;
