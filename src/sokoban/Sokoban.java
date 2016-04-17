@@ -5,7 +5,7 @@ import game.entities.Player;
 import game.level.Level;
 import sokoban.cells.Box;
 import sokoban.cells.Goal;
-import sokoban.cells.LightPoint;
+import sokoban.cells.Lantern;
 import sokoban.cells.Wall;
 
 public class Sokoban {
@@ -93,9 +93,9 @@ public class Sokoban {
         int y_level_centrum = (level.height << 3)/2;
 //        System.out.printf("%s %s", x_level_centrum, y_level_centrum);
 
-        if (sokoban_height > 1) {
-            new LightPoint(level, x_level_centrum, y_level_centrum, sokoban_height << 3, 0x33);
-        }
+//        if (sokoban_height > 1) {
+//            new LightPoint(level, x_level_centrum, y_level_centrum, sokoban_height << 3, 0x33);
+//        }
 
         int xOrigo = (x_level_centrum-(sokoban_width << 3));
         int yOrigo = (y_level_centrum-(sokoban_height << 3));
@@ -121,6 +121,7 @@ public class Sokoban {
                     break;
                 case '@':
                     new Player(level, x, y);
+                    new Lantern(level, x, y, 0);
                     break;
                 case '$':
                     new Box(level, x, y);

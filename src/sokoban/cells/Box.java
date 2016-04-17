@@ -48,6 +48,7 @@ public class Box extends Mob {
 
     @Override
     public void isPushed(int x, int y) {
+
         move(x, y);
     }
 

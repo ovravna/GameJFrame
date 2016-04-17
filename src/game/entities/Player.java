@@ -3,6 +3,7 @@ package game.entities;
 //import java.util.*;
 
 import game.InputHandler;
+import game.InputManager;
 import game.InputObject;
 import game.gfx.Screen;
 import game.level.Level;
@@ -32,13 +33,12 @@ public class Player extends Mob implements Actable, InputObject {
         super(level, "Player", x, y, 1);
         this.username = username;
         dimentions = new int[]{7, 0, 7, 3};
-        super.addInputObject(this);
+        InputManager.addInputObject(this);
     }
 
     @Override
     public void setInputHandler(InputHandler input) {
         this.input = input;
-        System.out.println("Input from: "+input);
     }
 
     @Override

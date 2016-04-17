@@ -9,20 +9,18 @@ public abstract class InputManager {
     private static InputHandler input;
 
 
-    public void addInputObject(InputObject inputObject) {
+    public static void addInputObject(InputObject inputObject) {
         inputObjects.add(inputObject);
         inputObject.setInputHandler(input);
 
     }
 
 
-    public void setInput(InputHandler input) {
+    protected void setInput(InputHandler input) {
         this.input = input;
 
         for (InputObject inputObject : inputObjects) {
             inputObject.setInputHandler(this.input);
         }
-
-        System.out.println("Origin "+this.input);
     }
 }

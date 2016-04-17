@@ -16,7 +16,6 @@ public class Goal extends Mob {
     private final SpriteSheet goalSheet;
     private boolean isFilled;
     private boolean isWon;
-    private boolean wonFlag;
 
     public Goal(Level level, int x, int y) {
         super(level, "Goal", x, y, 0);
@@ -43,7 +42,7 @@ public class Goal extends Mob {
 
     @Override
     public void tick() {
-        if (isFilled && goals.stream().allMatch(Goal::isFilled) && !wonFlag) {
+        if (isFilled && goals.stream().allMatch(Goal::isFilled) && !isWon) {
             isWon = true;
 
             for (Entity entity : level.entities) {
@@ -52,9 +51,7 @@ public class Goal extends Mob {
                 }
             }
 
-
 //            removeEntity(250, 213);
-            wonFlag = true;
 
         }
 

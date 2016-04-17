@@ -43,30 +43,16 @@ public class Game extends Canvas implements Runnable {
     }
 
     public Game(String name, Level level) {
-
         this.name = name;
-//        this.daylightCycle = false;
-//        this.light = 0;
 
         screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png"));
-
-
 
         levelManager = new LevelManager(screen, new InputHandler(this));
         levelManager.addLevel(level);
 
-
         screen.sheet.setFontLine(1);
         screen.sheet.setPlayerLine(10);
-
-
     }
-
-    public void addInputHandler(InputHandler input) {
-
-    }
-
-
 
 
     public void setDaylightCycle(boolean daylightCycle) {

@@ -133,7 +133,7 @@ public class Menu extends Level implements InputObject {
         if (currentChoice == 0) {
             Level level = new Level(Sokoban.LEVEL);
             new Player(level, 0, 0);
-            new Lantern(level, 20, 10, -0xaaff11);
+            new Lantern(level, 20, 10, -0xaa);
             new Lantern(level, 30, 10, -0x11);
 
 //            new LightPoint(level, 40, 40, -0x661100, 20);

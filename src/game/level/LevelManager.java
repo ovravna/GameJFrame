@@ -21,7 +21,6 @@ public class LevelManager extends InputManager {
     public LevelManager(Screen screen, InputHandler input) {
         this.screen = screen;
 
-        System.out.println("LevelManager "+input);
         super.setInput(input);
         currentLevel = MENU;
         screen.setLighting(false);
@@ -36,21 +35,12 @@ public class LevelManager extends InputManager {
 //        loadLevel(level);
 
 
-
         loadLevel(currentLevel);
 
     }
 
-
-
     public void loadLevel(Level level) {
         gameLevel = level;
-
-
-//        if (gameLevel.containsPlayer()) {
-//            gameLevel.player.setInput(input);
-//        }
-
         gameLevel.loadLevel();
     }
 
@@ -58,15 +48,13 @@ public class LevelManager extends InputManager {
         gameLevel = null;
         switch (currentLevel) {
             case MENU:
+            default:
                 gameLevel = new Menu(this, "/levels/Black.png");
                 break;
             case FIRST_LEVEL:
                 gameLevel = levels.get(0);
+                break;
         }
-
-//        if (gameLevel.containsPlayer()) {
-//            gameLevel.player.setInput(input);
-//        }
 
         gameLevel.loadLevel();
     }
@@ -97,8 +85,6 @@ public class LevelManager extends InputManager {
     public void draw(Graphics g) {
         gameLevel.draw(g, screen);
 
-
     }
-
 
 }

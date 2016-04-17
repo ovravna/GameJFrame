@@ -23,7 +23,10 @@ public abstract class Mob extends Entity {
     }
 
     public void move(int xa, int ya) {
-        if (xa != 0 && ya != 0) {
+        if (xa == 0 && ya == 0) {
+            System.out.println("Mob.move(0, 0)");
+            return;
+        } else if (xa != 0 && ya != 0) {
             move(xa, 0);
             move(0, ya);
             numSteps--;

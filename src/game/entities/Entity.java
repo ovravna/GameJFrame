@@ -1,7 +1,7 @@
 package game.entities;
 
 
-import game.InputManager;
+import game.InputObject;
 import game.gfx.Screen;
 import game.level.Level;
 import sokoban.cells.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Entity extends InputManager implements Comparable{
+public abstract class Entity implements Comparable{
 
     public int x, y;
     protected Level level;
@@ -73,7 +73,7 @@ public abstract class Entity extends InputManager implements Comparable{
         for (Entity entity : level.entities) {
             if (!entity.equals(this) && (e = entity.getEntity(x, y)) != null) {
                 if (e.isSolid() && !e.equals(this)) {
-                    if (e instanceof Mob && this instanceof Player) {
+                    if (e instanceof Mob && this instanceof InputObject) {
                         e.isPushed(xa, ya);
                     }
                     return true;
