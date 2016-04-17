@@ -35,6 +35,7 @@ public class Level {
     }
 
     public Level(LevelManager levelManager, String imagePath) {
+        System.out.println(imagePath);
         this.levelManager = levelManager;
 
         this.imagePath = imagePath;

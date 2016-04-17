@@ -72,10 +72,10 @@ public class Sokoban {
 //        new Box(level, "box", 40, 40);
 //        new Ball(level, "Ball", player.x, player.y);
 
-        game.setLighting(true);
-        game.setDaylightCycle(false);
-        game.setCycleTime(20);
-        game.setLight();
+//        game.setLighting(true);
+//        game.setDaylightCycle(false);
+//        game.setCycleTime(20);
+//        game.setLight();
         game.init();
 
         game.start();
@@ -148,7 +148,7 @@ public class Sokoban {
     }
 
     public static void main(String[] args) {
-        new Sokoban(w);
+        new Sokoban(q);
     }
 
 

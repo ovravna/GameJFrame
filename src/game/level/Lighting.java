@@ -6,14 +6,18 @@ import game.gfx.Screen;
 
 import java.util.HashMap;
 
-import static game.gfx.Screen.filterColor;
 
 public class Lighting {
 
     private HashMap<Entity, Integer[]> lightSources = new HashMap<>();
+    public static final int INITIAL_FILTER = -0xdf;
+    public static int filterColor = INITIAL_FILTER;
+
+    public boolean renderLight = true;
 
     private Screen screen;
-    private int width, height;
+    private int width;
+    private int height;
 
     public Lighting(Screen screen) {
 
@@ -21,6 +25,8 @@ public class Lighting {
         width = screen.width;
         height = screen.height;
         screen.setLighting(this);
+
+        setFilterColor();
 
     }
 
@@ -95,6 +101,15 @@ public class Lighting {
     }
 
 
+    public void setFilterColor() {
+        setFilterColor(INITIAL_FILTER);
+    }
+
+    public void setFilterColor(int filterColor) {
+        this.filterColor = filterColor;
+    }
+
+
     public Integer lightCombiner(int i) {
         int r = -0xff;
 
@@ -120,5 +135,24 @@ public class Lighting {
         lightSources.remove(entity);
     }
 
+    private int clock;
+
+    public boolean setFilter(int cycleSeconds, boolean rise, int maxFilter) {
+        double time = 60*cycleSeconds;
+
+
+//        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock/time)))-maxFilter);
+        int delta = (INITIAL_FILTER-maxFilter)/2;
+
+        filterColor = (int) (delta*Math.cos((clock << 1)/time)+delta+maxFilter);
+
+        clock++;
+        System.out.println(filterColor);
+        if (rise) {
+            return filterColor > 0.9*maxFilter;
+        } else
+            return filterColor < INITIAL_FILTER;
+
+    }
 
 }

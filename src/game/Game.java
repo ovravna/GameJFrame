@@ -20,6 +20,8 @@ public class Game extends Canvas implements Runnable {
     public static final int SCALE = 10;
     private static String name;
     private JFrame frame;
+    public static long globalTime;
+
 
     private boolean running = true;
     public int tickCount = 0;
@@ -30,12 +32,8 @@ public class Game extends Canvas implements Runnable {
 
     private LevelManager levelManager;
 
-    private boolean daylightCycle = true;
 
     private static int light = -0xdf;
-    private int cycleTime = 20;
-    private int smoothRise = 0;
-    private boolean wonFlag;
 
     public Game() {
         this("Game", null);
@@ -54,29 +52,18 @@ public class Game extends Canvas implements Runnable {
     }
 
 
-    public void setDaylightCycle(boolean daylightCycle) {
-        this.daylightCycle = daylightCycle;
-    }
+//    public static void setLight() {
+//        setLight(-0xdf);
+//    }
 
-    public static void setLight() {
-        setLight(-0xdf);
-    }
+//    public static void setLight(Integer light) {
+//        if (light == null) {
+//            setLight();
+//            return;
+//        }
+//        Screen.filterColor = light;
+//    }
 
-    public static void setLight(Integer light) {
-        if (light == null) {
-            setLight();
-            return;
-        }
-        Screen.filterColor = light;
-    }
-
-    public void setLighting(boolean lighting) {
-        screen.setLightRendering(lighting);
-    }
-
-    public void setCycleTime(int cycleTime) {
-        this.cycleTime = cycleTime;
-    }
 
     public static int getLight() {
         return Game.light;
@@ -110,7 +97,6 @@ public class Game extends Canvas implements Runnable {
     }
 
 
-    public long globalTime;
 
     @Override
     public void run() {
@@ -137,18 +123,17 @@ public class Game extends Canvas implements Runnable {
                 tick();
                 delta--;
                 shouldRender = true;
-                if (daylightCycle) {
-                    globalTime++;
-                    screen.setFilter(globalTime, cycleTime, true, 0);
-                }
+//                if (daylightCycle) {
+//                    globalTime++;
+//                    screen.setFilter(globalTime, cycleTime, true, 0);
+//                }
 
-                if (smoothRise > 0) {
-                    globalTime++;
-                    if (screen.setFilter(globalTime, cycleTime, smoothRise == 1 ? true:false, 0)) {
-                        smoothRise = 0;
-                    }
-
-                }
+//                if (smoothRise > 0) {
+//                    globalTime++;
+//                    if (screen.setFilter(globalTime, cycleTime, smoothRise == 1 ? true:false, 0)) {
+//                        smoothRise = 0;
+//                    }
+//                }
             }
 
 //            try {

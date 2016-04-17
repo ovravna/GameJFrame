@@ -1,6 +1,5 @@
 package game.gfx;
 
-import game.Game;
 import game.level.Lighting;
 
 import java.util.Arrays;
@@ -14,8 +13,6 @@ public class Screen {
 
     public static final byte BIT_MIRROR_X = 0x1;
     public static final byte BIT_MIRROR_Y = 0x2;
-    public static int filterColor;
-    private boolean lightOn = true;
 
     public static List<Integer> defaultIgnoreColors = Arrays.asList(0xfa05f0);
 
@@ -105,7 +102,7 @@ public class Screen {
                             if (xPixel+xScale < 0 || xPixel+xScale >= width)
                                 continue;
                             pixels[(xPixel+xScale)+(yPixel+yScale)*width] =
-                                    !lightOn ? col : colorSelector(col, lighting.lightCombiner((xPixel+xScale)+(yPixel+yScale)*width));
+                                    !lighting.renderLight ? col : colorSelector(col, lighting.lightCombiner((xPixel+xScale)+(yPixel+yScale)*width));
                         }
                     }
                 }
@@ -142,21 +139,18 @@ public class Screen {
         this.lighting = lighting;
     }
 
-    public void setLightRendering(boolean lightOn) {
-        this.lightOn = lightOn;
-    }
 
-    public boolean setFilter(long clock, int cycleSeconds, boolean rise, int maxFilter) {
-        double time = 60*cycleSeconds;
-
-        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock/time))));
-
-        if (rise) {
-            return filterColor == maxFilter;
-        } else
-            return filterColor < Game.getLight();
-
-    }
+//    public boolean setFilter(long clock, int cycleSeconds, boolean rise, int maxFilter) {
+//        double time = 60*cycleSeconds;
+//
+//        filterColor = (int) (Game.getLight()*(1-Math.sin(2*(clock/time))) - maxFilter);
+//
+//        if (rise) {
+//            return filterColor == Game.getLight() - maxFilter;
+//        } else
+//            return filterColor < Game.getLight();
+//
+//    }
 
 
 //    public void renderRoundLight(int x, int y, int radius, int filter, Entity this_entity) {
@@ -235,8 +229,8 @@ public class Screen {
 
 
 
-    private static int colorSelector(int color, Integer filter) {
-        if (filter == null) return Screen.colorSelector(color, filterColor);
+    private int colorSelector(int color, Integer filter) {
+        if (filter == null) return colorSelector(color, lighting.filterColor);
 //        System.out.println(Integer.toHexString(filter));
         if (filter > Math.abs(0xff)) {
             int r = (filter/0x10000)%0x100;

@@ -19,7 +19,9 @@ public class LevelManager extends InputManager {
     private List<Level> levels = new ArrayList<>();
     private Levels currentLevel;
     private Level gameLevel;
-
+    private int smoothRise;
+    private int cycleTime = 20;
+    private boolean wonFlag;
 
 
     public LevelManager(Screen screen, InputHandler input) {
@@ -27,7 +29,6 @@ public class LevelManager extends InputManager {
 
         super.setInput(input);
         currentLevel = MENU;
-        screen.setLightRendering(false);
 
 //        Level level = new Level(Sokoban.LEVEL);
 //        new Player(level, 0, 0);
@@ -96,8 +97,22 @@ public class LevelManager extends InputManager {
     public void tick() {
         gameLevel.tick();
 
-        if (gameLevel.entities.stream().anyMatch(n -> n instanceof Goal && ((Goal) n).isWon())) {
+
+        if (!wonFlag && gameLevel.entities.stream().anyMatch(n -> n instanceof Goal && ((Goal) n).isWon())) {
+            smoothRise = 1;
+            cycleTime = 2;
+            wonFlag = true;
+        }
+
+        if (smoothRise > 0) {
+            if (gameLevel.lighting.setFilter(cycleTime, smoothRise == 1 ? true:false, 0xff)) {
+                smoothRise = 0;
+            }
+        }
+
+        if (wonFlag && smoothRise == 0) {
             loadLevel(Levels.TEST);
+            wonFlag = false;
         }
 
     }
