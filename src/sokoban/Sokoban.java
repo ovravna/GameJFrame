@@ -8,9 +8,13 @@ import sokoban.cells.Goal;
 import sokoban.cells.Lantern;
 import sokoban.cells.Wall;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Sokoban {
     Game game;
     Level level;
+    private static int index = 0;
 
     public static final String LEVEL = "/levels/sokoban_test.png";
 
@@ -57,28 +61,11 @@ public class Sokoban {
             "          #   #\n"+
             "           ###\n";
 
+    private static List<String> boards = Arrays.asList(q, w, p);
 
 
     public Sokoban(String board) {
-        this.level = init(board);
-
-        game = new Game("Sokoban", this.level);
-
-//        game.player = new Player(level, 0, 50, input);
-//        new Lantern(level, 20, 10, 0);
-//        new Lantern(level, 60, 10, 0);
-
-
-//        new Box(level, "box", 40, 40);
-//        new Ball(level, "Ball", player.x, player.y);
-
-//        game.setLighting(true);
-//        game.setDaylightCycle(false);
-//        game.setCycleTime(20);
-//        game.setLight();
-        game.init();
-
-        game.start();
+        new Game("Sokoban", init(board)).init();
     }
 
 
@@ -133,6 +120,7 @@ public class Sokoban {
                 case '+':
                     new Player(level, x, y);
                     new Goal(level, x, y);
+                    new Lantern(level, x, y, 0);
                     break;
                 default:
                     throw new IllegalArgumentException(String.format("%s not allowed", cell));
@@ -143,14 +131,20 @@ public class Sokoban {
     }
 
 
-    public Level getLevel() {
-        return level;
-    }
+//    public Level getLevel() {
+//        return level;
+//    }
 
     public static void main(String[] args) {
-        new Sokoban(q);
+        new Sokoban(nextBoard());
     }
 
+    public static String nextBoard() {
+        String board = boards.get(index);
+        index++;
+        index %= boards.size();
+        return board;
+    }
 
 //    @Override
 //    public void newInputHandler(InputHandler input) {

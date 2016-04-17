@@ -147,9 +147,8 @@ public class Lighting {
         filterColor = (int) (delta*Math.cos((clock << 1)/time)+delta+maxFilter);
 
         clock++;
-        System.out.println(filterColor);
         if (rise) {
-            return filterColor > 0.9*maxFilter;
+            return filterColor > maxFilter-10;
         } else
             return filterColor < INITIAL_FILTER;
 

@@ -116,9 +116,9 @@ public class Level {
     public void renderTiles(Screen screen, int xOffset, int yOffset) {
         if (lighting == null) {
             if (levelManager == null) {
-                System.out.println("bolle");
+                System.out.println("Level: LevelManager is null");
             }
-            System.out.println("ninja");
+            System.out.println("Level: Lighting is null");
 
             lighting = new Lighting(levelManager.screen);
             screen.setLighting(lighting);

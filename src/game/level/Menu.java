@@ -122,11 +122,11 @@ public class Menu extends Level implements InputObject {
     }
 
     private void select() {
-        if (currentChoice == 1) {
+        if (currentChoice == 0) {
             levelManager.loadLevel(Levels.FIRST_LEVEL);
         }
 
-        if (currentChoice == 0) {
+        if (currentChoice == 1) {
             levelManager.loadLevel(Levels.TEST);
         }
 

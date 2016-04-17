@@ -47,6 +47,11 @@ public class LevelManager extends InputManager {
     public void loadLevel(Level level) {
         gameLevel = level;
         gameLevel.loadLevel();
+        if (level.levelManager == null) {
+            level.addManager(this);
+        }
+
+
     }
 
     public void loadLevel(Levels currentLevel) {
@@ -66,9 +71,11 @@ public class LevelManager extends InputManager {
                 new Lantern(level, 30, 10, -0x11);
 
 //                new LightPoint(level, 40, 40, -0x661100, 20);
-
                 loadLevel(level);
                 break;
+            case NEXT:
+                loadLevel(Sokoban.init(Sokoban.nextBoard()));
+
         }
 
         gameLevel.loadLevel();
@@ -100,7 +107,7 @@ public class LevelManager extends InputManager {
 
         if (!wonFlag && gameLevel.entities.stream().anyMatch(n -> n instanceof Goal && ((Goal) n).isWon())) {
             smoothRise = 1;
-            cycleTime = 2;
+            cycleTime = 1;
             wonFlag = true;
         }
 
@@ -111,7 +118,7 @@ public class LevelManager extends InputManager {
         }
 
         if (wonFlag && smoothRise == 0) {
-            loadLevel(Levels.TEST);
+            loadLevel(Levels.NEXT);
             wonFlag = false;
         }
 

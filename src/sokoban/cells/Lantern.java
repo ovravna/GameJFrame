@@ -14,6 +14,10 @@ public class Lantern extends Mob implements Actable{
     private final SpriteSheet lanternSheet;
     private int filter;
     private int radius;
+    private boolean lastHeld;
+    private static final int INITIAL_BOUNCETIME = 19;
+    private int bouceTime = INITIAL_BOUNCETIME;
+    private boolean bounce;
 
     public Lantern(Level level, int x, int y, int filter) {
         this(level, x, y, Light.SOFT, filter, 50);
@@ -36,21 +40,49 @@ public class Lantern extends Mob implements Actable{
 
     @Override
     public void tick() {
+        if (!isHeld && lastHeld) {
+            bounce = true;
+        }
+
+        if (bounce) {
+            if (bouceTime == 0) {
+                bounce = false;
+                bouceTime = INITIAL_BOUNCETIME;
+            }
+
+            if (bouceTime % 10 > 5) {
+                y--;
+            } else {
+                y++;
+            }
+
+            bouceTime--;
+
+
+
+        }
+
+
         if (isHeld) {
             x = level.player.x-3;
             y = level.player.y-6;
         }
 
+        lastHeld = isHeld;
     }
 
     @Override
     public void render(Screen screen) {
 
+
+
+
         level.lighting.renderRoundLight(x, y, radius, filter, 6, 6, light, this);
 
         if (!isHeld) {
-            screen.render(x, y, lanternSheet, 0 , 0, 1, 16, Arrays.asList(0xffffff));
+            screen.render(x, y, lanternSheet, 1 , 0, 1, 16, Arrays.asList(0xffffff));
         }
+
 
     }
 
