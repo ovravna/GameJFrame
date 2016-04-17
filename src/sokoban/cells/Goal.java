@@ -7,7 +7,6 @@ import game.gfx.SpriteSheet;
 import game.level.Level;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Goal extends Mob {
@@ -60,7 +59,7 @@ public class Goal extends Mob {
 
     @Override
     public void render(Screen screen) {
-        screen.render(x, y, goalSheet, 0, 0, 1, 16, Arrays.asList(0xffffff));
+        screen.render(x, y, goalSheet, 0, 0, 1, 16);
     }
 
     @Override

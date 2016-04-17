@@ -3,8 +3,9 @@ package game.level.tiles;
 import game.gfx.Screen;
 import game.level.Level;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 public class BasicTile extends Tile {
 
@@ -14,7 +15,7 @@ public class BasicTile extends Tile {
 
 
     public BasicTile(int id, int x, int y, int levelColor) {
-        this(id, x, y, levelColor, Arrays.asList(0x000000));
+        this(id, x, y, levelColor, asList(0x000000));
     }
 
     public BasicTile(int id, int x, int y, int levelColor, List<Integer> ignoreColors) {
@@ -36,6 +37,6 @@ public class BasicTile extends Tile {
 
     @Override
     public void render(Screen screen, Level level, int x, int y) {
-        screen.render(x, y, tileId, 0, 1, block);
+        screen.render(x, y, tileId, 0, 1, block, ignoreColors);
     }
 }

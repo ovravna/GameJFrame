@@ -6,14 +6,14 @@ import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
 
-import java.util.Arrays;
-
 public class Lantern extends Mob implements Actable{
     private boolean isHeld;
     private Light light;
     private final SpriteSheet lanternSheet;
     private int filter;
     private int radius;
+    private LightPoint lightPoint;
+
     private boolean lastHeld;
     private static final int INITIAL_BOUNCETIME = 19;
     private int bouceTime = INITIAL_BOUNCETIME;
@@ -32,6 +32,8 @@ public class Lantern extends Mob implements Actable{
         dimentions = new int[]{14, 2, 14, 2};
         lanternSheet = new SpriteSheet("/box16x16.png");
         this.filter = filter;
+//        this.lightPoint = new LightPoint(level, x, y, filter-0x33, radius >> 1);
+//        this.lightPoint.renderLight = false;
     }
 
     public boolean isHeld() {
@@ -57,16 +59,15 @@ public class Lantern extends Mob implements Actable{
             }
 
             bouceTime--;
-
-
-
         }
-
 
         if (isHeld) {
-            x = level.player.x-3;
-            y = level.player.y-6;
+            x = level.getPlayer().x-3;
+            y = level.getPlayer().y-6;
         }
+
+//        lightPoint.x = x+2;
+//        lightPoint.y = y+7;
 
         lastHeld = isHeld;
     }
@@ -75,13 +76,13 @@ public class Lantern extends Mob implements Actable{
     public void render(Screen screen) {
 
 
-
-
         level.lighting.renderRoundLight(x, y, radius, filter, 6, 6, light, this);
 
         if (!isHeld) {
-            screen.render(x, y, lanternSheet, 1 , 0, 1, 16, Arrays.asList(0xffffff));
+//            lightPoint.renderLight = true;
+            screen.render(x, y, lanternSheet, 1 , 0, 1, 16);
         }
+//        else lightPoint.renderLight = false;
 
 
     }

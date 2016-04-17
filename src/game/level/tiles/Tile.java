@@ -5,8 +5,10 @@ package game.level.tiles;
 import game.gfx.Screen;
 import game.level.Level;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static game.level.Level.tileColors;
+import static java.util.Arrays.asList;
 
 public abstract class Tile {
 
@@ -17,9 +19,10 @@ public abstract class Tile {
     public static final Tile GRASS = new BasicTile(2, 2, 0,  0xff00ff00);
     public static final Tile WATER = new AnimatedTile(3, new int[][]{{3, 0}, {4, 0}, {5, 0}, {4, 0}}, 0xff0000ff, 700);
     public static final Tile SAND = new BasicTile(4, 7, 0, 0xffDD8800);
-    public static final Tile ROCK1 = new BasicSolidTile(7, 1, 7, 0xff111111, 16, Arrays.asList(0xffffff));
+    public static final Tile ROCK1 = new BasicSolidTile(7, 1, 7, 0xff111111, 16, asList(0xffffff));
     public static final Tile BLACK = new BasicTile(5, 0, 0, 0xff010101);
     public static final Tile WHITE = new BasicTile(6, 8, 0, 0xffffffff);
+
 
 
     protected byte id;
@@ -36,7 +39,7 @@ public abstract class Tile {
         this.solid = solid;
         this.emitter = emitter;
         this.levelColor = levelColor;
-        Level.tileColors.put(levelColor, this);
+        tileColors.put(levelColor, this);
 
         this.ignoreColors = ignoreColors;
         tiles[id] = this;

@@ -63,11 +63,13 @@ public class LevelManager extends InputManager {
                 break;
             case FIRST_LEVEL:
                 gameLevel = levels.get(0);
+                gameLevel.addManager(this);
+//                gameLevel.renderLight(false);
                 break;
             case TEST:
                 Level level = new Level(this, Sokoban.LEVEL);
                 new Player(level, 0, 0);
-                new Lantern(level, 20, 10, -0xaa);
+//                new Lantern(level, 20, 10, -0xaa);
                 new Lantern(level, 30, 10, -0x11);
 
 //                new LightPoint(level, 40, 40, -0x661100, 20);
@@ -75,7 +77,8 @@ public class LevelManager extends InputManager {
                 break;
             case NEXT:
                 loadLevel(Sokoban.init(Sokoban.nextBoard()));
-
+//                gameLevel.renderLight(false);
+                break;
         }
 
         gameLevel.loadLevel();
@@ -84,8 +87,8 @@ public class LevelManager extends InputManager {
     public void addLevel(Level level) {
         if (level != null && !levels.contains(level)) {
             levels.add(level);
+            level.addManager(this);
         }
-        level.addManager(this);
 
     }
 

@@ -15,7 +15,10 @@ public class InputHandler implements KeyListener {
     public Key jump = new Key();
     public Key enter = new Key();
 
+    private Game game;
+
     public InputHandler(Game game) {
+        this.game = game;
         game.addKeyListener(this);
     }
 
@@ -63,6 +66,16 @@ public class InputHandler implements KeyListener {
         if (keyCode == KeyEvent.VK_ESCAPE) {
             System.exit(0);
         }
+
+        if (keyCode == KeyEvent.VK_F2) {
+            game.meta_data = true;
+        }
+
+        if (keyCode == KeyEvent.VK_F3) {
+            game.meta_data = false;
+        }
+
+
 
     }
 

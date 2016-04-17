@@ -10,6 +10,8 @@ public class LightPoint extends Mob {
     private final Light light;
     private int filter;
 
+    public boolean renderLight = true;
+
     public LightPoint(Level level, int x, int y, int filter, int radius) {
         this(level, x, y, filter, radius, Light.SOFT);
     }
@@ -22,6 +24,8 @@ public class LightPoint extends Mob {
         this.light = light;
     }
 
+
+
     @Override
     public void tick() {
 
@@ -29,7 +33,10 @@ public class LightPoint extends Mob {
 
     @Override
     public void render(Screen screen) {
-        level.lighting.renderRoundLight(x, y, radius, filter, light, this);
+        if (renderLight) {
+            System.out.println("rendering light");
+            level.lighting.renderRoundLight(x, y, radius, filter, light, this);
+        }
 
     }
 

@@ -22,8 +22,8 @@ public class Ball extends Mob {
 
 
     public Ball(Level level, String name, int x, int y) {
-        super(level, name, x, y, level.player.speed);
-        this.player = level.player;
+        super(level, name, x, y, level.getPlayer().speed);
+        this.player = level.getPlayer();
         solid = true;
 
 //        dimentions = new int[]{16, 0, 16, 0};

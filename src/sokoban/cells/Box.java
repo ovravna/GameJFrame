@@ -23,7 +23,7 @@ public class Box extends Mob {
 
     @Override
     public void tick() {
-        if (level.player == null) return;
+        if (level.getPlayer() == null) return;
         Entity entity = getEntity(x+8, y+8);
 
         if (entity instanceof Goal) {

@@ -26,7 +26,7 @@ public class Level {
     protected LevelManager levelManager;
     private String imagePath;
     private BufferedImage image;
-    public Player player;
+    private Player player;
     public static HashMap<Integer, Tile> tileColors = new HashMap<>();
     public Lighting lighting;
 
@@ -42,9 +42,7 @@ public class Level {
 
         if (levelManager != null) {
             lighting = new Lighting(levelManager.screen);
-
         }
-
 
         if (imagePath != null) {
             loadImage();
@@ -85,8 +83,6 @@ public class Level {
         }
     }
 
-
-
     private void saveLevelToFile() {
 
         try {
@@ -121,8 +117,7 @@ public class Level {
             System.out.println("Level: Lighting is null");
 
             lighting = new Lighting(levelManager.screen);
-            screen.setLighting(lighting);
-
+//            screen.setLighting(lighting);
         }
 
         if (xOffset < 0) {
@@ -145,16 +140,7 @@ public class Level {
                 getTile(x, y).render(screen, this, x << 3, y << 3);
             }
         }
-
-
-//        for (int y = 0;y < height;y++) {
-//            for (int x = 0;x < width;x++) {
-//                getTile(x, y).render(screen, this, x << 3, y << 3);
-//            }
-//        }
     }
-
-//    n instanceof Player?1:-1
 
     public void renderEntities(Screen screen) {
         entities.sort((n, m) -> n.compareTo(m));
@@ -178,22 +164,19 @@ public class Level {
 
     public void tick() {
         entities.forEach(Entity::tick);
-//        System.out.println(entities.size());
         for (Tile t : Tile.tiles) {
             if (t == null) break;
             t.tick();
         }
-
     }
 
-    public boolean containsPlayer() {
-        return player != null;
+    public Player getPlayer() {
+        return player;
     }
 
     public void addEntities(Entity entity) {
         if (entity instanceof Player) this.player = (Player) entity;
         this.entities.add(entity);
-
     }
 
     public void draw(Graphics g, Screen screen) {
@@ -203,6 +186,18 @@ public class Level {
 
     public void addManager(LevelManager levelManager) {
         this.levelManager = levelManager;
+        System.out.println("Level: "+levelManager);
+
+        if (lighting == null) {
+            lighting = new Lighting(this.levelManager.screen);
+        }
+    }
+
+    public void renderLight(boolean renderLight) {
+        if (lighting != null) {
+            lighting.renderLight = renderLight;
+        } else
+            System.out.println("Level.renderLight: lighting = null");
     }
 }
 

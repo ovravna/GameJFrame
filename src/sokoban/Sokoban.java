@@ -27,7 +27,7 @@ public class Sokoban {
                     "#  *  #\n"+
                     "#######";
     static String w =
-            "#######\n"+
+                    "#######\n"+
                     "#.  # #\n"+
                     "#$* $ #\n"+
                     "#  $@ #\n"+
@@ -35,7 +35,8 @@ public class Sokoban {
                     "#  *  #\n"+
                     "#######";
 
-    static String p = "           ###\n"+
+    static String p =
+            "           # #\n"+
             "          #   #\n"+
             "         #  *  #\n"+
             "        #  *$*  #\n"+
@@ -61,7 +62,7 @@ public class Sokoban {
             "          #   #\n"+
             "           ###\n";
 
-    private static List<String> boards = Arrays.asList(q, w, p);
+    private static List<String> boards = Arrays.asList(p, w, p);
 
 
     public Sokoban(String board) {
@@ -108,7 +109,7 @@ public class Sokoban {
                     break;
                 case '@':
                     new Player(level, x, y);
-                    new Lantern(level, x, y, 0);
+                    new Lantern(level, x+2, y+5, 0);
                     break;
                 case '$':
                     new Box(level, x, y);
@@ -120,7 +121,7 @@ public class Sokoban {
                 case '+':
                     new Player(level, x, y);
                     new Goal(level, x, y);
-                    new Lantern(level, x, y, 0);
+                    new Lantern(level, x+2, y+5, 0);
                     break;
                 default:
                     throw new IllegalArgumentException(String.format("%s not allowed", cell));
@@ -129,11 +130,6 @@ public class Sokoban {
         }
         return level;
     }
-
-
-//    public Level getLevel() {
-//        return level;
-//    }
 
     public static void main(String[] args) {
         new Sokoban(nextBoard());
@@ -145,14 +141,4 @@ public class Sokoban {
         index %= boards.size();
         return board;
     }
-
-//    @Override
-//    public void newInputHandler(InputHandler input) {
-////        this.input = input;
-//    }
-//
-//    @Override
-//    public void action() {
-//
-//    }
 }

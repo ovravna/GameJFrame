@@ -20,7 +20,6 @@ public class Game extends Canvas implements Runnable {
     public static final int SCALE = 10;
     private static String name;
     private JFrame frame;
-    public static long globalTime;
 
 
     private boolean running = true;
@@ -29,11 +28,10 @@ public class Game extends Canvas implements Runnable {
 
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private Screen screen;
-
     private LevelManager levelManager;
 
-
-    private static int light = -0xdf;
+    private int frames;
+    public boolean meta_data = true;
 
     public Game() {
         this("Game", null);
@@ -65,16 +63,12 @@ public class Game extends Canvas implements Runnable {
 //    }
 
 
-    public static int getLight() {
-        return Game.light;
-    }
-
     public void init() {
         setMinimumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         setMaximumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
         setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
 
-        frame = new JFrame();
+        frame = new JFrame(name);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -123,25 +117,7 @@ public class Game extends Canvas implements Runnable {
                 ticks++;
                 tick();
                 delta--;
-                shouldRender = true;
-//                if (daylightCycle) {
-//                    globalTime++;
-//                    screen.setFilter(globalTime, cycleTime, true, 0);
-//                }
-
-//                if (smoothRise > 0) {
-//                    globalTime++;
-//                    if (screen.setFilter(globalTime, cycleTime, smoothRise == 1 ? true:false, 0)) {
-//                        smoothRise = 0;
-//                    }
-//                }
             }
-
-//            try {
-//                Thread.sleep(1);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
 
             if (shouldRender) {
                 frames++;
@@ -153,14 +129,15 @@ public class Game extends Canvas implements Runnable {
             if (System.currentTimeMillis()-lastTimer >= 1000) {
                 lastTimer += 1000;
 
-                int x = 0;
-                int y = 0;
-                if (levelManager.currentLevel().player != null) {
-                    x = levelManager.currentLevel().player.x;
-                    y = levelManager.currentLevel().player.y;
-                }
+//                int x = 0;
+//                int y = 0;
+//                if (levelManager.currentLevel().getPlayer() != null) {
+//                    x = levelManager.currentLevel().getPlayer().x;
+//                    y = levelManager.currentLevel().getPlayer().y;
+//                }
 
-                frame.setTitle(String.format("  %3d ticks | %3d fps | pos  %4s %4s\n", ticks, frames, x, y));
+//                frame.setTitle(String.format("%s FPS-%s Ticks-%s", name, frames, ticks));
+                this.frames = frames;
                 frames = 0;
                 ticks = 0;
             }
@@ -170,13 +147,6 @@ public class Game extends Canvas implements Runnable {
     public void tick() {
         tickCount++;
         levelManager.tick();
-
-
-//        if (Goal.goals.stream().anyMatch(Goal::isWon) && !wonFlag) {
-//            smoothRise = 1;
-//            setCycleTime(1);
-//            wonFlag = true;
-//        }
 
     }
 
@@ -190,9 +160,9 @@ public class Game extends Canvas implements Runnable {
         int xOffset = 0;
         int yOffset = 0;
 
-        if (levelManager.currentLevel().player != null) {
-            xOffset = levelManager.currentLevel().player.x-screen.width/2;
-            yOffset = levelManager.currentLevel().player.y-screen.height/2;
+        if (levelManager.currentLevel().getPlayer() != null) {
+            xOffset = levelManager.currentLevel().getPlayer().x-screen.width/2;
+            yOffset = levelManager.currentLevel().getPlayer().y-screen.height/2;
 
         }
 
@@ -214,9 +184,11 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         levelManager.draw(g);
 
-//        g.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-//        g.setColor(Color.BLACK);
-//        g.drawString("kake []", xOffset-2, yOffset-10);
+        if (meta_data) {
+            g.setFont(new Font("Arial", Font.BOLD, 30));
+            g.setColor(Color.RED);
+            g.drawString("FPS-"+frames, 5, 25);
+        }
 
         g.dispose();
         bs.show();

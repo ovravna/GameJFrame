@@ -5,8 +5,6 @@ import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
 
-import java.util.Arrays;
-
 public class Wall extends Mob {
 
     private SpriteSheet sheet;
@@ -28,7 +26,7 @@ public class Wall extends Mob {
 
     @Override
     public void render(Screen screen) {
-        screen.render(x, y, sheet , 0, 0, 1, 16, Arrays.asList());
+        screen.render(x, y, sheet , 0, 0, 1, 16);
 
     }
 
