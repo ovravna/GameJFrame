@@ -4,6 +4,7 @@ import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
 import game.level.LevelManager;
+import game.level.Lighting;
 
 import javax.swing.*;
 import java.awt.*;
@@ -185,9 +186,11 @@ public class Game extends Canvas implements Runnable {
         levelManager.draw(g);
 
         if (meta_data) {
+            String s = String.format("FPS-%-4s LS-%s", frames, Lighting.sources);
+            
             g.setFont(new Font("Arial", Font.BOLD, 30));
             g.setColor(Color.RED);
-            g.drawString("FPS-"+frames, 5, 25);
+            g.drawString(s, 5, 25);
         }
 
         g.dispose();

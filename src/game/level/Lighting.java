@@ -114,7 +114,7 @@ public class Lighting {
     }
 
     private static final int INITIAL_R = -0xff;
-    private static int sources = 0;
+    public static int sources = 0;
 
     public Integer lightCombiner(int i) {
 
@@ -122,9 +122,9 @@ public class Lighting {
 
         Integer temp;
 
-        if (sources != lightSources.size()) {
-            System.out.println("Lightsources "+ lightSources.size());
-        }
+//        if (sources != lightSources.size()) {
+//            System.out.println("Lightsources "+ lightSources.size());
+//        }
 
         sources = lightSources.size();
 

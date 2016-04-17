@@ -75,8 +75,6 @@ public class InputHandler implements KeyListener {
             game.meta_data = false;
         }
 
-
-
     }
 
     public class Key {

@@ -62,7 +62,7 @@ public class Sokoban {
             "          #   #\n"+
             "           ###\n";
 
-    private static List<String> boards = Arrays.asList(p, w, p);
+    private static List<String> boards = Arrays.asList(q, w, p);
 
 
     public Sokoban(String board) {
