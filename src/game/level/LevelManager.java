@@ -2,7 +2,11 @@ package game.level;
 
 import game.InputHandler;
 import game.InputManager;
+import game.entities.Player;
 import game.gfx.Screen;
+import sokoban.Sokoban;
+import sokoban.cells.Goal;
+import sokoban.cells.Lantern;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +15,7 @@ import java.util.List;
 import static game.level.Levels.MENU;
 
 public class LevelManager extends InputManager {
-    private final Screen screen;
+    public final Screen screen;
     private List<Level> levels = new ArrayList<>();
     private Levels currentLevel;
     private Level gameLevel;
@@ -23,7 +27,7 @@ public class LevelManager extends InputManager {
 
         super.setInput(input);
         currentLevel = MENU;
-        screen.setLighting(false);
+        screen.setLightRendering(false);
 
 //        Level level = new Level(Sokoban.LEVEL);
 //        new Player(level, 0, 0);
@@ -54,6 +58,16 @@ public class LevelManager extends InputManager {
             case FIRST_LEVEL:
                 gameLevel = levels.get(0);
                 break;
+            case TEST:
+                Level level = new Level(this, Sokoban.LEVEL);
+                new Player(level, 0, 0);
+                new Lantern(level, 20, 10, -0xaa);
+                new Lantern(level, 30, 10, -0x11);
+
+//                new LightPoint(level, 40, 40, -0x661100, 20);
+
+                loadLevel(level);
+                break;
         }
 
         gameLevel.loadLevel();
@@ -63,6 +77,8 @@ public class LevelManager extends InputManager {
         if (level != null && !levels.contains(level)) {
             levels.add(level);
         }
+        level.addManager(this);
+
     }
 
     public void addLevels(Level... levels) {
@@ -79,6 +95,10 @@ public class LevelManager extends InputManager {
 
     public void tick() {
         gameLevel.tick();
+
+        if (gameLevel.entities.stream().anyMatch(n -> n instanceof Goal && ((Goal) n).isWon())) {
+            loadLevel(Levels.TEST);
+        }
 
     }
 

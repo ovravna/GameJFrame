@@ -4,7 +4,6 @@ import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
 import game.level.LevelManager;
-import sokoban.cells.Goal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,7 +71,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void setLighting(boolean lighting) {
-        screen.setLighting(lighting);
+        screen.setLightRendering(lighting);
     }
 
     public void setCycleTime(int cycleTime) {
@@ -187,11 +186,11 @@ public class Game extends Canvas implements Runnable {
         levelManager.tick();
 
 
-        if (Goal.goals.stream().anyMatch(Goal::isWon) && !wonFlag) {
-            smoothRise = 1;
-            setCycleTime(1);
-            wonFlag = true;
-        }
+//        if (Goal.goals.stream().anyMatch(Goal::isWon) && !wonFlag) {
+//            smoothRise = 1;
+//            setCycleTime(1);
+//            wonFlag = true;
+//        }
 
     }
 

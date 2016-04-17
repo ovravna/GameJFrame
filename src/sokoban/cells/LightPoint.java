@@ -29,7 +29,7 @@ public class LightPoint extends Mob {
 
     @Override
     public void render(Screen screen) {
-        screen.renderRoundLight(x, y, radius, filter, light, this);
+        level.lighting.renderRoundLight(x, y, radius, filter, light, this);
 
     }
 

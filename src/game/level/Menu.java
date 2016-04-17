@@ -2,11 +2,9 @@ package game.level;
 
 import game.InputHandler;
 import game.InputObject;
-import game.entities.Player;
 import game.gfx.Screen;
 import game.level.tiles.Background;
 import sokoban.Sokoban;
-import sokoban.cells.Lantern;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,7 +15,6 @@ import java.io.IOException;
 import static game.Game.*;
 
 public class Menu extends Level implements InputObject {
-    private final LevelManager levelManager;
     private InputHandler input;
     private Background bg;
     private BufferedImage bgImage;
@@ -42,9 +39,8 @@ public class Menu extends Level implements InputObject {
 
 
     public Menu(LevelManager levelManager, String imagePath){
-        super(imagePath);
-        this.levelManager = levelManager;
-        this.levelManager.addInputObject(this);
+        super(levelManager, imagePath);
+        super.levelManager.addInputObject(this);
 
 //        bg = new Background("/backgrounds/menubg.gif", 0);
 
@@ -131,14 +127,7 @@ public class Menu extends Level implements InputObject {
         }
 
         if (currentChoice == 0) {
-            Level level = new Level(Sokoban.LEVEL);
-            new Player(level, 0, 0);
-            new Lantern(level, 20, 10, -0xaa);
-            new Lantern(level, 30, 10, -0x11);
-
-//            new LightPoint(level, 40, 40, -0x661100, 20);
-
-            levelManager.loadLevel(level);
+            levelManager.loadLevel(Levels.TEST);
         }
 
         if (currentChoice == 2) {

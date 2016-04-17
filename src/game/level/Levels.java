@@ -1,6 +1,6 @@
 package game.level;
 
 public enum Levels {
-    MENU, FIRST_LEVEL
+    MENU, TEST, FIRST_LEVEL
 
 }

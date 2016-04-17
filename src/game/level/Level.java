@@ -23,15 +23,27 @@ public class Level {
     public int width;
     public int height;
     public List<Entity> entities = new ArrayList<>();
+    protected LevelManager levelManager;
     private String imagePath;
     private BufferedImage image;
     public Player player;
     public static HashMap<Integer, Tile> tileColors = new HashMap<>();
-
+    public Lighting lighting;
 
     public Level(String imagePath) {
-//        System.out.println(imagePath);
+        this(null, imagePath);
+    }
+
+    public Level(LevelManager levelManager, String imagePath) {
+        this.levelManager = levelManager;
+
         this.imagePath = imagePath;
+
+        if (levelManager != null) {
+            lighting = new Lighting(levelManager.screen);
+
+        }
+
 
         if (imagePath != null) {
             loadImage();
@@ -101,10 +113,21 @@ public class Level {
     }
 
     public void renderTiles(Screen screen, int xOffset, int yOffset) {
+        if (lighting == null) {
+            if (levelManager == null) {
+                System.out.println("bolle");
+            }
+            System.out.println("ninja");
+
+            lighting = new Lighting(levelManager.screen);
+            screen.setLighting(lighting);
+
+        }
+
         if (xOffset < 0) {
             xOffset = 0;
         }
-        if (xOffset > (width << 3)- screen.width) {
+        if (xOffset > (width << 3)-screen.width) {
             xOffset = (width << 3)-screen.width;
         }
         if (yOffset < 0) {
@@ -116,13 +139,11 @@ public class Level {
 
         screen.setOffset(xOffset, yOffset);
 
-        for (int y = (yOffset >> 3); y < (yOffset + screen.height >> 3) + 1; y++) {
-			for (int x = (xOffset >> 3); x < (xOffset + screen.width >> 3) + 1; x++) {
-				getTile(x, y).render(screen, this, x << 3, y << 3);
+        for (int y = (yOffset >> 3);y < (yOffset+screen.height >> 3)+1;y++) {
+            for (int x = (xOffset >> 3);x < (xOffset+screen.width >> 3)+1;x++) {
+                getTile(x, y).render(screen, this, x << 3, y << 3);
             }
-		}
-
-
+        }
 
 
 //        for (int y = 0;y < height;y++) {
@@ -135,7 +156,7 @@ public class Level {
 //    n instanceof Player?1:-1
 
     public void renderEntities(Screen screen) {
-        entities.sort((n,m) -> n.compareTo(m));
+        entities.sort((n, m) -> n.compareTo(m));
         entities.forEach(entity -> entity.render(screen));
     }
 
@@ -177,4 +198,11 @@ public class Level {
     public void draw(Graphics g, Screen screen) {
 
     }
+
+
+    public void addManager(LevelManager levelManager) {
+        this.levelManager = levelManager;
+    }
 }
+
+

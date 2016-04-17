@@ -52,7 +52,6 @@ public class Goal extends Mob {
             }
 
 //            removeEntity(250, 213);
-
         }
 
 
