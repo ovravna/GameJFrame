@@ -84,7 +84,6 @@ public class Level {
     }
 
     private void saveLevelToFile() {
-
         try {
             ImageIO.write(image, "png", new File(Level.class.getResource(this.imagePath).getFile()));
         } catch (IOException e) {
