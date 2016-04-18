@@ -96,9 +96,8 @@ public class Menu extends Level implements InputObject {
             bg.update();
         }
 
-
         if (!showHelp) {
-            if (input.up.isReleased()) {
+            if (input.up.isToggled()) {
     //            AudioPlayer.MENUOPTION.play();
                 currentChoice--;
                 if (currentChoice == -1) {
@@ -106,7 +105,7 @@ public class Menu extends Level implements InputObject {
                 }
             }
 
-            if (input.down.isReleased()) {
+            if (input.down.isToggled()) {
     //            AudioPlayer.MENUOPTION.play();
                 currentChoice++;
                 if (currentChoice == options.length) {
@@ -128,7 +127,7 @@ public class Menu extends Level implements InputObject {
         }
 
         if (bgImage != null) {
-            g.drawImage(bgImage, 0, 0, WIDTH*SCALE+20, HEIGHT*SCALE+20, null);
+            g.drawImage(bgImage, 0, 0, WIDTH*SCALE+30, HEIGHT*SCALE+30, null);
         }
 
 

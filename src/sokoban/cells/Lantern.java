@@ -20,7 +20,7 @@ public class Lantern extends Mob implements Actable{
     private boolean bounce;
 
     public Lantern(Level level, int x, int y) {
-        this(level, x, y, 0);
+        this(level, x, y, -0x33);
     }
 
     public Lantern(Level level, int x, int y, int filter) {

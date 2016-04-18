@@ -1,4 +1,4 @@
-package sokoban.tile;
+package sokoban.tiles;
 
 import game.level.tiles.BasicTile;
 

@@ -118,7 +118,7 @@ public class Lighting {
         this.filterColor = filterColor;
     }
 
-    private static final int INITIAL_R = -0xff;
+    private static final int INITIAL_R = -0xffffff;
     public static int sources = 0;
 
     public Integer lightCombiner(int i) {
@@ -126,10 +126,6 @@ public class Lighting {
         Integer r = INITIAL_R;
 
         Integer temp;
-
-//        if (sources != lightSources.size()) {
-//            System.out.println("Lightsources "+ lightSources.size());
-//        }
 
         sources = lightSources.size();
 

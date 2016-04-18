@@ -29,9 +29,12 @@ public class Game extends Canvas implements Runnable {
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private Screen screen;
     private LevelManager levelManager;
+    public static final Dimension DIMENSIONS = new Dimension(WIDTH*SCALE, HEIGHT*SCALE);
 
     private int frames;
     public static boolean META_DATA = true;
+    public boolean isApplet = false;
+    private Thread thread;
 
     public Game() {
         this("Game", null);
@@ -52,9 +55,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void init() {
-        setMinimumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
-        setMaximumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
-        setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
+        setMinimumSize(Game.DIMENSIONS);
+        setMaximumSize(Game.DIMENSIONS);
+        setPreferredSize(Game.DIMENSIONS);
 
         frame = new JFrame(name);
 
@@ -72,11 +75,20 @@ public class Game extends Canvas implements Runnable {
 
     public synchronized void start() {
         running = true;
-        new Thread(this).start();
+        thread = new Thread(this);
+        thread.start();
+
+
     }
 
-    private synchronized void stop() {
+    public synchronized void stop() {
         running = false;
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -35,7 +35,7 @@ public abstract class Tile {
 
     public Tile(int id, boolean solid, boolean emitter, int levelColor, List<Integer> ignoreColors) {
         this.id = (byte) id;
-        if (tiles[id] != null) throw new RuntimeException("Duplecate tile-ID on"+id);
+        if (tiles[id] != null) throw new RuntimeException("Duplecate tiles-ID on"+id);
         this.solid = solid;
         this.emitter = emitter;
         this.levelColor = levelColor;
