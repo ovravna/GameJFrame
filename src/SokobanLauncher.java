@@ -1,10 +1,8 @@
-package sokoban;
-
 import game.Game;
+import sokoban.Sokoban;
 
 import java.applet.Applet;
 import java.awt.*;
-
 public class SokobanLauncher extends Applet {
 
     private static Game game = new Game("Sokoban");
@@ -16,6 +14,8 @@ public class SokobanLauncher extends Applet {
         setMaximumSize(Game.DIMENSIONS);
         setMinimumSize(Game.DIMENSIONS);
         setPreferredSize(Game.DIMENSIONS);
+
+
         game.isApplet = true;
     }
 
