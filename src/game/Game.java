@@ -39,29 +39,15 @@ public class Game extends Canvas implements Runnable {
     }
 
     public Game(String name, Level level) {
-        this.name = name;
+        Game.name = name;
 
         screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png"));
         screen.sheet.setFontLine(1);
         screen.sheet.setPlayerLine(10);
 
         levelManager = new LevelManager(screen, new InputHandler(this), level);
-
+//        levelManager.addLevel(level);
     }
-
-
-//    public static void setLight() {
-//        setLight(-0xdf);
-//    }
-
-//    public static void setLight(Integer light) {
-//        if (light == null) {
-//            setLight();
-//            return;
-//        }
-//        Screen.filterColor = light;
-//    }
-
 
     public void init() {
         setMinimumSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));

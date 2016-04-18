@@ -4,14 +4,14 @@ import game.entities.Entity;
 import game.entities.Player;
 import game.gfx.Screen;
 import game.level.tiles.Tile;
+import sokoban.cells.Goal;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +27,8 @@ public class Level {
     private Player player;
     public static HashMap<Integer, Tile> tileColors = new HashMap<>();
     public Lighting lighting;
+    private Stack<Entity> removeStack = new Stack<>();
+    public List<Goal> goals = new ArrayList<>();
 
     public Level(String imagePath) {
         this(null, imagePath);
@@ -160,7 +162,17 @@ public class Level {
     }
 
     public void tick() {
-        entities.forEach(Entity::tick);
+
+        try {
+            entities.forEach(Entity::tick);
+        } catch (ConcurrentModificationException ignored) {
+        } finally {
+            if (!removeStack.isEmpty()) {
+                for (Entity entity : removeStack) {
+                    entities.remove(entity);
+                }
+            }
+        }
         for (Tile t : Tile.tiles) {
             if (t == null) break;
             t.tick();
@@ -195,6 +207,24 @@ public class Level {
             lighting.renderLight = renderLight;
         } else
             System.out.println("Level.renderLight: lighting = null");
+    }
+
+    public void addToRemoveStack(Entity entity) {
+        removeStack.push(entity);
+    }
+
+    public void removeEntity(Entity entity) {
+        removeStack.push(entity);
+        entities.remove(removeStack.pop());
+    }
+
+    public void removeEntities() {
+        if (!removeStack.isEmpty()) {
+            for (Entity entity : removeStack) {
+                entities.remove(entity);
+            }
+//            entities.remove(removeStack.pop());
+        }
     }
 }
 

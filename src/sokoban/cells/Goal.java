@@ -6,11 +6,7 @@ import game.gfx.Screen;
 import game.gfx.SpriteSheet;
 import game.level.Level;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Goal extends Mob {
-    public static List<Goal> goals = new ArrayList<>();
 
     private final SpriteSheet goalSheet;
     private boolean isFilled;
@@ -23,7 +19,7 @@ public class Goal extends Mob {
         solid = false;
         pushable = false;
         dimentions = new int[]{10, 6, 10, 6};
-        goals.add(this);
+        level.goals.add(this);
 
     }
 
@@ -41,18 +37,16 @@ public class Goal extends Mob {
 
     @Override
     public void tick() {
-        if (isFilled && goals.stream().allMatch(Goal::isFilled) && !isWon) {
+//        System.out.println(goals.size());
+//        System.out.println(goals.stream().allMatch(Goal::isFilled));
+        if (isFilled && level.goals.stream().allMatch(Goal::isFilled) && !isWon) {
             isWon = true;
 
-            for (Entity entity : level.entities) {
-                if (entity instanceof Wall) {
-                    entity.changePosition(0,-400);
-                }
-            }
+            for (Entity entity: level.entities) if (entity instanceof Wall)
+                    level.addToRemoveStack(entity);
+            level.removeEntities();
 
-//            removeEntity(250, 213);
         }
-
 
         isFilled = false;
     }

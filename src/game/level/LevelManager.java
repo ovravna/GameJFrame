@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.level.Levels.FIRST_LEVEL;
+import static game.level.Levels.MENU;
 
 public class LevelManager extends InputManager {
     public final Screen screen;
@@ -32,7 +32,7 @@ public class LevelManager extends InputManager {
         this.screen = screen;
         addLevel(level);
         super.setInput(input);
-        currentLevel = FIRST_LEVEL;
+        currentLevel = MENU;
         loadLevel(currentLevel);
     }
 
@@ -54,16 +54,16 @@ public class LevelManager extends InputManager {
         gameLevel = null;
         switch (currentLevel) {
             case MENU:
-            default:
                 gameLevel = new Menu(this, "/levels/Black.png");
                 break;
             case FIRST_LEVEL:
 
-                if (levels.size() != 0) {
+                if (!levels.isEmpty()) {
                     gameLevel = levels.get(0);
+                    System.out.println("GameLevel-level: "+gameLevel);
+                    gameLevel.addManager(this);
                 } else System.out.println("No first level");
 
-                gameLevel.addManager(this);
 //                gameLevel.renderLight(false);
                 break;
             case TEST:
@@ -78,6 +78,8 @@ public class LevelManager extends InputManager {
             case NEXT:
                 loadLevel(Sokoban.init(Sokoban.nextBoard()));
                 break;
+            default:
+                throw new RuntimeException("Invalid level");
         }
         System.out.println("Level loading");
         gameLevel.loadLevel();
@@ -108,20 +110,16 @@ public class LevelManager extends InputManager {
     public void tick() {
         gameLevel.tick();
 
-
         if (!wonFlag && gameLevel.entities.stream().anyMatch(n -> n instanceof Goal && ((Goal) n).isWon())) {
             smoothRise = 1;
             cycleTime = 1;
             wonFlag = true;
         }
 
-        if (smoothRise > 0) {
-            if (gameLevel.lighting.setFilter(cycleTime, smoothRise == 1, 0xff)) {
+        if (smoothRise != 0) {
+            if (gameLevel.lighting.setFilter(cycleTime, smoothRise == 1, 0xff))
                 smoothRise = 0;
-            }
-        }
-
-        if (wonFlag && smoothRise == 0) {
+        } else if (wonFlag) {
             loadLevel(Levels.NEXT);
             wonFlag = false;
         }

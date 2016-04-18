@@ -40,7 +40,7 @@ public class Box extends Mob {
         screen.render(x, y, 5 + 5*8, 0, 1, 16);
 
         if (renderLight) {
-            level.lighting.renderRoundLight(x + 4, y + 7 , 6, -0x55, Light.SOFT, this);
+            level.lighting.renderRoundLight(x + 4, y + 7 , 6, -0x88, Light.SOFT, this);
         } else level.lighting.removeLightSource(this);
 
 

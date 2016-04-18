@@ -36,8 +36,6 @@ public class Lantern extends Mob implements Actable{
         dimentions = new int[]{14, 2, 14, 2};
         lanternSheet = new SpriteSheet("/box16x16.png");
         this.filter = filter;
-//        this.lightPoint = new LightPoint(level, x, y, filter-0x33, radius >> 1);
-//        this.lightPoint.renderLight = false;
     }
 
     public boolean isHeld() {
@@ -62,17 +60,13 @@ public class Lantern extends Mob implements Actable{
                 y++;
             }
 
-//            bouceTime--;
+            bouceTime--;
         }
 
         if (isHeld) {
             x = level.getPlayer().x-3;
             y = level.getPlayer().y-6;
         }
-
-//        lightPoint.x = x+2;
-//        lightPoint.y = y+7;
-
         lastHeld = isHeld;
     }
 
@@ -83,10 +77,8 @@ public class Lantern extends Mob implements Actable{
         level.lighting.renderRoundLight(x, y, radius, filter, 6, 6, light, this);
 
         if (!isHeld) {
-//            lightPoint.renderLight = true;
             screen.render(x, y, lanternSheet, 1 , 0, 1, 16);
         }
-//        else lightPoint.renderLight = false;
 
 
     }
