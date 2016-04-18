@@ -45,9 +45,7 @@ public class Game extends Canvas implements Runnable {
         screen.sheet.setFontLine(1);
         screen.sheet.setPlayerLine(10);
 
-        levelManager = new LevelManager(screen, new InputHandler(this));
-        levelManager.addLevel(level);
-        levelManager.loadLevel();
+        levelManager = new LevelManager(screen, new InputHandler(this), level);
 
     }
 

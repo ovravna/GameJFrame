@@ -47,7 +47,7 @@ public class Level {
         } else {
             this.width = 64;
             this.height = 64;
-            tiles = new byte[width*height];
+            this.tiles = new byte[width*height];
             this.generateLevel();
         }
     }
@@ -57,6 +57,7 @@ public class Level {
             this.image = ImageIO.read(Level.class.getResource(this.imagePath));
             this.width = image.getWidth();
             this.height = image.getHeight();
+            tiles = new byte[width*height];
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,8 +65,6 @@ public class Level {
     }
 
     public void loadLevel() {
-
-        tiles = new byte[width*height];
         this.loadTiles();
     }
 
@@ -141,7 +140,7 @@ public class Level {
     }
 
     public void renderEntities(Screen screen) {
-//        entities.sort((n, m) -> n.compareTo(m));
+        entities.sort((n, m) -> n.compareTo(m));
         entities.forEach(entity -> entity.render(screen));
     }
 

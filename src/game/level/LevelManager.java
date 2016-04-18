@@ -25,11 +25,15 @@ public class LevelManager extends InputManager {
 
 
     public LevelManager(Screen screen, InputHandler input) {
-        this.screen = screen;
+        this(screen, input, null);
+    }
 
+    public LevelManager(Screen screen, InputHandler input, Level level) {
+        this.screen = screen;
+        addLevel(level);
         super.setInput(input);
         currentLevel = FIRST_LEVEL;
-//        loadLevel(currentLevel);
+        loadLevel(currentLevel);
     }
 
     public void loadLevel(Level level) {
@@ -112,7 +116,7 @@ public class LevelManager extends InputManager {
         }
 
         if (smoothRise > 0) {
-            if (gameLevel.lighting.setFilter(cycleTime, smoothRise == 1 ? true:false, 0xff)) {
+            if (gameLevel.lighting.setFilter(cycleTime, smoothRise == 1, 0xff)) {
                 smoothRise = 0;
             }
         }
