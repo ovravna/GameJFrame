@@ -42,12 +42,13 @@ public class Game extends Canvas implements Runnable {
         this.name = name;
 
         screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/8x8font.png"));
+        screen.sheet.setFontLine(1);
+        screen.sheet.setPlayerLine(10);
 
         levelManager = new LevelManager(screen, new InputHandler(this));
         levelManager.addLevel(level);
+        levelManager.loadLevel();
 
-        screen.sheet.setFontLine(1);
-        screen.sheet.setPlayerLine(10);
     }
 
 
@@ -187,7 +188,7 @@ public class Game extends Canvas implements Runnable {
 
         if (meta_data) {
             String s = String.format("FPS-%-4s LS-%s", frames, Lighting.sources);
-            
+
             g.setFont(new Font("Arial", Font.BOLD, 30));
             g.setColor(Color.RED);
             g.drawString(s, 5, 25);

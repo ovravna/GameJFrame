@@ -79,6 +79,7 @@ public class Level {
                 }
             }
         }
+        System.out.println("Tiles loaded");
     }
 
     private void saveLevelToFile() {
@@ -140,7 +141,7 @@ public class Level {
     }
 
     public void renderEntities(Screen screen) {
-        entities.sort((n, m) -> n.compareTo(m));
+//        entities.sort((n, m) -> n.compareTo(m));
         entities.forEach(entity -> entity.render(screen));
     }
 

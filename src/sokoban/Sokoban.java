@@ -62,7 +62,7 @@ public class Sokoban {
             "          #   #\n"+
             "           ###\n";
 
-    private static List<String> boards = Arrays.asList(q, w, p);
+    private static List<String> boards = Arrays.asList(q);
 
 
     public Sokoban(String board) {
@@ -109,7 +109,7 @@ public class Sokoban {
                     break;
                 case '@':
                     new Player(level, x, y);
-                    new Lantern(level, x+2, y+5, 0);
+                    new Lantern(level, x+2, y+5);
                     break;
                 case '$':
                     new Box(level, x, y);

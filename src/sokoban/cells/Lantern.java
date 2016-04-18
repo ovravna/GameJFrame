@@ -19,6 +19,10 @@ public class Lantern extends Mob implements Actable{
     private int bouceTime = INITIAL_BOUNCETIME;
     private boolean bounce;
 
+    public Lantern(Level level, int x, int y) {
+        this(level, x, y, -0x33);
+    }
+
     public Lantern(Level level, int x, int y, int filter) {
         this(level, x, y, Light.SOFT, filter, 50);
     }

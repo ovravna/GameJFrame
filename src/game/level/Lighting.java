@@ -81,22 +81,27 @@ public class Lighting {
                 // TODO: 14.04.2016 ender kode for håndtering av filter > 0xff
                 if (distance < radSqur) {
 
-                    int shade = 1;
+                    double diff = 1;
 
                     if (lighting == Light.SOFT) {
-                        shade = ((int) ((filterColor*distance)-a*(radSqur-distance))/radSqur);
+                        diff = ((int) ((filterColor*distance)-a*(radSqur-distance))/radSqur);
+//                        diff = (distance/radSqur);
+//                        System.out.println(distance);
                     } else if (lighting == Light.HARD) {
-                        shade = a;
+                        diff = a;
                     }
 
 //                    System.out.println(temp.length);
                     if (rgbFilter) {
-                        int f = (shade-a)/filterColor;
+//                        int f = (shade-a)/filterColor;
+                        light[xa+ya*width] =
+                                       -((((int)((r-filterColor)*diff+r)) << 16)
+                                        +(((int)((g-filterColor)*diff+g)) << 8)
+                                          +(int)((b-filterColor)*diff+b));
 
-
-                        light[xa+ya*width] = ((f*r) << 16)+((f*b) << 8)+(f*g);
-
-                    } else light[xa+ya*width] = shade;
+                    } else light[xa+ya*width] = ((int) diff);
+//                            -(int) ((filter-filterColor)*diff+filter);
+//                            (int) (filter * Math.sin(shade) + filterColor * Math.cos(shade));
 
                 } else light[xa+ya*width] = null;
             }

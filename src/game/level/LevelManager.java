@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.level.Levels.MENU;
+import static game.level.Levels.FIRST_LEVEL;
 
 public class LevelManager extends InputManager {
     public final Screen screen;
@@ -28,8 +28,8 @@ public class LevelManager extends InputManager {
         this.screen = screen;
 
         super.setInput(input);
-        currentLevel = MENU;
-        loadLevel(currentLevel);
+        currentLevel = FIRST_LEVEL;
+//        loadLevel(currentLevel);
     }
 
     public void loadLevel(Level level) {
@@ -42,6 +42,10 @@ public class LevelManager extends InputManager {
         gameLevel.loadLevel();
     }
 
+    public void loadLevel() {
+        loadLevel(currentLevel);
+    }
+
     public void loadLevel(Levels currentLevel) {
         gameLevel = null;
         switch (currentLevel) {
@@ -50,7 +54,11 @@ public class LevelManager extends InputManager {
                 gameLevel = new Menu(this, "/levels/Black.png");
                 break;
             case FIRST_LEVEL:
-                gameLevel = levels.get(0);
+
+                if (levels.size() != 0) {
+                    gameLevel = levels.get(0);
+                } else System.out.println("No first level");
+
                 gameLevel.addManager(this);
 //                gameLevel.renderLight(false);
                 break;
@@ -58,7 +66,7 @@ public class LevelManager extends InputManager {
                 Level level = new Level(this, Sokoban.LEVEL);
                 new Player(level, 0, 0);
 //                new Lantern(level, 20, 10, -0xaa);
-                new Lantern(level, 30, 10, -0x11);
+                new Lantern(level, 30, 10);
 
 //                new LightPoint(level, 40, 40, -0x661100, 20);
                 loadLevel(level);
@@ -67,8 +75,9 @@ public class LevelManager extends InputManager {
                 loadLevel(Sokoban.init(Sokoban.nextBoard()));
                 break;
         }
-
+        System.out.println("Level loading");
         gameLevel.loadLevel();
+        System.out.println("Level loaded");
     }
 
     public void addLevel(Level level) {
@@ -76,6 +85,7 @@ public class LevelManager extends InputManager {
             levels.add(level);
             level.addManager(this);
         }
+        System.out.println("Level: "+level);
 
     }
 
