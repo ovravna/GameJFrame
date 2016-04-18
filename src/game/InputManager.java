@@ -6,7 +6,7 @@ import java.util.List;
 public abstract class InputManager {
 
     private static List<InputObject> inputObjects = new ArrayList<>();
-    private static InputHandler input;
+    protected static InputHandler input;
 
 
     public static void addInputObject(InputObject inputObject) {

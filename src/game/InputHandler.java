@@ -12,6 +12,8 @@ public class InputHandler implements KeyListener {
     public Key act = new Key();
     public Key jump = new Key();
     public Key enter = new Key();
+    public Key restart = new Key();
+    public Key meta_data = new Key();
 
     private Game game;
 
@@ -35,6 +37,7 @@ public class InputHandler implements KeyListener {
         toggleKey(e.getKeyCode(), false);
 
     }
+
 
     public void toggleKey(int keyCode, boolean isPressed) {
         if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
@@ -65,12 +68,20 @@ public class InputHandler implements KeyListener {
             System.exit(0);
         }
 
-        if (keyCode == KeyEvent.VK_F2) {
-            game.meta_data = true;
+        if (keyCode == KeyEvent.VK_F3) {
+            Game.META_DATA = true;
         }
 
-        if (keyCode == KeyEvent.VK_F3) {
-            game.meta_data = false;
+        if (keyCode == KeyEvent.VK_F4) {
+            Game.META_DATA = false;
+        }
+
+        if (keyCode == KeyEvent.VK_R) {
+            restart.toggle(isPressed);
+        }
+
+        if (keyCode == KeyEvent.VK_F2 || keyCode == KeyEvent.VK_M) {
+            meta_data.toggle(isPressed);
         }
 
     }
@@ -86,6 +97,17 @@ public class InputHandler implements KeyListener {
 
         public boolean isReleased() {
             if (lastPressed && pressed != lastPressed) {
+                lastPressed = pressed;
+                return true;
+            }
+
+            lastPressed = pressed;
+
+            return false;
+        }
+
+        public boolean isToggled() {
+            if (pressed && pressed != lastPressed) {
                 lastPressed = pressed;
                 return true;
             }

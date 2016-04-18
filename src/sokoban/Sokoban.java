@@ -62,11 +62,11 @@ public class Sokoban {
             "          #   #\n"+
             "           ###\n";
 
-    private static List<String> boards = Arrays.asList(q);
+    private static List<String> boards = Arrays.asList(q, w, p);
 
 
-    public Sokoban(String board) {
-        new Game("Sokoban", init(board)).init();
+    public Sokoban() {
+        new Game("Sokoban").init();
     }
 
 
@@ -79,6 +79,7 @@ public class Sokoban {
 
         int x_level_centrum = (level.width << 3)/2;
         int y_level_centrum = (level.height << 3)/2;
+
 //        System.out.printf("%s %s", x_level_centrum, y_level_centrum);
 
 //        if (sokoban_height > 1) {
@@ -132,7 +133,7 @@ public class Sokoban {
     }
 
     public static void main(String[] args) {
-        new Sokoban(nextBoard());
+        new Sokoban();
     }
 
     public static String nextBoard() {

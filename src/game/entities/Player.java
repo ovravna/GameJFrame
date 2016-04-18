@@ -55,11 +55,13 @@ public class Player extends Mob implements Actable, InputObject {
         if (input.down.isPressed()) ya++;
         if (input.left.isPressed()) xa--;
         if (input.right.isPressed()) xa++;
-        if (input.act.isReleased()) act();
+        if (input.act.isToggled()) act();
         if (input.jump.isReleased()) {
             isJumping = true;
             jumpTime = tickCount;
         }
+
+
 
 
         if (xa != 0 || ya != 0) {

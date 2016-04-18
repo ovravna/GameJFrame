@@ -1,6 +1,7 @@
 package game.level;
 
 import game.InputHandler;
+import game.InputManager;
 import game.InputObject;
 import game.gfx.Screen;
 import game.level.tiles.Background;
@@ -36,16 +37,21 @@ public class Menu extends Level implements InputObject {
             "Quit"
     };
     private int currentChoice;
+    private int fontOffset = 0;
+
+    private boolean moveFont;
+    private boolean showHelp;
+    private boolean hideHelp;
 
 
     public Menu(LevelManager levelManager, String imagePath){
         super(levelManager, imagePath);
-        super.levelManager.addInputObject(this);
+        InputManager.addInputObject(this);
 
 //        bg = new Background("/backgrounds/menubg.gif", 0);
 
         titleColor = new Color(246, 198, 77);
-        fontColor1 = new Color(255, 220, 142);
+        fontColor1 = new Color(245, 221, 128);
         fontColor2 = new Color(255, 136, 18);
 
 
@@ -58,32 +64,54 @@ public class Menu extends Level implements InputObject {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 //        player = new Player(this, 0, 0);
     }
+
+    private int offsetVal = 1;
 
     @Override
     public void tick() {
         super.tick();
+        int MOVESPEED = 2;
+        int INIT_OFFSET = 1;
+
+        if (moveFont) {
+            fontOffset -= (offsetVal*= MOVESPEED);
+        }
+
+        if (hideHelp) {
+            if (offsetVal >= 512) {
+                offsetVal = INIT_OFFSET;
+            }
+            fontOffset += (offsetVal *= MOVESPEED);
+            if (fontOffset > 0) {
+                showHelp = false;
+                hideHelp = false;
+                offsetVal = INIT_OFFSET;
+            }
+        }
+
+
         if (bg != null) {
             bg.update();
         }
 
 
-        if (input.up.isReleased()) {
-//            AudioPlayer.MENUOPTION.play();
-            currentChoice--;
-            if (currentChoice == -1) {
-                currentChoice = options.length-1;
+        if (!showHelp) {
+            if (input.up.isReleased()) {
+    //            AudioPlayer.MENUOPTION.play();
+                currentChoice--;
+                if (currentChoice == -1) {
+                    currentChoice = options.length-1;
+                }
             }
-        }
 
-        if (input.down.isReleased()) {
-//            AudioPlayer.MENUOPTION.play();
-            currentChoice++;
-            if (currentChoice == options.length) {
-                currentChoice = 0;
+            if (input.down.isReleased()) {
+    //            AudioPlayer.MENUOPTION.play();
+                currentChoice++;
+                if (currentChoice == options.length) {
+                    currentChoice = 0;
+                }
             }
         }
 
@@ -112,16 +140,47 @@ public class Menu extends Level implements InputObject {
 
         g.setFont(font);
         for (int i = 0;i < options.length;i++) {
-            if (currentChoice == i) {
+            if (i == currentChoice) {
                 g.setColor(fontColor2);
             } else {
                 g.setColor(fontColor1);
             }
-            g.drawString(options[i], 600-options[i].length()*20, 530+i*80);
+            g.drawString(options[i], 600-options[i].length()*20+fontOffset, 530+i*80);
+
+            if (moveFont && 600-options[i].length()*20+fontOffset < -200) {
+                moveFont = false;
+            }
         }
+
+        if (showHelp) {
+            String[] help = new String[] {"Push boxes","Go crazy", "Win life","", "Got it!" };
+            for (int i = 0; i < help.length; i++) {
+                if (i == help.length-1) {
+                    g.setColor(fontColor2);
+                    g.drawString(help[i], 1600-help[i].length()*20+fontOffset, 530+i*80);
+                } else {
+                    g.setColor(fontColor1);
+                    g.drawString(help[i], 1400+fontOffset, 530+i*80);
+
+                }
+
+
+
+            }
+
+        }
+
+
+
     }
 
     private void select() {
+        if (showHelp) {
+            hideHelp = true;
+//            levelManager.loadLevel(Levels.MENU);
+            return;
+        }
+
         if (currentChoice == 0) {
             levelManager.loadLevel(Levels.NEXT);
         }
@@ -139,7 +198,8 @@ public class Menu extends Level implements InputObject {
         }
 
         if (currentChoice == 3) {
-            //help
+            moveFont = true;
+            showHelp = true;
         }
 
         if (currentChoice == 4) {

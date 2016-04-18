@@ -1,5 +1,6 @@
 package game.level;
 
+import game.Game;
 import game.InputHandler;
 import game.InputManager;
 import game.entities.Player;
@@ -110,6 +111,8 @@ public class LevelManager extends InputManager {
     public void tick() {
         gameLevel.tick();
 
+//========= Sokoban spesific win conditions
+
         if (!wonFlag && gameLevel.entities.stream().anyMatch(n -> n instanceof Goal && ((Goal) n).isWon())) {
             smoothRise = 1;
             cycleTime = 1;
@@ -123,6 +126,16 @@ public class LevelManager extends InputManager {
             loadLevel(Levels.NEXT);
             wonFlag = false;
         }
+//=========================================
+
+        if (input.restart.isToggled()) {
+            loadLevel(currentLevel);
+        }
+
+        if (input.meta_data.isToggled()) {
+            Game.META_DATA = !Game.META_DATA;
+        }
+
 
     }
 

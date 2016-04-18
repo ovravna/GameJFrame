@@ -22,7 +22,6 @@ public class Game extends Canvas implements Runnable {
     private static String name;
     private JFrame frame;
 
-
     private boolean running = true;
     public int tickCount = 0;
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -32,10 +31,14 @@ public class Game extends Canvas implements Runnable {
     private LevelManager levelManager;
 
     private int frames;
-    public boolean meta_data = true;
+    public static boolean META_DATA = true;
 
     public Game() {
         this("Game", null);
+    }
+
+    public Game(String name) {
+        this(name, null);
     }
 
     public Game(String name, Level level) {
@@ -46,7 +49,6 @@ public class Game extends Canvas implements Runnable {
         screen.sheet.setPlayerLine(10);
 
         levelManager = new LevelManager(screen, new InputHandler(this), level);
-//        levelManager.addLevel(level);
     }
 
     public void init() {
@@ -77,8 +79,6 @@ public class Game extends Canvas implements Runnable {
         running = false;
     }
 
-
-
     @Override
     public void run() {
         long lastTime = System.nanoTime();
@@ -89,8 +89,6 @@ public class Game extends Canvas implements Runnable {
 
         long lastTimer = System.currentTimeMillis();
         double delta = 0;
-//        init();
-
         long now;
         boolean shouldRender;
         while (running) {
@@ -108,8 +106,6 @@ public class Game extends Canvas implements Runnable {
             if (shouldRender) {
                 frames++;
                 render();
-
-
             }
 
             if (System.currentTimeMillis()-lastTimer >= 1000) {
@@ -133,9 +129,7 @@ public class Game extends Canvas implements Runnable {
     public void tick() {
         tickCount++;
         levelManager.tick();
-
     }
-
 
     public void render() {
         BufferStrategy bs = getBufferStrategy();
@@ -156,7 +150,6 @@ public class Game extends Canvas implements Runnable {
 
         levelManager.currentLevel().renderEntities(screen);
 
-
         for (int y = 0;y < screen.height;y++) {
             for (int x = 0;x < screen.width;x++) {
                 int colorCode = screen.pixels[x+y*WIDTH];
@@ -170,7 +163,7 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         levelManager.draw(g);
 
-        if (meta_data) {
+        if (META_DATA) {
             String s = String.format("FPS-%-4s LS-%s", frames, Lighting.sources);
 
             g.setFont(new Font("Arial", Font.BOLD, 30));
