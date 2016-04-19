@@ -3,6 +3,7 @@ package game.level;
 import game.InputHandler;
 import game.InputManager;
 import game.InputObject;
+import game.audio.AudioPlayer;
 import game.gfx.Screen;
 import game.level.tiles.Background;
 import sokoban.Sokoban;
@@ -54,6 +55,9 @@ public class Menu extends Level implements InputObject {
         fontColor1 = new Color(245, 221, 128);
         fontColor2 = new Color(255, 136, 18);
 
+        addAudio(AudioPlayer.MENUOPTION);
+        addAudio(AudioPlayer.MENUSELECT);
+
 
         titleFont = new Font("Old English Text MT", Font.BOLD, 120);
 
@@ -96,17 +100,22 @@ public class Menu extends Level implements InputObject {
             bg.update();
         }
 
-        if (!showHelp) {
-            if (input.up.isToggled()) {
-    //            AudioPlayer.MENUOPTION.play();
+        if (input.up.isToggled()) {
+
+            AudioPlayer.MENUOPTION.play();
+
+
+            if (!showHelp) {
                 currentChoice--;
                 if (currentChoice == -1) {
                     currentChoice = options.length-1;
                 }
             }
+        }
 
-            if (input.down.isToggled()) {
-    //            AudioPlayer.MENUOPTION.play();
+        if (input.down.isToggled()) {
+            AudioPlayer.MENUOPTION.play();
+            if (!showHelp) {
                 currentChoice++;
                 if (currentChoice == options.length) {
                     currentChoice = 0;
@@ -114,8 +123,9 @@ public class Menu extends Level implements InputObject {
             }
         }
 
+
         if (input.enter.isReleased()) {
-//            AudioPlayer.MENUSELECT.play();
+            AudioPlayer.MENUSELECT.play();
             select();
         }
     }
@@ -152,25 +162,24 @@ public class Menu extends Level implements InputObject {
         }
 
         if (showHelp) {
-            String[] help = new String[] {"Push boxes","Go crazy", "Win life","", "Got it!" };
+            String[] help = new String[] {
+                    "Push boxes",
+                    "Go crazy",
+                    "Win life",
+                    "",
+                    "Got it!" };
+
             for (int i = 0; i < help.length; i++) {
                 if (i == help.length-1) {
                     g.setColor(fontColor2);
                     g.drawString(help[i], 1600-help[i].length()*20+fontOffset, 530+i*80);
                 } else {
                     g.setColor(fontColor1);
-                    g.drawString(help[i], 1400+fontOffset, 530+i*80);
+                    g.drawString(help[i], 1300+fontOffset, 530+i*80);
 
                 }
-
-
-
             }
-
         }
-
-
-
     }
 
     private void select() {

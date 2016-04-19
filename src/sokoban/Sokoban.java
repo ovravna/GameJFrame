@@ -1,6 +1,7 @@
 package sokoban;
 
 import game.Game;
+import game.audio.AudioPlayer;
 import game.entities.Player;
 import game.level.Level;
 import sokoban.cells.Box;
@@ -72,6 +73,9 @@ public class Sokoban {
 
     public static Level init(String sokoban) {
         Level level = new Level(Sokoban.LEVEL);
+        level.addAudio(AudioPlayer.BG_MUSIC);
+
+
         String[] sokobanSplit = sokoban.split("\\||\\n");
 
         int sokoban_width = sokobanSplit[0].length();

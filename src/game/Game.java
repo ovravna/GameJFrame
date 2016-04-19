@@ -32,9 +32,10 @@ public class Game extends Canvas implements Runnable {
     public static final Dimension DIMENSIONS = new Dimension(WIDTH*SCALE, HEIGHT*SCALE);
 
     private int frames;
-    public static boolean META_DATA = true;
+    public static boolean META_DATA = false;
     public boolean isApplet = false;
     private Thread thread;
+    private int ticks;
 
     public Game() {
         this("Game", null);
@@ -129,9 +130,9 @@ public class Game extends Canvas implements Runnable {
 //                    x = levelManager.currentLevel().getPlayer().x;
 //                    y = levelManager.currentLevel().getPlayer().y;
 //                }
-
 //                frame.setTitle(String.format("%s FPS-%s Ticks-%s", name, frames, ticks));
                 this.frames = frames;
+                this.ticks = ticks;
                 frames = 0;
                 ticks = 0;
             }
@@ -176,7 +177,7 @@ public class Game extends Canvas implements Runnable {
         levelManager.draw(g);
 
         if (META_DATA) {
-            String s = String.format("FPS-%-4s LS-%s", frames, Lighting.sources);
+            String s = String.format("Ticks-%-4s FPS-%-4s LS-%s", ticks, frames, Lighting.sources);
 
             g.setFont(new Font("Arial", Font.BOLD, 30));
             g.setColor(Color.RED);

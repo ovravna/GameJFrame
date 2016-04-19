@@ -15,7 +15,6 @@ public class SokobanLauncher extends Applet {
         setMinimumSize(Game.DIMENSIONS);
         setPreferredSize(Game.DIMENSIONS);
 
-
         game.isApplet = true;
     }
 

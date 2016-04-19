@@ -1,5 +1,6 @@
 package game.level;
 
+import game.audio.AudioPlayer;
 import game.entities.Entity;
 import game.entities.Player;
 import game.gfx.Screen;
@@ -20,15 +21,19 @@ public class Level {
     private byte[] tiles;
     public int width;
     public int height;
-    public List<Entity> entities = new ArrayList<>();
     protected LevelManager levelManager;
     private String imagePath;
     private BufferedImage image;
     private Player player;
-    public static HashMap<Integer, Tile> tileColors = new HashMap<>();
     public Lighting lighting;
+
+    public static HashMap<Integer, Tile> tileColors = new HashMap<>();
+
     private Stack<Entity> removeStack = new Stack<>();
+    public List<Entity> entities = new ArrayList<>();
     public List<Goal> goals = new ArrayList<>();
+    public List<AudioPlayer> audios = new ArrayList<>();
+
 
     public Level(String imagePath) {
         this(null, imagePath);
@@ -67,6 +72,7 @@ public class Level {
     }
 
     public void loadLevel() {
+
         this.loadTiles();
     }
 
@@ -225,6 +231,10 @@ public class Level {
             }
 //            entities.remove(removeStack.pop());
         }
+    }
+
+    public void addAudio(AudioPlayer audio) {
+        audios.add(audio);
     }
 }
 

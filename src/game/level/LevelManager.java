@@ -3,6 +3,7 @@ package game.level;
 import game.Game;
 import game.InputHandler;
 import game.InputManager;
+import game.audio.AudioPlayer;
 import game.entities.Player;
 import game.gfx.Screen;
 import sokoban.Sokoban;
@@ -77,6 +78,7 @@ public class LevelManager extends InputManager {
                 loadLevel(level);
                 break;
             case NEXT:
+                AudioPlayer.BG_MUSIC.play();
                 loadLevel(Sokoban.init(Sokoban.nextBoard()));
                 break;
             default:
